@@ -1,1 +1,10 @@
 /* Empty. Add your own CSS if you like */
+
+.full-width{
+    width: 100%;
+    height: auto;
+}
+
+a.item{
+    height: calc(50vh - 16px);
+}

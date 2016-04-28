@@ -8,8 +8,6 @@ angular.module('app.routes', [])
   // Each state's controller can be found in controllers.js
   $stateProvider
 
-
-
   .state('timeToLeaveOverview', {
     url: '/timetoleave',
     templateUrl: 'components/timetoleave/timetoleave.html',
@@ -22,6 +20,6 @@ angular.module('app.routes', [])
     controller: 'TimelineController'
   });
 
-  $urlRouterProvider.otherwise('/timetoleave')
+  $urlRouterProvider.otherwise('/timetoleave');
 
 });
