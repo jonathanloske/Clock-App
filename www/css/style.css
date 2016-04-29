@@ -14,8 +14,8 @@ a.item{
     white-space: nowrap;
     overflow: visible;
     height: 25vh;
-    line-height: 23vh;
-    font-size: 20px;
+    line-height: calc(50vh - 30px);
+    font-size: 30px;
     font-weight: bold;
     padding-right: 2px;
 }
