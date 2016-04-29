@@ -20,6 +20,6 @@ angular.module('app.routes', [])
     controller: 'TimelineController'
   });
 
-  $urlRouterProvider.otherwise('/timetoleave');
+  $urlRouterProvider.otherwise('/timeline');
 
 });
