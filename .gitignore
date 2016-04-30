@@ -1,2 +1,4 @@
 platforms
 www/lib
+jsconfig.json
+.vscode/settings.json
