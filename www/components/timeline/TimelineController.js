@@ -75,6 +75,7 @@ angular.module('app.controllers')
         ]
     ];
 
+    // Fill up the time line with the hours between 7am and midnight.
     $scope.timerange = [];
     for(var i = 7; i < 24; i++){
         $scope.timerange.push(i > 12? i % 12: i);
