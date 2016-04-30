@@ -23,7 +23,6 @@ angular.module('starter', ['ionic', 'app.controllers', 'app.routes'])
   });
 
   $rootScope.keyPress = function(event){
-        console.log(event.keyCode);
         if(event.keyCode === 65) {
           $ionicScrollDelegate.scrollBy(-50, 0, true);
         } else if (event.keyCode === 68) {

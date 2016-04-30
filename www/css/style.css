@@ -12,30 +12,29 @@ a.item{
 .timeline .filled{
     color: white;
     white-space: nowrap;
-    overflow: visible;
+    overflow: hidden;
+    text-overflow: ellipsis;
     height: 25vh;
     line-height: calc(50vh - 30px);
     font-size: 30px;
     font-weight: bold;
     padding-right: 2px;
+    border-left: 1px solid white;
+    border-right: 1px solid white;
 }
 
-.timeline .filled + .filled{
-    /* Make sure the following .filled doesn't cover the text */
-    z-index: -1;
-    /* Take care of display bug that shows small white stripes */
-    position: relative;
-    left: -1px;
+.timeline{
+    margin-bottom: 10px;
 }
 
-.timeline-positive .filled{
+.timeline:nth-of-type(2) .filled{
     background-color: #387ef5;
 }
 
-.timeline-balanced .filled{
+.timeline:nth-of-type(3) .filled{
     background-color: #33cd5f;
 }
 
-.timeline-assertive .filled{
+.timeline:nth-of-type(4) .filled{
     background-color: #ef473a;
 }
