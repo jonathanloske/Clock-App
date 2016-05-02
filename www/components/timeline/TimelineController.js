@@ -1,7 +1,21 @@
 angular.module('app.controllers')
 
-.controller('TimelineController', function($scope) {
-    $scope.calendars = [
+.controller('TimelineController', function($scope, socket) {
+    $scope.calendars = [];
+    
+    // request the calendars for today from all logged in users from the server
+    socket.emit('request calendars', new Date());
+    
+    // receive the requested calendars (they are sent back one by one)
+    socket.on('receive calendar', function(calendar) {
+        var index = $scope.calendars.push([]) - 1;
+        calendar.forEach(function(event) {
+            var calendarEvent = { start : new Date(Date.parse(event.start.dateTime)), end: new Date(Date.parse(event.end.dateTime)), title : event.summary};
+            $scope.calendars[index].push(calendarEvent);
+         });
+    });
+    
+    /*$scope.calendars = [
         [
             {
                 start: new Date(2016, 05, 01, 07, 10),
@@ -22,7 +36,7 @@ angular.module('app.controllers')
                 start: new Date(2016, 05, 01, 13),
                 end: new Date(2016, 05, 01, 17),
                 title: 'Slacking off'
-            },
+            },                  
             {
                 start: new Date(2016, 05, 01, 18),
                 end: new Date(2016, 05, 01, 19),
@@ -73,7 +87,7 @@ angular.module('app.controllers')
                 title: 'Choir'
             }
         ]
-    ];
+    ];*/
 
     // Fill up the time line with the hours between 7am and midnight.
     $scope.timerange = [];
