@@ -14,8 +14,8 @@ a.item{
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
-    height: 25vh;
-    line-height: calc(50vh - 30px);
+    height: calc(33vh - 20px);
+    line-height: calc(66vh - 68px);
     font-size: 30px;
     font-weight: bold;
     padding-right: 2px;
