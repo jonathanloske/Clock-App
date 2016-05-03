@@ -21,7 +21,18 @@ angular.module('app.controllers')
     $scope.currentMinutes = (new Date()).getMinutes();
 
 	// request the calendars for today from all logged in users from the server
-	socket.emit('request calendars', new Date());
+	navigator.geolocation.getCurrentPosition(function (position) {
+			socket.emit('request calendars', {
+				day: new Date(),
+				lat: position.coords.latitude,
+				long: position.coords.longitude
+			});
+		},
+		function () {
+			console.log("Couldnt get geolocation");
+		}, {
+			enableHighAccuracy: true
+		});
 
 	// receive the requested calendars (they are sent back one by one)
 	socket.on('receive calendar', function (calendar) {
