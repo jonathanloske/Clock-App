@@ -1,19 +1,19 @@
 /* Empty. Add your own CSS if you like */
 
-.full-width{
+.full-width {
     width: 100%;
     height: auto;
 }
 
-a.item{
+a.item {
     height: calc(50vh - 16px);
 }
 
-.timeline-page{
+.timeline-page {
     background-color: black;
 }
 
-.timeline-time{
+.timeline-time {
     position: absolute;
     font-size: 14vh;
     color: black;
@@ -98,7 +98,8 @@ a.item{
 .timelines{
     position: absolute;
     top: 35px;
-    margin-left: 30vh;
+    margin-left: calc(30vh - 1px);
+    width: 100%;
 }
 
 .timelines .timeline:nth-of-type(1) .filled{
