@@ -44,6 +44,7 @@ a.item {
     width: 20vh;
     border-radius: 6px;
     margin-left: 2vh;
+    box-shadow: 0 0 6px 0px black;
 }
 
 .timeline-hours{
