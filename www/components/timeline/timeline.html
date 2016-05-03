@@ -5,32 +5,34 @@
                  One hour should take up 25% (horizontally) of the screen.-->
             <div class="col col-25" ng-repeat="time in timerange track by $index">{{time}}</div>
         </div>
-        <div class="row timeline timeline-marker" ng-repeat="calendar in calendars">
-            <!-- Calculate the horizontal positioning of the elements.
-                This is divided into two parts:
-                    'margin-left' is to care for the white space between the last calendar
-                        event and the current one (or between 7am and the first event).
-                    'flex' handles the amount of space the element should occupy given its duration.
-                We want to display four hours on one screen which makes 25% the equivalent for
-                    one hour and what we use as a multiplier.
-                The rest of the logic is subtracting the time of the current event from the
-                    time of the last event (or 7am for the first event).
-                Since this is very dynamic, I didn't find a way to do it in CSS without making
-                    classes for every percentage and even then the percentage still would have
-                    to be calculcated.-->
-            <div
-                ng-class="['col', 'timeline-cell', 'filled', 'timelines' + calendars.length]"
-                ng-repeat="event in calendar track by $index"
-                ng-style="{
-                    'margin-left': ($index === 0?
-                        ((event.start.getHours() * 60 + event.start.getMinutes() - 07 * 60) / 60 * 25) :
-                         (((event.start.getHours() * 60 + event.start.getMinutes())
-                            - (calendar[$index - 1].end.getHours() * 60 + calendar[$index - 1].end.getMinutes())) / 60 * 25)) + '%',
-                    'flex': '0 0 ' +
-                        (((event.end.getHours() * 60 + event.end.getMinutes()) -
-                        (event.start.getHours() * 60 + event.start.getMinutes())) / 60 * 25) + '%'
-                }">
-                {{event.title}}
+        <div class="timelines">
+            <div class="row timeline timeline-marker" ng-repeat="calendar in calendars">
+                <!-- Calculate the horizontal positioning of the elements.
+                    This is divided into two parts:
+                        'margin-left' is to care for the white space between the last calendar
+                            event and the current one (or between 7am and the first event).
+                        'flex' handles the amount of space the element should occupy given its duration.
+                    We want to display four hours on one screen which makes 25% the equivalent for
+                        one hour and what we use as a multiplier.
+                    The rest of the logic is subtracting the time of the current event from the
+                        time of the last event (or 7am for the first event).
+                    Since this is very dynamic, I didn't find a way to do it in CSS without making
+                        classes for every percentage and even then the percentage still would have
+                        to be calculcated.-->
+                <div
+                    ng-class="['col', 'timeline-cell', 'filled', 'timelines' + calendars.length]"
+                    ng-repeat="event in calendar track by $index"
+                    ng-style="{
+                        'margin-left': ($index === 0?
+                            ((event.start.getHours() * 60 + event.start.getMinutes() - 07 * 60) / 60 * 25) :
+                            (((event.start.getHours() * 60 + event.start.getMinutes())
+                                - (calendar[$index - 1].end.getHours() * 60 + calendar[$index - 1].end.getMinutes())) / 60 * 25)) + '%',
+                        'flex': '0 0 ' +
+                            (((event.end.getHours() * 60 + event.end.getMinutes()) -
+                            (event.start.getHours() * 60 + event.start.getMinutes())) / 60 * 25) + '%'
+                    }">
+                    {{event.title}}
+                </div>
             </div>
         </div>
     </ion-content>

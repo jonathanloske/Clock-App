@@ -9,6 +9,21 @@ a.item{
     height: calc(50vh - 16px);
 }
 
+.timeline-page{
+    background-color: black;
+}
+
+.timeline-hours{
+    color: white;
+    padding-top: 0;
+    margin-left: 25%;
+}
+
+.timeline-hours .col{
+    height: 100vh;
+    border-right: 2px solid grey;
+}
+
 .timeline .filled{
     color: white;
     white-space: nowrap;
@@ -16,9 +31,9 @@ a.item{
     text-overflow: ellipsis;
     font-size: 30px;
     font-weight: bold;
-    padding-right: 2px;
-    border-left: 1px solid white;
-    border-right: 1px solid white;
+    border-left: 1px solid black;
+    border-right: 1px solid black;
+    border-radius: 6px;
 }
 
 .timeline .filled.timelines2 {
@@ -28,7 +43,7 @@ a.item{
 
 .timeline .filled.timelines3 {
     height: calc(33vh - 20px);
-    line-height: calc(66vh - 68px);
+    line-height: calc(66vh - 70px);
 }
 
 .timeline .filled.timelines4 {
@@ -45,22 +60,28 @@ a.item{
     margin-bottom: 10px;
 }
 
-.timeline:nth-of-type(2) .filled{
+.timelines{
+    position: absolute;
+    top: 35px;
+    margin-left: 25%;
+}
+
+.timelines .timeline:nth-of-type(1) .filled{
     background-color: #387ef5;
 }
 
-.timeline:nth-of-type(3) .filled{
+.timelines .timeline:nth-of-type(2) .filled{
     background-color: #33cd5f;
 }
 
-.timeline:nth-of-type(4) .filled{
+.timelines .timeline:nth-of-type(3) .filled{
     background-color: #886aea;
 }
 
-.timeline:nth-of-type(5) .filled{
+.timelines .timeline:nth-of-type(4) .filled{
     background-color: #ef473a;
 }
 
-.timeline:nth-of-type(6) .filled{
+.timelines .timeline:nth-of-type(5) .filled{
     background-color: #444;
 }
