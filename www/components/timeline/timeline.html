@@ -1,6 +1,17 @@
 <ion-view title="Timeline">
     <ion-content class="timeline-page" direction="x">
-        <div class="row timeline-marker">
+        <div class="timeline-time">
+            8:10
+        </div>
+        <div class="timeline-pictures">
+            <div class="row timeline" ng-repeat="calendar in calendars track by $index">
+                <div
+                    ng-class="['col', 'timelines' + calendars.length]">
+                    <img ng-src="{{pictures[$index]}}"/>
+                </div>
+            </div>
+        </div>
+        <div class="row timeline-hours">
             <!-- Display the hour markers at the top of the screen.
                  One hour should take up 25% (horizontally) of the screen.-->
             <div class="col col-25" ng-repeat="time in timerange track by $index">{{time}}</div>

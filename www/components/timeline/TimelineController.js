@@ -94,4 +94,12 @@ angular.module('app.controllers')
     for(var i = 7; i < 24; i++){
         $scope.timerange.push(i > 12? i % 12: i);
     }
+
+    $scope.pictures = [
+        'img/father.jpg',
+        'img/mother.png',
+        'img/child1.jpg',
+        'img/placeholder.jpg',
+        'img/placeholder.jpg'
+    ]
 });

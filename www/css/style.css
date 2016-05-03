@@ -13,10 +13,45 @@ a.item{
     background-color: black;
 }
 
+.timeline-time{
+    position: absolute;
+    font-size: 14vh;
+    color: black;
+    top: 1vh;
+    left: -1vw;
+    z-index: 1;
+}
+
+.timeline-pictures{
+    position: absolute;
+    /* Make the element 100% wide so that even when the user completely overscrolls,
+       the background is still in the background-color of this element. */
+    left: -100%;
+    /* Abusing the inset box-shadow a bit. Usually it will give a shadow on all
+       four edges but we only want it on the right edge so we make the container
+       a lot higher and move the upper and lower edge out of view (the left edge
+       is never visible since we already made the container really wide) */
+    top: -5vh;
+    padding-left: 100%;
+    width: calc( 100% + 30vh );
+    height: 110vh;
+    background-color: #525252;
+    padding-top: calc( 10px + 5vh);
+    box-shadow: 0 0 20px 0 black inset;
+}
+
+.timeline-pictures img{
+    width: 20vh;
+    border-radius: 6px;
+    margin-left: 2vh;
+}
+
 .timeline-hours{
     color: white;
-    padding-top: 0;
-    margin-left: 25%;
+    padding-top: 0px;
+    margin-left: 30vh;
+    line-height: 5vh;
+    font-size: 6vh;
 }
 
 .timeline-hours .col{
@@ -36,22 +71,22 @@ a.item{
     border-radius: 6px;
 }
 
-.timeline .filled.timelines2 {
+.timeline .timelines2 {
     height: calc(50vh - 26px);
     line-height: calc(100vh - 82px);
 }
 
-.timeline .filled.timelines3 {
+.timeline .timelines3 {
     height: calc(33vh - 20px);
     line-height: calc(66vh - 70px);
 }
 
-.timeline .filled.timelines4 {
+.timeline .timelines4 {
     height: calc(25vh - 20px);
     line-height: calc(50vh - 70px);
 }
 
-.timeline .filled.timelines5 {
+.timeline .timelines5 {
     height: calc(20vh - 17px);
     line-height: calc(40vh - 64px);
 }
@@ -63,7 +98,7 @@ a.item{
 .timelines{
     position: absolute;
     top: 35px;
-    margin-left: 25%;
+    margin-left: 30vh;
 }
 
 .timelines .timeline:nth-of-type(1) .filled{
