@@ -101,5 +101,8 @@ angular.module('app.controllers')
         'img/child1.jpg',
         'img/placeholder.jpg',
         'img/placeholder.jpg'
-    ]
+    ];
+
+    $scope.currentHour = (new Date()).getHours();
+    $scope.currentMinutes = (new Date()).getMinutes();
 });
