@@ -19,7 +19,7 @@
                     classes for every percentage and even then the percentage still would have
                     to be calculcated.-->
             <div
-                class="col timeline-cell filled"
+                ng-class="['col', 'timeline-cell', 'filled', 'timelines' + calendars.length]"
                 ng-repeat="event in calendar track by $index"
                 ng-style="{
                     'margin-left': ($index === 0?

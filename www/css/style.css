@@ -14,13 +14,31 @@ a.item{
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
-    height: calc(33vh - 20px);
-    line-height: calc(66vh - 68px);
     font-size: 30px;
     font-weight: bold;
     padding-right: 2px;
     border-left: 1px solid white;
     border-right: 1px solid white;
+}
+
+.timeline .filled.timelines2 {
+    height: calc(50vh - 26px);
+    line-height: calc(100vh - 82px);
+}
+
+.timeline .filled.timelines3 {
+    height: calc(33vh - 20px);
+    line-height: calc(66vh - 68px);
+}
+
+.timeline .filled.timelines4 {
+    height: calc(25vh - 20px);
+    line-height: calc(50vh - 70px);
+}
+
+.timeline .filled.timelines5 {
+    height: calc(20vh - 17px);
+    line-height: calc(40vh - 64px);
 }
 
 .timeline{
@@ -36,5 +54,13 @@ a.item{
 }
 
 .timeline:nth-of-type(4) .filled{
+    background-color: #886aea;
+}
+
+.timeline:nth-of-type(5) .filled{
     background-color: #ef473a;
+}
+
+.timeline:nth-of-type(6) .filled{
+    background-color: #444;
 }
