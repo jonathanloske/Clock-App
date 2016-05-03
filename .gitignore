@@ -3,3 +3,4 @@ www/lib
 jsconfig.json
 .vscode/settings.json
 .io-config.json
+node_modules/

@@ -42,7 +42,7 @@
                             to be calculcated.-->
                     <div
                         ng-class="['col', 'timeline-cell', 'filled', 'timelines' + calendars.length]"
-                        ng-repeat="event in calendar track by $index"
+                        ng-repeat="event in calendar.events track by $index"
                         ng-style="{
                             'margin-left': ($index === 0?
                                 ((event.start.getHours() * 60 + event.start.getMinutes() - 07 * 60) / 60 * 25) :
