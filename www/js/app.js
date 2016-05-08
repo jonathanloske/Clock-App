@@ -5,7 +5,7 @@
 // the 2nd parameter is an array of 'requires'
 angular.module('starter', ['ionic', 'app.controllers', 'app.routes'])
 
-.run(function ($ionicPlatform, $rootScope, $state, $ionicScrollDelegate) {
+.run(function ($ionicPlatform, $rootScope, $state, $ionicScrollDelegate, socket) {
 	$ionicPlatform.ready(function () {
 		if (window.cordova && window.cordova.plugins.Keyboard) {
 			// Hide the accessory bar by default (remove this to show the accessory bar above the keyboard
@@ -35,11 +35,60 @@ angular.module('starter', ['ionic', 'app.controllers', 'app.routes'])
 			}
 		}
 	};
+
+	socket.emit('clock - request all calendars', {
+		day: new Date()
+	});
 })
 
-.factory('socket', function ($rootScope) {
+
+.factory('storage', function ($rootScope) {
+
+	var calendars = [];
+
+	return {
+		// controllers can listen to changes of the storage
+		subscribe: function (scope, callback) {
+			var handler = $rootScope.$on('storage-has-changed', callback);
+			scope.$on('$destroy', handler);
+		},
+		updateCalendar: function (calendar) {
+			// find the calendar to replace (matching is done by user's name)
+			calendars.forEach(function (currentCal, index) {
+				if (currentCal.name == calendar.name) {
+					calendars[index] = calendar;
+					return;
+				}
+			});
+
+			// if this calendar doesnt exist yet, just add it
+			calendars.push(calendar);
+
+			// notify controllers using this factory, that the storage has been updated
+			$rootScope.$emit('storage-has-changed');
+		},
+		setCalendars: function (cals) {
+			calendars = cals;
+		},
+		getCalendars: function () {
+			return calendars;
+		}
+	};
+})
+
+.factory('socket', function ($rootScope, storage) {
 
 	var socket = io.connect("http://localhost:8080");
+
+	socket.on('clock - calendar update', function (calendar) {
+		// iterate over all events in the calendar to convert them into javascript Dates
+		calendar.events.forEach(function (event) {
+			event.start = new Date(event.start);
+			event.end = new Date(event.end);
+		});
+		// once that is done, save the updated calendar to the storage
+		storage.updateCalendar(calendar);
+	});
 
 	return {
 		on: function (eventName, callback) {

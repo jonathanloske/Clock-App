@@ -1,55 +1,55 @@
 angular.module('app.controllers')
 
-.controller('TimeToLeaveController', function($scope, socket) {
+.controller('TimeToLeaveController', function ($scope, storage) {
+	// get the users' calendars from the storage and listen to updates
+	$scope.calendars = storage.getCalendars();
 
-    // Jonas socket comm code START
-    socket.on('calendar', function (data) {
-        console.log(data);
-        // socket.emit('calendar_ack', { my: 'data' });
-    });
-    // Jonas socket comm code END
+	storage.subscribe($scope, function onStorageUpdated() {
+		$scope.calendars = storage.getCalendars();
+		$scope.$apply();
+	});
 
-    $scope.parents = [
-        {
-            transit: [
-                {
-                    type: 'car',
-                    minutesLeft: 30
+	$scope.parents = [
+		{
+			transit: [
+				{
+					type: 'car',
+					minutesLeft: 30
                 },
-                {
-                    type: 'walk',
-                    minutesLeft: 10
+				{
+					type: 'walk',
+					minutesLeft: 10
                 }
             ],
-            picture: 'img/father.jpg'
+			picture: 'img/father.jpg'
         },
-        {
-            transit: [
-                {
-                    type: 'bus',
-                    minutesLeft: 20
+		{
+			transit: [
+				{
+					type: 'bus',
+					minutesLeft: 20
                 },
-                {
-                    type: 'walk',
-                    minutesLeft: 10
+				{
+					type: 'walk',
+					minutesLeft: 10
                 }
             ],
-            picture: 'img/mother.png'
+			picture: 'img/mother.png'
         }
     ];
-    $scope.children = [
-        {
-            transit: [
-                {
-                    type: 'walk',
-                    minutesLeft: 40
+	$scope.children = [
+		{
+			transit: [
+				{
+					type: 'walk',
+					minutesLeft: 40
                 },
-                {
-                    type: 'bicycle',
-                    minutesLeft: 50
+				{
+					type: 'bicycle',
+					minutesLeft: 50
                 }
             ],
-            picture: 'img/child1.jpg'
+			picture: 'img/child1.jpg'
         }
     ];
 });

@@ -1,15 +1,21 @@
 angular.module('app.controllers')
 
-.controller('TimelineController', function ($scope, socket) {
-	$scope.calendars = [];
+.controller('TimelineController', function ($scope, storage) {
+	// get the users' calendars from the storage and listen to updates
+	$scope.calendars = storage.getCalendars();
 
-    // Fill up the time line with the hours between 7am and midnight.
-    $scope.timerange = [];
-    for(var i = 7; i < 24; i++){
-        $scope.timerange.push(i > 12? i % 12: i);
-    }
+	storage.subscribe($scope, function onStorageUpdated() {
+		$scope.calendars = storage.getCalendars();
+		$scope.$apply();
+	});
 
-    $scope.pictures = [
+	// Fill up the time line with the hours between 7am and midnight.
+	$scope.timerange = [];
+	for (var i = 7; i < 24; i++) {
+		$scope.timerange.push(i > 12 ? i % 12 : i);
+	}
+
+	$scope.pictures = [
         'img/father.jpg',
         'img/mother.png',
         'img/child1.jpg',
@@ -17,42 +23,8 @@ angular.module('app.controllers')
         'img/placeholder.jpg'
     ];
 
-    $scope.currentHour = (new Date()).getHours();
-    $scope.currentMinutes = (new Date()).getMinutes();
-
-	// request the calendars for today from all logged in users from the server
-	navigator.geolocation.getCurrentPosition(function (position) {
-			socket.emit('request calendars', {
-				day: new Date(),
-				lat: position.coords.latitude,
-				long: position.coords.longitude
-			});
-		},
-		function () {
-			console.log("Couldnt get geolocation");
-		}, {
-			enableHighAccuracy: true
-		});
-
-	// receive the requested calendars (they are sent back one by one)
-	socket.on('receive calendar', function (calendar) {
-		var index = $scope.calendars.push(calendar) - 1;
-
-		// cast event times to Date-objects
-		$scope.calendars[index].events.forEach(function (event) {
-			event.start = new Date(event.start);
-			event.end = new Date(event.end);
-			console.log(event);
-		});
-		/*calendar.events.forEach(function (event) {
-			var calendarEvent = {
-				start: new Date(event.start),
-				end: new Date(event.end),
-				title: event.title
-			};
-			$scope.calendars[index].push(calendarEvent);
-		});*/
-	});
+	$scope.currentHour = (new Date()).getHours();
+	$scope.currentMinutes = (new Date()).getMinutes();
 
 	/*$scope.calendars = [
 	    [
