@@ -7,7 +7,8 @@
                         <img ng-src="{{parent.picture}}"/>
                         <h2>
                             <i ng-class="['icon', 'ion-android-' + '{{parent.transit[0].type}}']"></i>
-                            Leave in {{parent.transit[0].minutesLeft}} minutes</h2>
+                            Leave in {{parent.transit[0].minutesLeft}} minutes for {{parent.nextEvent}}
+                        </h2>
                         <p>
                             <i ng-class="['icon', 'ion-android-' + '{{parent.transit[1].type}}']"></i>
                             Leave in {{parent.transit[1].minutesLeft}} minutes
@@ -23,7 +24,7 @@
                         <img ng-src="{{child.picture}}"/>
                         <h2>
                             <i ng-class="['icon', 'ion-android-' + '{{child.transit[0].type}}']"></i>
-                             Leave in {{child.transit[0].minutesLeft}} minutes
+                             Leave in {{child.transit[0].minutesLeft}} minutesfor {{child.nextEvent}}
                         </h2>
                         <p>
                             <i ng-class="['icon', 'ion-android-' + '{{child.transit[1].type}}']"></i>
