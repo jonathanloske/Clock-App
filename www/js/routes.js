@@ -18,8 +18,14 @@ angular.module('app.routes', [])
     url: '/timeline',
     templateUrl: 'components/timeline/timeline.html',
     controller: 'TimelineController'
+  })
+
+  .state('carStatus', {
+    url: '/carstatus',
+    templateUrl: 'components/carstatus/carstatus.html',
+    controller: 'CarStatusController'
   });
 
-  $urlRouterProvider.otherwise('/timeline');
+  $urlRouterProvider.otherwise('/timetoleave');
 
 });

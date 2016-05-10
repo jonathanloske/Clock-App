@@ -24,15 +24,20 @@ angular.module('starter', ['ionic', 'app.controllers', 'app.routes'])
 
 	$rootScope.keyPress = function (event) {
 		if (event.keyCode === 65) {
+			if ($state.current.name === 'timeline' && $ionicScrollDelegate.getScrollPosition().left === 0) {
+				$state.go('timeToLeaveOverview');
+			} else if($state.current.name === 'timeToLeaveOverview'){
+				$state.go('carStatus');
+			}
 			$ionicScrollDelegate.scrollBy(-50, 0, true);
 		} else if (event.keyCode === 68) {
-			$ionicScrollDelegate.scrollBy(50, 0, true);
-		} else if (event.keyCode == 32) {
-			if ($state.current.name == 'timeline') {
-				$state.go('timeToLeaveOverview');
-			} else {
+			if ($state.current.name === 'timeToLeaveOverview') {
 				$state.go('timeline');
+			} else if($state.current.name === 'carStatus'){
+				$state.go('timeToLeaveOverview');
 			}
+			$ionicScrollDelegate.scrollBy(50, 0, true);
+		} else if (event.keyCode === 32) {
 		}
 	};
 
