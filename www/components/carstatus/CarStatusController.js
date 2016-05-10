@@ -7,6 +7,6 @@ angular.module('app.controllers')
         storage.subscribe($scope, function onStorageUpdated() {
             $scope.carSimulatorData = storage.getCarSimulatorData();
             $scope.$apply();
-            console.log("carSimulatorData: " + $scope.carSimulatorData);
+            console.log("carSimulatorData: " + JSON.stringify($scope.carSimulatorData));
         });
     });

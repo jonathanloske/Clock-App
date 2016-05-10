@@ -93,7 +93,9 @@ angular.module('starter', ['ionic', 'app.controllers', 'app.routes'])
 
 	.factory('socket', function ($rootScope, storage) {
 
-		var socket = io.connect("http://localhost:8080");
+		var socket = io.connect("http://localhost:8080", {
+			query: 'id=clock'
+		});
 
 		socket.on('clock - calendar update', function (calendar) {
 			// iterate over all events in the calendar to convert them into javascript Dates
@@ -107,7 +109,6 @@ angular.module('starter', ['ionic', 'app.controllers', 'app.routes'])
 
 		socket.on('[Car Simulator Data] - Battery Update', function (data) {
 			storage.updateCarSimulatorData('battery_level', data);
-			console.log('foo')
 		});
 
 		return {
