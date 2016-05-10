@@ -56,6 +56,10 @@ a.item {
     box-shadow: 0 0 6px 0px black;
 }
 
+.timeline-pictures img.selected{
+    box-shadow: 0 0 10px 6px #387ef5;
+}
+
 .timeline-hours{
     color: white;
     padding-top: 0px;
@@ -121,6 +125,10 @@ a.item {
     top: 35px;
     margin-left: calc(30vh + 1px);
     width: 100%;
+}
+
+.timeline-cell.selected{
+    box-shadow: 0 0 10px 6px #387ef5;
 }
 
 .timelines .timeline:nth-of-type(1) .filled{

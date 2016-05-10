@@ -6,7 +6,7 @@
         <div class="timeline-pictures">
             <div class="row timeline" ng-repeat="calendar in calendars track by $index">
                 <div ng-class="['col', 'timelines' + calendars.length]">
-                    <img ng-src="{{pictures[$index]}}"/>
+                    <img ng-src="{{calendar.picture}}" ng-class="editMode && selectedUserIndex === $index? 'selected' : ''"/>
                 </div>
             </div>
         </div>
@@ -23,8 +23,7 @@
             <!-- Subtract {{currentHour - 7}} * 2.5 to make up for minor misplacement of markers -->
             <div class="timeline-current-marker"
                  ng-style="{'left':
-                    'calc(' + (((currentHour - 7) * 60 + currentMinutes) / 60 * 25) + '%'
-                    + ' - ' + (currentHour - 7) * 2.5 + 'px)'}">
+                    ((currentHour - 7) * pixelWidthOfOneHour + currentMinutes / 60 * pixelWidthOfOneHour) + 'px'}">
             </div>
             <div class="timelines">
                 <div class="row timeline timeline-marker" ng-repeat="calendar in calendars">
@@ -41,7 +40,11 @@
                             classes for every percentage and even then the percentage still would have
                             to be calculcated.-->
                     <div
-                        ng-class="['col', 'timeline-cell', 'filled', 'timelines' + calendars.length]"
+                        ng-class="['col', 'timeline-cell', 'filled',
+                            'timelines' + calendars.length,
+                            editCalendarMode && calendars[selectedUserIndex] === calendar &&selectedCalendarIndex === $index?
+                                'selected' : ''
+                        ]"
                         ng-repeat="event in calendar.events track by $index"
                         ng-style="{
                             'margin-left': ($index === 0?

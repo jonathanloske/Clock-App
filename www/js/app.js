@@ -24,20 +24,19 @@ angular.module('starter', ['ionic', 'app.controllers', 'app.routes'])
 
 	$rootScope.keyPress = function (event) {
 		if (event.keyCode === 65) {
-			if ($state.current.name === 'timeline' && $ionicScrollDelegate.getScrollPosition().left === 0) {
-				$state.go('timeToLeaveOverview');
-			} else if($state.current.name === 'timeToLeaveOverview'){
+			if ($state.current.name === 'timeToLeaveOverview'){
 				$state.go('carStatus');
 			}
-			$ionicScrollDelegate.scrollBy(-50, 0, true);
+			$rootScope.handleCounterClockwise();
 		} else if (event.keyCode === 68) {
 			if ($state.current.name === 'timeToLeaveOverview') {
 				$state.go('timeline');
 			} else if($state.current.name === 'carStatus'){
 				$state.go('timeToLeaveOverview');
 			}
-			$ionicScrollDelegate.scrollBy(50, 0, true);
+			$rootScope.handleClockwise();
 		} else if (event.keyCode === 32) {
+			$rootScope.toggleEditMode();
 		}
 	};
 
@@ -83,7 +82,7 @@ angular.module('starter', ['ionic', 'app.controllers', 'app.routes'])
 
 .factory('socket', function ($rootScope, storage) {
 
-	var socket = io.connect("http://localhost:8080");
+	var socket = io.connect("http://mtin.de:8080");
 
 	socket.on('clock - calendar update', function (calendar) {
 		// iterate over all events in the calendar to convert them into javascript Dates
