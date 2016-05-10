@@ -83,38 +83,40 @@ angular.module('starter', ['ionic', 'app.controllers', 'app.routes'])
 
 .factory('socket', function ($rootScope, storage) {
 
-	var socket = io.connect("http://localhost:8080");
+	var socket = io.connect("http://localhost:8080", {
+		query: 'id=clock'
+	}););
 
-	socket.on('clock - calendar update', function (calendar) {
-		// iterate over all events in the calendar to convert them into javascript Dates
-		calendar.events.forEach(function (event) {
-			event.start = new Date(event.start);
-			event.end = new Date(event.end);
-		});
-		// once that is done, save the updated calendar to the storage
-		storage.updateCalendar(calendar);
+socket.on('clock - calendar update', function (calendar) {
+	// iterate over all events in the calendar to convert them into javascript Dates
+	calendar.events.forEach(function (event) {
+		event.start = new Date(event.start);
+		event.end = new Date(event.end);
 	});
+	// once that is done, save the updated calendar to the storage
+	storage.updateCalendar(calendar);
+});
 
-	return {
-		on: function (eventName, callback) {
-			socket.on(eventName, function () {
-				var args = arguments;
-				$rootScope.$apply(function () {
-					callback.apply(socket, args);
-				});
+return {
+	on: function (eventName, callback) {
+		socket.on(eventName, function () {
+			var args = arguments;
+			$rootScope.$apply(function () {
+				callback.apply(socket, args);
 			});
-		},
-		emit: function (eventName, data, callback) {
-			socket.emit(eventName, data, function () {
-				var args = arguments;
-				$rootScope.$apply(function () {
-					if (callback) {
-						callback.apply(socket, args);
-					}
-				});
-			})
-		}
-	};
+		});
+	},
+	emit: function (eventName, data, callback) {
+		socket.emit(eventName, data, function () {
+			var args = arguments;
+			$rootScope.$apply(function () {
+				if (callback) {
+					callback.apply(socket, args);
+				}
+			});
+		})
+	}
+};
 });
 
 angular.module('app.controllers', []);
