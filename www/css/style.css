@@ -15,7 +15,7 @@ a.item {
 
 .timeline-time {
     position: absolute;
-    font-size: 14vh;
+    font-size: 12vh;
     color: black;
     top: 1vh;
     left: -1vw;
@@ -85,6 +85,11 @@ a.item {
     border-left: 1px solid black;
     border-right: 1px solid black;
     border-radius: 6px;
+}
+
+.timeline .timelines1 {
+    height: calc(100vh - 50px);
+    line-height: calc(200vh - 130px);
 }
 
 .timeline .timelines2 {

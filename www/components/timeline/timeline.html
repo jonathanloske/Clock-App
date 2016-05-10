@@ -1,7 +1,7 @@
 <ion-view title="Timeline">
     <ion-content class="timeline-page" scroll="false">
         <div class="timeline-time">
-            8:10
+            {{currentHour}}:{{currentMinutes}}
         </div>
         <div class="timeline-pictures">
             <div class="row timeline" ng-repeat="calendar in calendars track by $index">
