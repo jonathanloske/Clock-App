@@ -55,6 +55,21 @@
                                 (((event.end.getHours() * 60 + event.end.getMinutes()) -
                                 (event.start.getHours() * 60 + event.start.getMinutes())) / 60 * 25) + '%'
                         }">
+                        <div
+                            class="transit-option"
+                            ng-style="{
+                                'left': 'calc(' + ((event.start.getHours() - 7) * pixelWidthOfOneHour + event.start.getMinutes() / 60 * pixelWidthOfOneHour) + 'px - 12.5%)'
+                            }">
+                            {{transitOptions[$index]}}
+                        </div>
+                        <div
+                            ng-if="$scope.editTransitOption"
+                            class="transit-options"
+                            ng-style="{
+                                'left': 'calc(' + ((event.start.getHours() - 7) * pixelWidthOfOneHour + event.start.getMinutes() / 60 * pixelWidthOfOneHour) + 'px - 12.5%)'
+                            }">
+                            {{transitOptions[$index]}}
+                        </div>
                         {{event.title}}
                     </div>
                 </div>

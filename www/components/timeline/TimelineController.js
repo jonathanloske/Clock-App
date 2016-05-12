@@ -7,6 +7,13 @@ angular.module('app.controllers')
 	storage.subscribe($scope, function onStorageUpdated() {
 		$scope.calendars = storage.getCalendars();
 		$scope.scrollToTime(new Date());
+		for(var i = 0; i < $scope.calendars.length; i++){
+			for( var j = 0; j < $scope.calendars[i].events.length; j++ ){
+				if($scope.calendars[i].events[j].start.getDay() !== new Date().getDay()){
+					$scope.calendars[i].events.splice(j);
+				}
+			}
+		}
 		$scope.$apply();
 	});
 
