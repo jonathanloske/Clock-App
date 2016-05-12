@@ -4,6 +4,10 @@ angular.module('app.controllers')
 	// get the users' calendars from the storage and listen to updates
 	$scope.calendars = storage.getCalendars();
 
+	$scope.goTo = function(){
+		$state.go('timeToLeaveOverview');
+	};
+
 	storage.subscribe($scope, function onStorageUpdated() {
 		$scope.calendars = storage.getCalendars();
 		$scope.scrollToTime(new Date());
@@ -102,6 +106,7 @@ angular.module('app.controllers')
 				}
 			} else {
 				if ($ionicScrollDelegate.getScrollPosition().left === 0) {
+					$state.go('timeToLeaveOverview');
 				} else {
 					$ionicScrollDelegate.scrollBy(-1 * $window.innerWidth / 4 - 2.5, 0, true);
 				}

@@ -3,7 +3,7 @@
         <div class="timeline-time">
             {{currentHour}}:{{currentMinutes}}
         </div>
-        <div class="timeline-pictures">
+        <div class="timeline-pictures" ng-click="goTo()">
             <div class="row timeline" ng-repeat="calendar in calendars track by $index">
                 <div ng-class="['col', 'timelines' + calendars.length]">
                     <img ng-src="{{calendar.picture}}" ng-class="editMode && selectedUserIndex === $index? 'selected' : ''"/>
