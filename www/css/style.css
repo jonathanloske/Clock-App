@@ -9,17 +9,54 @@ a.item {
     height: calc(50vh - 16px);
 }
 
-.timeline-page {
+.timeline-page, .timetoleave-page{
     background-color: black;
 }
 
 .timeline-time {
     position: absolute;
-    font-size: 12vh;
+    font-size: 90px;
     color: black;
-    top: 1vh;
+    top: 16px;
     left: -1vw;
     z-index: 2;
+}
+
+.transportation{
+    border-radius: 100%;
+    overflow: hidden;
+    background-size: cover;
+    box-shadow: inset 0px 0px 40vh grey;
+    margin: auto;
+}
+
+.transportation:before{
+    /*content: '';
+    background-size: 40vh;
+    position: absolute;
+    background-repeat: no-repeat;
+    width: 40vh;
+    height: 40vh;
+    margin: 8px;
+    left: 0;
+    top: 0;
+    border-radius: 100%;
+    filter: blur(4px);
+    opacity: 0.6;*/
+}
+
+.transportation.primary-transportation{
+    width: 40vh;
+    height: 40vh;
+    line-height: 40vh;
+    text-align: center;
+    color: white;
+    font-size: 50px;
+}
+
+.transportation.secondary-transportation{
+    width: 20vh;
+    height: 20vh;
 }
 
 .timeline-current-marker{
@@ -131,22 +168,53 @@ a.item {
     box-shadow: 0 0 10px 6px #387ef5;
 }
 
+.timeline-cell > .transit-option{
+    position: absolute;
+    width: 12.5%;
+    height: 25vh;
+    line-height: initial;
+    border-radius: 6px;
+    box-shadow: 0 0 10px 6px black;
+    overflow: hidden;
+    word-wrap: break-word;
+}
+
 .timelines .timeline:nth-of-type(1) .filled{
     background-color: #387ef5;
+}
+
+.timelines .timeline:nth-of-type(1) .filled > .transit-option{
+    background: repeating-linear-gradient(45deg, #387ef5, #387ef5 10px, #525252 10px, #525252 13px);
 }
 
 .timelines .timeline:nth-of-type(2) .filled{
     background-color: #33cd5f;
 }
 
+.timelines .timeline:nth-of-type(2) .filled > .transit-option{
+    background: repeating-linear-gradient(45deg, #33cd5f, #33cd5f 10px, #525252 10px, #525252 13px);
+}
+
 .timelines .timeline:nth-of-type(3) .filled{
     background-color: #886aea;
+}
+
+.timelines .timeline:nth-of-type(3) .filled > .transit-option{
+    background: repeating-linear-gradient(45deg, #886aea, #886aea 10px, #525252 10px, #525252 13px);
 }
 
 .timelines .timeline:nth-of-type(4) .filled{
     background-color: #ef473a;
 }
 
+.timelines .timeline:nth-of-type(4) .filled > .transit-option{
+    background: repeating-linear-gradient(45deg, #ef473a, #ef473a 10px, #525252 10px, #525252 13px);
+}
+
 .timelines .timeline:nth-of-type(5) .filled{
     background-color: #444;
+}
+
+.timelines .timeline:nth-of-type(5) .filled > .transit-option{
+    background: repeating-linear-gradient(45deg, #444, #444 10px, #525252 10px, #525252 13px);
 }

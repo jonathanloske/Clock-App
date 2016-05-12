@@ -1,37 +1,29 @@
 <ion-view title="Time to Leave">
-    <ion-content>
+    <ion-content class="timetoleave-page">
         <div class="row">
-            <div class="col" ng-repeat="parent in parents">
-                <div class="list">
-                    <a class="item item-thumbnail-left" href="#">
-                        <img ng-src="{{parent.picture}}"/>
-                        <h2>
-                            <i ng-class="['icon', 'ion-android-' + '{{parent.transit[0].type}}']"></i>
-                            Leave in {{parent.transit[0].minutesLeft}} minutes for {{parent.nextEvent}}
-                        </h2>
-                        <p>
-                            <i ng-class="['icon', 'ion-android-' + '{{parent.transit[1].type}}']"></i>
-                            Leave in {{parent.transit[1].minutesLeft}} minutes
-                        </p>
-                    </a>
+            <div class="col" ng-repeat="parent in parents track by $index" ng-click="goToIndex($index)">
+                <div class="transportation primary-transportation" ng-style="{'background-image': 'url({{parent.picture}})'}">
+                    <i ng-class="['icon', 'ion-android-' + '{{parent.transit[0].type}}']"></i>
+                    {{parent.transit[0].minutesLeft}} mins
                 </div>
+                <!--<div class="transportation secondary-transportation">
+                    <i ng-class="['icon', 'ion-android-' + '{{parent.transit[1].type}}']"></i>
+                    <br/>
+                    {{parent.transit[1].minutesLeft}} mins
+                </div>-->
             </div>
         </div>
         <div class="row">
             <div class="col" ng-repeat="child in children">
-                <div class="list">
-                    <a class="item item-thumbnail-left" href="#">
-                        <img ng-src="{{child.picture}}"/>
-                        <h2>
-                            <i ng-class="['icon', 'ion-android-' + '{{child.transit[0].type}}']"></i>
-                             Leave in {{child.transit[0].minutesLeft}} minutesfor {{child.nextEvent}}
-                        </h2>
-                        <p>
-                            <i ng-class="['icon', 'ion-android-' + '{{child.transit[1].type}}']"></i>
-                             Leave in {{child.transit[1].minutesLeft}} minutes
-                        </p>
-                    </a>
+                <div class="transportation primary-transportation" ng-style="{'background-image': 'url({{child.picture}})'}">
+                    <i ng-class="['icon', 'ion-android-' + '{{child.transit[0].type}}']"></i>
+                    {{child.transit[0].minutesLeft}} mins
                 </div>
+                <!--<div class="transportation secondary-transportation">
+                    <i ng-class="['icon', 'ion-android-' + '{{child.transit[1].type}}']"></i>
+                    <br/>
+                    {{child.transit[1].minutesLeft}} mins
+                </div>-->
             </div>
         </div>
     </ion-content>
