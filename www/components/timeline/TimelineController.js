@@ -106,6 +106,7 @@ angular.module('app.controllers')
 				}
 			} else {
 				if ($ionicScrollDelegate.getScrollPosition().left === 0) {
+					$state.go('timeToLeaveOverview');
 				} else {
 					$ionicScrollDelegate.scrollBy(-1 * $window.innerWidth / 4 - 2.5, 0, true);
 				}
