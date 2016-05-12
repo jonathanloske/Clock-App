@@ -1,6 +1,6 @@
 angular.module('app.controllers')
 
-.controller('TimeToLeaveController', function ($scope, storage) {
+.controller('TimeToLeaveController', function ($rootScope, $scope, $state, storage) {
 	// get the users' calendars from the storage and listen to updates
 	$scope.calendars = storage.getCalendars();
     retrieveLeaveData();
@@ -11,20 +11,28 @@ angular.module('app.controllers')
 		$scope.$apply();
         console.log($scope.calendars);
 	});
-    
+
+    $scope.goToIndex = function(index){
+        if (index === 0 ){
+            $state.go('carStatus');
+        } else {
+            $state.go('timeline');
+        }
+    }
+
     function retrieveLeaveData() {
         $scope.parents = [];
-        
+
         for (var i = 0; i < $scope.calendars.length; i++) {
             var calendar = $scope.calendars[i];
-            
+
             // set the user data
             var parent = {
-                picture : calendar.picture, 
+                picture : calendar.picture,
                 nextEvent : "",
                 transit : []
             };
-            
+
             // find the next event for the user
             var nextEvent = {
                 msecsUntilStart : -1,
@@ -39,7 +47,7 @@ angular.module('app.controllers')
                     nextEvent.event = event;
                 }
             });
-            
+
             // retrieve transit information for the next event
             if (nextEvent.event != null) {
                 parent.nextEvent = nextEvent.event.title;
@@ -49,11 +57,11 @@ angular.module('app.controllers')
 
                     var timeToLeaveSecondBest = new Date(nextEvent.event.start.getTime() + nextEvent.event.optimized_transit.alternative.duration *60000);
                     parent.transit = [
-                      { 
+                      {
                           type : nextEvent.event.optimized_transit.best.name,
                           minutesLeft : Math.round((timeToLeaveBest - now)/1000/60)
                       },
-                        { 
+                        {
                           type : nextEvent.event.optimized_transit.alternative.name,
                           minutesLeft : Math.round((timeToLeaveSecondBest - now)/1000/60)
                       }
@@ -63,7 +71,7 @@ angular.module('app.controllers')
             } else {
                 parent.nextEvent = '- No more events today -';
             }
-            
+
             $scope.parents.push(parent);
         };
     };
@@ -112,4 +120,14 @@ angular.module('app.controllers')
 			picture: 'img/child1.jpg'
         }
     ];
+
+    $scope.$on("$ionicView.enter", function(event, data){
+        $rootScope.handleCounterClockwise = function(){
+            $state.go('carStatus');
+        };
+
+        $rootScope.handleClockwise = function(){
+            $state.go('timeline');
+        };
+    });
 });

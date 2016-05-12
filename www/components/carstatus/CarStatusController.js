@@ -1,6 +1,6 @@
 angular.module('app.controllers')
 
-    .controller('CarStatusController', function ($scope, storage) {
+    .controller('CarStatusController', function ($scope, $state, $rootScope, storage) {
         // get the users' carSimulatorData from the storage and listen to updates
         $scope.carSimulatorData = storage.getCarSimulatorData();
 
@@ -8,5 +8,14 @@ angular.module('app.controllers')
             $scope.carSimulatorData = storage.getCarSimulatorData();
             $scope.$apply();
             console.log("carSimulatorData: " + JSON.stringify($scope.carSimulatorData));
+        });
+
+        $scope.$on("$ionicView.enter", function(event, data){
+            $rootScope.handleCounterClockwise = function(){
+            };
+
+            $rootScope.handleClockwise = function(){
+                $state.go('timeToLeaveOverview');
+            }
         });
     });

@@ -23,18 +23,13 @@ angular.module('starter', ['ionic', 'app.controllers', 'app.routes'])
 	});
 
 	$rootScope.keyPress = function (event) {
+		// If user presses 'a' or turns the knob counterclockwise
 		if (event.keyCode === 65) {
-			if ($state.current.name === 'timeToLeaveOverview') {
-				$state.go('carStatus');
-			}
 			$rootScope.handleCounterClockwise();
+		// If user presses 'd' or turns the knob clockwise
 		} else if (event.keyCode === 68) {
-			if ($state.current.name === 'timeToLeaveOverview') {
-				$state.go('timeline');
-			} else if ($state.current.name === 'carStatus') {
-				$state.go('timeToLeaveOverview');
-			}
 			$rootScope.handleClockwise();
+		// If user presses the Space bar or presses the knob
 		} else if (event.keyCode === 32) {
 			$rootScope.toggleEditMode();
 		}
