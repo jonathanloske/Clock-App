@@ -1,0 +1,72 @@
+.radial-progress {
+	@circle-size: 44vh;
+	@circle-background: #525252;
+	@circle-color: #97a71d;
+	@inset-size: 40vh;
+	@inset-color: white;
+	@transition-length: 1s;
+	@shadow: 6px 6px 10px white;
+	@percentage-color: #97a71d;
+	@percentage-font-size: 22px;
+	@percentage-text-width: 57px;
+
+	margin: 3vh auto;
+	width:  @circle-size;
+	height: @circle-size;
+
+	background-color: @circle-background;
+	border-radius: 50%;
+	.circle {
+		.mask, .fill {
+			width:    @circle-size;
+			height:   @circle-size;
+			position: absolute;
+			border-radius: 50%;
+		}
+		.mask, .fill {
+			-webkit-backface-visibility: hidden;
+			border-radius: 50%;
+		}
+		.mask {
+			clip: rect(0px, @circle-size, @circle-size, @circle-size/2);
+			.fill {
+				clip: rect(0px, @circle-size/2, @circle-size, 0px);
+				// background-color: @circle-color;
+			}
+		}
+	}
+	.inset {
+		width:       @inset-size;
+		height:      @inset-size;
+		position:    absolute;
+		margin-left: (@circle-size - @inset-size)/2;
+		margin-top:  (@circle-size - @inset-size)/2;
+
+		background-color: @inset-color;
+		border-radius: 50%;
+	}
+
+	@i: 0;
+	@increment: 180deg / 100;
+	.loop (@i) when (@i <= 100) {
+		&[data-progress="@{i}"] {
+			.circle {
+				.mask.full, .fill {
+					-webkit-transform: rotate(@increment * @i);
+					-ms-transform: rotate(@increment * @i);
+					transform: rotate(@increment * @i);
+				}
+				.fill.fix {
+					-webkit-transform: rotate(@increment * @i * 2);
+					-ms-transform: rotate(@increment * @i * 2);
+					transform: rotate(@increment * @i * 2);
+				}
+			}
+			.inset .percentage .numbers {
+				width: @i * @percentage-text-width + @percentage-text-width;
+			}
+		}
+		.loop(@i + 1);
+	}
+	.loop(@i);
+}

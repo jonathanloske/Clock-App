@@ -4,6 +4,7 @@ angular.module('app.controllers')
 	// get the users' calendars from the storage and listen to updates
 	$scope.calendars = storage.getCalendars();
     retrieveLeaveData();
+    $scope.floor = Math.floor;
 
 	storage.subscribe($scope, function onStorageUpdated() {
 		$scope.calendars = storage.getCalendars();
@@ -21,7 +22,7 @@ angular.module('app.controllers')
     }
 
     function retrieveLeaveData() {
-        $scope.parents = [];
+        $scope.familyMembers = [];
 
         for (var i = 0; i < $scope.calendars.length; i++) {
             var calendar = $scope.calendars[i];
@@ -59,24 +60,26 @@ angular.module('app.controllers')
                     parent.transit = [
                       {
                           type : nextEvent.event.optimized_transit.best.name,
-                          minutesLeft : Math.round((timeToLeaveBest - now)/1000/60)
+                          hoursLeft: Math.floor(Math.round((timeToLeaveBest - now) / 1000 / 60 / 60)),
+                          minutesLeft : Math.round((timeToLeaveBest - now) / 1000 / 60)
                       },
                         {
                           type : nextEvent.event.optimized_transit.alternative.name,
-                          minutesLeft : Math.round((timeToLeaveSecondBest - now)/1000/60)
+                          hoursLeft: Math.floor(Math.round((timeToLeaveBest - now) / 1000 / 60 / 60)),
+                          minutesLeft : Math.round((timeToLeaveSecondBest - now) / 1000 / 60)
                       }
 
                     ];
-                } 
+                }
             } else {
                 parent.nextEvent = '- No more events today -';
             }
 
-            $scope.parents.push(parent);
+            $scope.familyMembers.push(parent);
         };
     };
 
-	/*$scope.parents = [
+	/*$scope.familyMembers = [
 		{
 			transit: [
 				{
@@ -109,7 +112,7 @@ angular.module('app.controllers')
 			transit: [
 				{
 					type: 'walk',
-					minutesLeft: 40
+					minutesLeft: 20
                 },
 				{
 					type: 'bicycle',

@@ -9,6 +9,10 @@ a.item {
     height: calc(50vh - 16px);
 }
 
+.row, .col{
+    padding: 0;
+}
+
 .timeline-page, .timetoleave-page{
     background-color: black;
 }
@@ -27,34 +31,23 @@ a.item {
     overflow: hidden;
     background-size: cover;
     box-shadow: inset 0px 0px 40vh grey;
-    margin: auto;
 }
 
-.transportation:before{
-    /*content: '';
-    background-size: 40vh;
-    position: absolute;
-    background-repeat: no-repeat;
-    width: 40vh;
-    height: 40vh;
-    margin: 8px;
-    left: 0;
-    top: 0;
-    border-radius: 100%;
-    filter: blur(4px);
-    opacity: 0.6;*/
+.transportation i{
+    line-height: 25vh;
+    font-size: 20vh;
+    vertical-align: bottom;
 }
 
-.transportation.primary-transportation{
+.transportation .primary-transportation{
     width: 40vh;
     height: 40vh;
-    line-height: 40vh;
     text-align: center;
     color: white;
     font-size: 50px;
 }
 
-.transportation.secondary-transportation{
+.transportation .secondary-transportation{
     width: 20vh;
     height: 20vh;
 }
@@ -217,4 +210,24 @@ a.item {
 
 .timelines .timeline:nth-of-type(5) .filled > .transit-option{
     background: repeating-linear-gradient(45deg, #444, #444 10px, #525252 10px, #525252 13px);
+}
+
+.row:nth-of-type(1) .col:nth-of-type(1) .radial-progress .fill{
+    background-color: #387ef5;
+}
+
+.row:nth-of-type(1) .col:nth-of-type(2) .radial-progress .fill{
+    background-color: #33cd5f;
+}
+
+.row:nth-of-type(2) .col:nth-of-type(1) .radial-progress .fill{
+    background-color: #886aea;
+}
+
+.row:nth-of-type(2) .col:nth-of-type(2) .radial-progress .fill{
+    background-color: #ef473a;
+}
+
+.row:nth-of-type(2) .col:nth-of-type(3) .radial-progress .fill{
+    background-color: #444;
 }
