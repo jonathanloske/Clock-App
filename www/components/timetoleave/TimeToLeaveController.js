@@ -13,6 +13,11 @@ angular.module('app.controllers')
         console.log($scope.calendars);
 	});
 
+    $scope.weather = {
+        condition: 'partlysunny',
+        temperature: 23
+    }
+
     $scope.goToIndex = function(index){
         if (index === 0 ){
             $state.go('carStatus');

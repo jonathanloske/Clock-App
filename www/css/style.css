@@ -243,3 +243,23 @@ a.item {
 .row:nth-of-type(2) .col:nth-of-type(3) .radial-progress .fill{
     background-color: #444;
 }
+
+.weather{
+    color: white;
+    position: absolute;
+    left: 45vw;
+    top: calc(40vh - 60px);
+    width: 10vw;
+    height: 10vh;
+    text-align: center;
+}
+
+.weather p{
+    position: relative;
+    top: -10px;
+    font-size: 40px;
+}
+
+.weather i{
+    font-size: 100px;
+}

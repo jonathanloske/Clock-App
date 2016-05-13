@@ -1,7 +1,7 @@
 <ion-view title="Time to Leave">
     <ion-content class="timetoleave-page" scroll="false">
         <div class="row family-member">
-            <div class="col" ng-repeat="familyMember in familyMembers.slice(0,2) track by $index" ng-click="goToIndex($index)">
+            <div class="col" ng-repeat="familyMember in familyMembers track by $index" ng-click="goToIndex($index)">
                 <leave-time-indicator transit="familyMember.transit[0]" picture="familyMember.picture"></leave-time-indicator>
                 <leave-time-indicator ng-if="familyMember.transit[0].minutesLeft < 30" transit="familyMember.transit[1]" small="true"></leave-time-indicator>
             </div>
@@ -11,6 +11,10 @@
                 <leave-time-indicator transit="child.transit[0]" picture="child.picture"></leave-time-indicator>
                 <leave-time-indicator ng-if="child.transit[0].minutesLeft < 30" transit="child.transit[1]" small="true"></leave-time-indicator>
             </div>
+        </div>
+        <div class="weather">
+            <i ng-class="['icon', 'ion-ios-' + weather.condition]"></i>
+            <p>{{weather.temperature}}°C</p>
         </div>
     </ion-content>
 </ion-view>
