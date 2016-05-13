@@ -17,6 +17,10 @@ a.item {
     background-color: black;
 }
 
+.timetoleave-page .col{
+    text-align: center;
+}
+
 .timeline-time {
     position: absolute;
     font-size: 90px;
@@ -30,28 +34,34 @@ a.item {
     border-radius: 100%;
     overflow: hidden;
     background-size: cover;
+    color: white;
 }
 .transportation-with-shadow{
     box-shadow: inset 0px 0px 40vh grey;
 }
 
-.transportation i{
+.radial-progress .transportation i{
     line-height: 25vh;
     font-size: 20vh;
     vertical-align: bottom;
+}
+
+.radial-progress.small .transportation i{
+    line-height: 10vh;
+    font-size: 7vh;
 }
 
 .transportation .primary-transportation{
     width: 40vh;
     height: 40vh;
     text-align: center;
-    color: white;
     font-size: 50px;
 }
 
 .transportation .secondary-transportation{
     width: 20vh;
     height: 20vh;
+    font-size: 4vh;
 }
 
 .timeline-current-marker{

@@ -7,12 +7,11 @@
 	@transition-length: 1s;
 	@shadow: 6px 6px 10px white;
 	@percentage-color: #97a71d;
-	@percentage-font-size: 22px;
-	@percentage-text-width: 57px;
 
-	margin: 3vh auto;
+	margin: 3vh 0;
 	width:  @circle-size;
 	height: @circle-size;
+	display: inline-block;
 
 	background-color: @circle-background;
 	border-radius: 50%;
@@ -62,11 +61,38 @@
 					transform: rotate(@increment * @i * 2);
 				}
 			}
-			.inset .percentage .numbers {
-				width: @i * @percentage-text-width + @percentage-text-width;
-			}
 		}
 		.loop(@i + 1);
 	}
 	.loop(@i);
+}
+
+.radial-progress.small{
+	@circle-size-small: 22vh;
+	@inset-size-small: 20vh;
+
+	width:  @circle-size-small;
+	height: @circle-size-small;
+
+	.circle {
+		.mask, .fill {
+			width:    @circle-size-small;
+			height:   @circle-size-small;
+		}
+
+		.mask {
+			clip: rect(0px, @circle-size-small, @circle-size-small, @circle-size-small/2);
+			.fill {
+				clip: rect(0px, @circle-size-small/2, @circle-size-small, 0px);
+				// background-color: @circle-color;
+			}
+		}
+	}
+
+	.inset {
+		width:       @inset-size-small;
+		height:      @inset-size-small;
+		margin-left: (@circle-size-small - @inset-size-small)/2;
+		margin-top:  (@circle-size-small - @inset-size-small)/2;
+	}
 }

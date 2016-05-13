@@ -3,11 +3,13 @@
         <div class="row family-member">
             <div class="col" ng-repeat="familyMember in familyMembers.slice(0,2) track by $index" ng-click="goToIndex($index)">
                 <leave-time-indicator transit="familyMember.transit[0]" picture="familyMember.picture"></leave-time-indicator>
+                <leave-time-indicator ng-if="familyMember.transit[0].minutesLeft < 30" transit="familyMember.transit[1]" small="true"></leave-time-indicator>
             </div>
         </div>
         <div class="row children">
             <div class="col" ng-repeat="child in children">
                 <leave-time-indicator transit="child.transit[0]" picture="child.picture"></leave-time-indicator>
+                <leave-time-indicator ng-if="child.transit[0].minutesLeft < 30" transit="child.transit[1]" small="true"></leave-time-indicator>
             </div>
         </div>
     </ion-content>

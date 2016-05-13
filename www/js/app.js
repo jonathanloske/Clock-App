@@ -137,7 +137,8 @@ angular.module('starter', ['ionic', 'app.controllers', 'app.routes'])
 	return {
 		scope: {
 			transit: '=',
-			picture: '='
+			picture: '=',
+			small: '='
 		},
 		templateUrl: 'components/timetoleave/leave-time-indicator.html',
 		link: function (scope, element, attrs) {
