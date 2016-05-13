@@ -43,7 +43,7 @@ angular.module('app.controllers')
 	$scope.selectedCalendarIndex = 0;
 	$scope.editMode = false;
 	$scope.editCalendarMode = false;
-	$scope.pixelWidthOfOneHour = $window.innerWidth / 4 - 2.5;
+	$scope.pixelWidthOfOneHour = $window.innerWidth / 4;
 
 	$scope.transitOptions = [
 		'car', 'walk', 'public transport', 'bike'
