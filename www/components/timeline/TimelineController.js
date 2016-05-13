@@ -120,7 +120,8 @@ angular.module('app.controllers')
 	};
 
 	$scope.calendars = [
-		{ events: [
+		{ 	picture: 'img/father.jpg',
+			events: [
 			{
 				start: new Date(2016, 05, 01, 07, 10),
 				end: new Date(2016, 05, 01, 07, 45),
@@ -147,7 +148,8 @@ angular.module('app.controllers')
 				title: 'Gym'
 			}
 		]},
-		{ events: [
+		{ 	picture: 'img/mother.png',
+			events: [
 			{
 				start: new Date(2016, 05, 01, 08, 0),
 				end: new Date(2016, 05, 01, 08, 30),
@@ -174,7 +176,8 @@ angular.module('app.controllers')
 				title: 'Gym'
 			}
 		]},
-		{events: [
+		{ 	picture: 'img/child1.jpg',
+			events: [
 			{
 				start: new Date(2016, 05, 01, 08, 0),
 				end: new Date(2016, 05, 01, 08, 30),
