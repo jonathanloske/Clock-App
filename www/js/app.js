@@ -139,7 +139,10 @@ angular.module('starter', ['ionic', 'app.controllers', 'app.routes'])
 			transit: '=',
 			picture: '='
 		},
-		templateUrl: 'components/timetoleave/leave-time-indicator.html'
+		templateUrl: 'components/timetoleave/leave-time-indicator.html',
+		link: function (scope, element, attrs) {
+			scope.floor = Math.floor;
+		}
 	};
 });
 
