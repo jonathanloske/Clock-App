@@ -30,6 +30,8 @@ a.item {
     border-radius: 100%;
     overflow: hidden;
     background-size: cover;
+}
+.transportation-with-shadow{
     box-shadow: inset 0px 0px 40vh grey;
 }
 

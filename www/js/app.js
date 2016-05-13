@@ -102,11 +102,11 @@ angular.module('starter', ['ionic', 'app.controllers', 'app.routes'])
 		// once that is done, save the updated calendar to the storage
 		storage.updateCalendar(calendar);
 	});
-	
+
 	socket.on('[Car Simulator Data] - Battery Update', function (data) {
 		storage.updateCarSimulatorData('battery_level', data);
 	});
-	
+
 	socket.on('[Car Simulator Data] - Oil Update', function (data) {
 		storage.updateCarSimulatorData('oil_level', data);
 	});
@@ -130,6 +130,16 @@ angular.module('starter', ['ionic', 'app.controllers', 'app.routes'])
 				});
 			})
 		}
+	};
+})
+
+.directive('leaveTimeIndicator', function() {
+	return {
+		scope: {
+			transit: '=',
+			picture: '='
+		},
+		templateUrl: 'components/timetoleave/leave-time-indicator.html'
 	};
 });
 

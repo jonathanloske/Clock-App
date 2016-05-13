@@ -2,58 +2,12 @@
     <ion-content class="timetoleave-page" scroll="false">
         <div class="row family-member">
             <div class="col" ng-repeat="familyMember in familyMembers.slice(0,2) track by $index" ng-click="goToIndex($index)">
-                <div class="radial-progress" data-progress="{{familyMember.transit[0].minutesLeft > 30? '100' : floor(familyMember.transit[0].minutesLeft * 10/3)}}">
-                    <div class="circle">
-                        <div class="mask full">
-                            <div class="fill"></div>
-                        </div>
-                        <div class="mask half">
-                            <div class="fill"></div>
-                            <div class="fill fix"></div>
-                        </div>
-                    </div>
-                    <div class="transportation inset" ng-style="{'background-image': 'url({{familyMember.picture}})'}">
-                        <div class="primary-transportation"
-                             ng-if="familyMember.transit[0].minutesLeft < 60">
-                            <i ng-class="['icon', 'ion-android-' + '{{familyMember.transit[0].type}}']"></i>
-                            <p>{{familyMember.transit[0].minutesLeft}} mins</p>
-                        </div>
-                        <!--<div class="transportation secondary-transportation">
-                            <i ng-class="['icon', 'ion-android-' + '{{familyMember.transit[1].type}}']"></i>
-                            <br/>
-                            {{familyMember.transit[1].minutesLeft}} mins
-                        </div>-->
-                    </div>
-                </div>
+                <leave-time-indicator transit="familyMember.transit[0]" picture="familyMember.picture"></leave-time-indicator>
             </div>
         </div>
         <div class="row children">
             <div class="col" ng-repeat="child in children">
-                <div class="radial-progress"
-                     data-progress="{{child.transit[0].minutesLeft > 30? '100' : floor(child.transit[0].minutesLeft * 10/3)}}">
-                    <div class="circle">
-                        <div class="mask full">
-                            <div class="fill"></div>
-                        </div>
-                        <div class="mask half">
-                            <div class="fill"></div>
-                            <div class="fill fix"></div>
-                        </div>
-                    </div>
-                    <div class="transportation inset"
-                         ng-style="{'background-image': 'url({{child.picture}})'}">
-                        <div class=" primary-transportation"
-                             ng-if="child.transit[0].minutesLeft < 60">
-                            <i ng-class="['icon', 'ion-android-' + '{{child.transit[0].type}}']"></i>
-                            <p>{{child.transit[0].minutesLeft}} mins</p>
-                        </div>
-                        <!--<div class="transportation secondary-transportation">
-                            <i ng-class="['icon', 'ion-android-' + '{{child.transit[1].type}}']"></i>
-                            <br/>
-                            {{child.transit[1].minutesLeft}} mins
-                        </div>-->
-                    </div>
-                </div>
+                <leave-time-indicator transit="child.transit[0]" picture="child.picture"></leave-time-indicator>
             </div>
         </div>
     </ion-content>
