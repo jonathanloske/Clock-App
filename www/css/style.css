@@ -68,8 +68,9 @@ a.item {
     position: absolute;
     top: 0;
     height: 100vh;
-    border-left: 1px solid red;
+    border-left: 2px solid red;
     margin-left: calc(30vh + 5px);
+    z-index: 1;
 }
 
 .timeline-pictures{
@@ -115,9 +116,6 @@ a.item {
     border-right: 1px solid grey;
     border-left: 1px solid grey;
     flex: 0 0 12.5%;
-}
-
-.timeline-hours .hour-marker{
     margin-right: 12.5%;
 }
 
