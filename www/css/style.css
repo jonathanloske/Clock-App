@@ -66,11 +66,9 @@ a.item {
 
 .timeline-current-marker{
     position: absolute;
-    top: 0;
     height: 100vh;
     border-left: 2px solid red;
     margin-left: calc(30vh + 5px);
-    z-index: 1;
 }
 
 .timeline-pictures{
@@ -78,24 +76,24 @@ a.item {
     /* Make the element 100% wide so that even when the user completely overscrolls,
        the background is still in the background-color of this element. */
     left: -100%;
+    top: -5vh;
+    z-index: 1;
     /* Abusing the inset box-shadow a bit. Usually it will give a shadow on all
        four edges but we only want it on the right edge so we make the container
        a lot higher and move the upper and lower edge out of view (the left edge
        is never visible since we already made the container really wide) */
-    top: -5vh;
     padding-left: 100%;
     width: calc( 100% + 30vh );
     height: 110vh;
     background-color: #525252;
     padding-top: calc( 10px + 5vh);
     box-shadow: 0 0 20px 0 black inset;
-    z-index: 1;
+    text-align: center;
 }
 
 .timeline-pictures img{
     width: 20vh;
     border-radius: 6px;
-    margin-left: 2vh;
     box-shadow: 0 0 6px 0px black;
 }
 
@@ -109,6 +107,7 @@ a.item {
     margin-left: 30vh;
     line-height: 5vh;
     font-size: 6vh;
+    z-index: 1;
 }
 
 .timeline-hours .hour-marker{
@@ -244,17 +243,14 @@ a.item {
 
 .weather{
     color: white;
-    position: absolute;
-    left: 45vw;
-    top: calc(40vh - 60px);
+    transform: translate3d(45vw, calc(-60vh - 60px), 0);
     width: 10vw;
     height: 10vh;
     text-align: center;
 }
 
 .weather p{
-    position: relative;
-    top: -10px;
+    transform: translate3d(0, -10px, 0);
     font-size: 40px;
 }
 

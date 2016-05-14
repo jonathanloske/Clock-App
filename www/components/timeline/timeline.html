@@ -22,8 +22,8 @@
             <!-- Calculate where the current time marker has to be placed (25% === 1 hour) -->
             <!-- Subtract {{currentHour - 7}} * 2.5 to make up for minor misplacement of markers -->
             <div class="timeline-current-marker"
-                 ng-style="{'left':
-                    ((currentHour - 7) * pixelWidthOfOneHour + currentMinutes / 60 * pixelWidthOfOneHour) + 'px'}">
+                 ng-style="{'transform':
+                    'translate3d(' + ((currentHour - 7) * pixelWidthOfOneHour + currentMinutes / 60 * pixelWidthOfOneHour) + 'px, -100vh, 1px)'}">
             </div>
             <div class="timelines">
                 <div class="row timeline timeline-marker" ng-repeat="calendar in calendars">
@@ -58,7 +58,7 @@
                         <div
                             class="transit-option"
                             ng-style="{
-                                'left': 'calc(' + ((event.start.getHours() - 7) * pixelWidthOfOneHour + event.start.getMinutes() / 60 * pixelWidthOfOneHour) + 'px - 2px - 12.5%)'
+                                'transform': 'translate3d(-' + (pixelWidthOfOneHour / 2 + 2) + 'px, 0,0)'
                             }">
                             {{transitOptions[$index]}}
                         </div>
