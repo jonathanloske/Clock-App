@@ -96,7 +96,9 @@ angular.module('app.controllers')
 			} else if($scope.editCalendarMode){
 				if($scope.selectedCalendarIndex >= 0){
 					$scope.selectedCalendarIndex--;
-					$scope.scrollToTime($scope.calendars[$scope.selectedUserIndex].events[$scope.selectedCalendarIndex].start);
+					if($scope.selectedCalendarIndex >= 0){
+						$scope.scrollToTime($scope.calendars[$scope.selectedUserIndex].events[$scope.selectedCalendarIndex].start);
+					}
 				}
 			} else if ($scope.editMode) {
 				if($scope.selectedUserIndex >= 0){
