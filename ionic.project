@@ -1,4 +1,11 @@
 {
   "name": "Clock",
-  "app_id": "8eb0ba9c"
+  "app_id": "8eb0ba9c",
+  "browsers": [
+    {
+      "platform": "android",
+      "browser": "crosswalk",
+      "version": "12.41.296.5"
+    }
+  ]
 }
