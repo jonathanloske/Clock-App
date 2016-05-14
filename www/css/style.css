@@ -13,6 +13,10 @@ a.item {
     padding: 0;
 }
 
+.selected{
+    box-shadow: 0 0 10px 6px #387ef5 !important;
+}
+
 .timeline-page, .timetoleave-page{
     background-color: black;
 }
@@ -97,8 +101,24 @@ a.item {
     box-shadow: 0 0 6px 0px black;
 }
 
-.timeline-pictures img.selected{
-    box-shadow: 0 0 10px 6px #387ef5;
+.cancel-button{
+    width: 20vh;
+    text-align: center;
+    color: white;
+    font-size: 36px;
+    padding-top: 6px;
+    padding-bottom: 6px;
+    border-radius: 6px;
+    position: absolute;
+    margin: 0 5vh;
+    z-index: 2;
+    top: 10px;
+}
+
+.timeline-pictures .col > .cancel-button{
+    position: relative;
+    top: -10px;
+    line-height: initial;
 }
 
 .timeline-hours{
@@ -135,9 +155,17 @@ a.item {
     line-height: calc(200vh - 130px);
 }
 
+.timeline .timelines1 > .cancel-button {
+    margin-top: -100vh;
+}
+
 .timeline .timelines2 {
     height: calc(50vh - 26px);
     line-height: calc(100vh - 82px);
+}
+
+.timeline .timelines2 > .cancel-button {
+    margin-top: -55vh;
 }
 
 .timeline .timelines3 {
@@ -145,14 +173,26 @@ a.item {
     line-height: calc(66vh - 70px);
 }
 
+.timeline .timelines3 > .cancel-button {
+    margin-top: -40vh;
+}
+
 .timeline .timelines4 {
     height: calc(25vh - 20px);
     line-height: calc(50vh - 70px);
 }
 
+.timeline .timelines4 > .cancel-button {
+    margin-top: -31vh;
+}
+
 .timeline .timelines5 {
     height: calc(20vh - 17px);
     line-height: calc(40vh - 64px);
+}
+
+.timeline .timelines5 > .cancel-button {
+    margin-top: -26vh;
 }
 
 .timeline{
@@ -166,58 +206,73 @@ a.item {
     width: 100%;
 }
 
-.timeline-cell.selected{
-    box-shadow: 0 0 10px 6px #387ef5;
-}
-
-.timeline-cell > .transit-option{
+.timeline-cell > .primary-transit-option, .timeline-cell > .transit-options{
     position: absolute;
-    width: 12.5%;
-    height: 25vh;
-    line-height: initial;
+    /* Choose a value that just fits all of the transit options*/
+    width: 20%;
     border-radius: 6px;
-    box-shadow: 0 0 10px 6px black;
-    overflow: hidden;
+    /*box-shadow: 0 0 10px 6px black;*/
     word-wrap: break-word;
 }
 
-.timelines .timeline:nth-of-type(1) .filled{
+.primary-transit-option{
+    border: 2px solid #525252;
+    text-align: center;
+    height: inherit;
+}
+
+.transit-options{
+    border: 1px solid white;
+    background-color: black;
+    z-index: 2;
+}
+
+.transit-options .transit-option{
+    line-height: initial;
+    text-align: right;
+}
+
+.transit-options :not(.transit-option:last-of-type){
+    border-bottom: 1px solid white;
+}
+
+.timeline:nth-of-type(1) .filled{
     background-color: #387ef5;
 }
 
-.timelines .timeline:nth-of-type(1) .filled > .transit-option{
+.timeline:nth-of-type(1) .filled > .primary-transit-option{
     background: repeating-linear-gradient(45deg, #387ef5, #387ef5 10px, #525252 10px, #525252 13px);
 }
 
-.timelines .timeline:nth-of-type(2) .filled{
+.timeline:nth-of-type(2) .filled{
     background-color: #33cd5f;
 }
 
-.timelines .timeline:nth-of-type(2) .filled > .transit-option{
+.timeline:nth-of-type(2) .filled > .primary-transit-option{
     background: repeating-linear-gradient(45deg, #33cd5f, #33cd5f 10px, #525252 10px, #525252 13px);
 }
 
-.timelines .timeline:nth-of-type(3) .filled{
+.timeline:nth-of-type(3) .filled{
     background-color: #886aea;
 }
 
-.timelines .timeline:nth-of-type(3) .filled > .transit-option{
+.timeline:nth-of-type(3) .filled > .primary-transit-option{
     background: repeating-linear-gradient(45deg, #886aea, #886aea 10px, #525252 10px, #525252 13px);
 }
 
-.timelines .timeline:nth-of-type(4) .filled{
+.timeline:nth-of-type(4) .filled{
     background-color: #ef473a;
 }
 
-.timelines .timeline:nth-of-type(4) .filled > .transit-option{
+.timeline:nth-of-type(4) .filled > .primary-transit-option{
     background: repeating-linear-gradient(45deg, #ef473a, #ef473a 10px, #525252 10px, #525252 13px);
 }
 
-.timelines .timeline:nth-of-type(5) .filled{
+.timeline:nth-of-type(5) .filled{
     background-color: #444;
 }
 
-.timelines .timeline:nth-of-type(5) .filled > .transit-option{
+.timeline:nth-of-type(5) .filled > .primary-transit-option{
     background: repeating-linear-gradient(45deg, #444, #444 10px, #525252 10px, #525252 13px);
 }
 

@@ -1,12 +1,20 @@
 <ion-view title="Timeline">
     <ion-content class="timeline-page" scroll="false">
-        <div class="timeline-time">
+        <div ng-show="!editMode" class="timeline-time">
             {{currentHour}}:{{currentMinutes}}
+        </div>
+        <div ng-class="['cancel-button', 'filled', selectedUserIndex === -1? 'selected':'']"
+                ng-show="editMode && !editCalendarMode">
+                Cancel
         </div>
         <div class="timeline-pictures" ng-click="goTo()">
             <div class="row timeline" ng-repeat="calendar in calendars track by $index">
                 <div ng-class="['col', 'timelines' + calendars.length]">
-                    <img ng-src="{{calendar.picture}}" ng-class="editMode && selectedUserIndex === $index? 'selected' : ''"/>
+                    <img ng-src="{{calendar.picture}}" ng-class="editMode && !editCalendarMode && selectedUserIndex === $index? 'selected' : ''"/>
+                    <div ng-class="['cancel-button', 'filled', selectedCalendarIndex === -1? 'selected':'']"
+                         ng-show="editCalendarMode && !editTransitOption && selectedUserIndex === $index">
+                        Cancel
+                    </div>
                 </div>
             </div>
         </div>
@@ -42,7 +50,7 @@
                     <div
                         ng-class="['col', 'timeline-cell', 'filled',
                             'timelines' + calendars.length,
-                            editCalendarMode && calendars[selectedUserIndex] === calendar &&selectedCalendarIndex === $index?
+                            editCalendarMode && !editTransitOption && calendars[selectedUserIndex] === calendar && selectedCalendarIndex === $index?
                                 'selected' : ''
                         ]"
                         ng-repeat="event in calendar.events track by $index"
@@ -56,19 +64,24 @@
                                 (event.start.getHours() * 60 + event.start.getMinutes())) / 60 * 25) + '%'
                         }">
                         <div
-                            class="transit-option"
+                            class="primary-transit-option"
+                            ng-if="!editTransitOption || !(calendars[selectedUserIndex] === calendar && selectedCalendarIndex === $index)"
                             ng-style="{
-                                'transform': 'translate3d(-' + (pixelWidthOfOneHour / 2 + 2) + 'px, 0,0)'
+                                'transform': 'translate3d(-' + (pixelWidthOfOneHour * 4 / 5 + 2) + 'px, 0,0)'
                             }">
                             {{transitOptions[$index]}}
                         </div>
                         <div
-                            ng-if="$scope.editTransitOption"
+
                             class="transit-options"
+                            ng-if="editTransitOption && calendars[selectedUserIndex] === calendar &&selectedCalendarIndex === $index"
                             ng-style="{
-                                'left': 'calc(' + ((event.start.getHours() - 7) * pixelWidthOfOneHour + event.start.getMinutes() / 60 * pixelWidthOfOneHour) + 'px - 12.5%)'
+                                'transform': 'translate3d(-' + (pixelWidthOfOneHour * 4 / 5 + 2) + 'px, 0,0)'
                             }">
-                            {{transitOptions[$index]}}
+                            <div ng-class="['transit-option', selectedTransitOptionIndex === $index? 'selected' : '' ]"
+                                 ng-repeat="transitOption in transitOptions track by $index">
+                                {{transitOption}}
+                            </div>
                         </div>
                         {{event.title}}
                     </div>

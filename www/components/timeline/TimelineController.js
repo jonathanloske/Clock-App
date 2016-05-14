@@ -1,6 +1,6 @@
 angular.module('app.controllers')
 
-.controller('TimelineController', function ($scope, storage, $timeout, $document, $rootScope, $ionicScrollDelegate, $state, $ionicActionSheet, $window) {
+.controller('TimelineController', function ($scope, storage, $timeout, $document, $rootScope, $ionicScrollDelegate, $state, $window) {
 	// get the users' calendars from the storage and listen to updates
 	$scope.calendars = storage.getCalendars();
 
@@ -39,10 +39,9 @@ angular.module('app.controllers')
 
 	updateTime();
 
-	$scope.selectedUserIndex = 0;
-	$scope.selectedCalendarIndex = 0;
 	$scope.editMode = false;
 	$scope.editCalendarMode = false;
+	$scope.editTransitOption = false;
 	$scope.pixelWidthOfOneHour = $window.innerWidth / 4;
 
 	$scope.transitOptions = [
@@ -51,36 +50,35 @@ angular.module('app.controllers')
 
 	$scope.$on("$ionicView.enter", function(event, data){
 		$rootScope.toggleEditMode = function (event) {
-			if ($scope.editCalendarMode) {
-				$ionicActionSheet.show({
-					buttons: [
-						{ text: 'Car' },
-						{ text: 'Walk' },
-						{ text: 'Public Transport' },
-						{ text: 'Bike' }
-					],
-					titleText: 'Choose transit option',
-					cancelText: 'Cancel',
-					cancel: function() {
-						$scope.editMode = false;
-						$scope.editCalendarMode = false;
-					},
-					buttonClicked: function(index) {
-						$scope.editMode = false;
-						$scope.editCalendarMode = false;
-					}
-				});
+			if($scope.editTransitOption){
+				$scope.editMode = false;
+				$scope.editCalendarMode = false;
+				$scope.editTransitOption = false;
+			} else if ($scope.editCalendarMode) {
+				if($scope.selectedCalendarIndex === -1){
+					$scope.editCalendarMode = false;
+				} else {
+					$scope.selectedTransitOptionIndex = 0;
+					$scope.editTransitOption = true;
+				}
 			} else if($scope.editMode){
-				$scope.editCalendarMode = true;
+				if($scope.selectedUserIndex === -1){
+					$scope.editMode = false;
+				} else {
+					$scope.selectedCalendarIndex = 0;
+					$scope.scrollToTime($scope.calendars[$scope.selectedUserIndex].events[$scope.selectedCalendarIndex].start);
+					$scope.editCalendarMode = true;
+				}
 			} else {
 				$scope.editMode = true;
 				$scope.selectedUserIndex = 0;
-				$scope.selectedCalendarIndex = 0;
 			}
 		};
 
 		$rootScope.handleClockwise = function (event) {
-			if ($scope.editCalendarMode) {
+			if($scope.editTransitOption){
+				$scope.selectedTransitOptionIndex = $scope.selectedTransitOptionIndex < $scope.transitOptions.length - 1? $scope.selectedTransitOptionIndex + 1 : $scope.selectedTransitOptionIndex;
+			} else if ($scope.editCalendarMode) {
 				$scope.selectedCalendarIndex = $scope.selectedCalendarIndex < $scope.calendars[$scope.selectedUserIndex].events.length - 1? $scope.selectedCalendarIndex + 1 : $scope.selectedCalendarIndex;
 				$scope.scrollToTime($scope.calendars[$scope.selectedUserIndex].events[$scope.selectedCalendarIndex].start);
 			} else if ($scope.editMode) {
@@ -91,17 +89,17 @@ angular.module('app.controllers')
 		};
 
 		$rootScope.handleCounterClockwise = function (event) {
-			if($scope.editCalendarMode){
-				if($scope.selectedCalendarIndex === 0){
-					$scope.editCalendarMode = false;
-				} else {
+			if($scope.editTransitOption){
+				if($scope.selectedTransitOptionIndex > 0){
+					$scope.selectedTransitOptionIndex--;
+				}
+			} else if($scope.editCalendarMode){
+				if($scope.selectedCalendarIndex >= 0){
 					$scope.selectedCalendarIndex--;
 					$scope.scrollToTime($scope.calendars[$scope.selectedUserIndex].events[$scope.selectedCalendarIndex].start);
 				}
 			} else if ($scope.editMode) {
-				if($scope.selectedUserIndex === 0){
-					$scope.editMode = false;
-				} else {
+				if($scope.selectedUserIndex >= 0){
 					$scope.selectedUserIndex--;
 				}
 			} else {
