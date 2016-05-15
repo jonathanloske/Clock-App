@@ -81,6 +81,14 @@ angular.module('starter', ['ionic', 'app.controllers', 'app.routes'])
 			// notify controllers using this factory, that the storage has been updated
 			$rootScope.$emit('storage-has-changed');
 		},
+		deleteCalendar: function (username) {
+			calendars.forEach(function (currentCal, index) {
+				if (currentCal.name == username) {
+					delete calendars[index];
+					$rootScope.$emit('storage-has-changed');
+				}
+			});
+		},
 		getCarSimulatorData: function () {
 			return carSimulatorData;
 		}
@@ -89,7 +97,7 @@ angular.module('starter', ['ionic', 'app.controllers', 'app.routes'])
 
 .factory('socket', function ($rootScope, storage) {
 
-	var socket = io.connect("http://mtin.de:8080", {
+	var socket = io.connect("http://localhost:8080", {
 		query: 'id=clock'
 	});
 
@@ -101,6 +109,10 @@ angular.module('starter', ['ionic', 'app.controllers', 'app.routes'])
 		});
 		// once that is done, save the updated calendar to the storage
 		storage.updateCalendar(calendar);
+	});
+
+	socket.on('clock - user deleted', function (username) {
+		storage.deleteCalendar(username);
 	});
 
 	socket.on('[Car Simulator Data] - Battery Update', function (data) {
