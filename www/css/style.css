@@ -72,7 +72,7 @@ a.item {
     position: absolute;
     height: 100vh;
     border-left: 2px solid red;
-    margin-left: calc(30vh + 5px);
+    margin-left: calc(15vw + 5px);
 }
 
 .timeline-pictures{
@@ -86,33 +86,35 @@ a.item {
        four edges but we only want it on the right edge so we make the container
        a lot higher and move the upper and lower edge out of view (the left edge
        is never visible since we already made the container really wide) */
+    box-shadow: 0 0 20px 0 black inset;
     padding-left: 100%;
-    width: calc( 100% + 30vh );
+    width: calc( 100% + 15vw );
     height: 110vh;
     background-color: #525252;
     padding-top: calc( 10px + 5vh);
-    box-shadow: 0 0 20px 0 black inset;
     text-align: center;
 }
 
 .timeline-pictures img{
-    width: 20vh;
+    width: 12vw;
     border-radius: 6px;
     box-shadow: 0 0 6px 0px black;
 }
 
 .cancel-button{
-    width: 20vh;
+    width: 12vw;
     text-align: center;
-    color: white;
+    color: black;
     font-size: 36px;
     padding-top: 6px;
     padding-bottom: 6px;
     border-radius: 6px;
     position: absolute;
-    margin: 0 5vh;
+    margin: 0 1.5vw;
     z-index: 2;
     top: 10px;
+    background-color: #f8f8f8;
+    box-shadow: 0 0 6px 2px black;
 }
 
 .timeline-pictures .col > .cancel-button{
@@ -124,16 +126,20 @@ a.item {
 .timeline-hours{
     color: white;
     padding-top: 0px;
-    margin-left: 30vh;
+    margin-left: 15vw;
     line-height: 5vh;
     font-size: 6vh;
     z-index: 1;
+    width: 85vw;
 }
 
 .timeline-hours .hour-marker{
     height: 100vh;
     border-right: 1px solid grey;
     border-left: 1px solid grey;
+    /* Flex is the width of one element. One hour-marker should represent one hour.
+       We achieve this by making it half an hour wide and giving it a margin of another
+       30 minutes. Since 100% === 85vw === 4 hours, 30 minutes === 85vw / 8 === 10.625*/
     flex: 0 0 12.5%;
     margin-right: 12.5%;
 }
@@ -148,10 +154,11 @@ a.item {
     border-left: 1px solid black;
     border-right: 1px solid black;
     border-radius: 6px;
+    margin-right: 0.5px;
 }
 
 .timeline .timelines1 {
-    height: calc(100vh - 50px);
+    height: calc(94vh - 50px);
     line-height: calc(200vh - 130px);
 }
 
@@ -160,8 +167,8 @@ a.item {
 }
 
 .timeline .timelines2 {
-    height: calc(50vh - 26px);
-    line-height: calc(100vh - 82px);
+    height: calc(47vh - 26px);
+    line-height: calc(94vh - 82px);
 }
 
 .timeline .timelines2 > .cancel-button {
@@ -169,8 +176,8 @@ a.item {
 }
 
 .timeline .timelines3 {
-    height: calc(33vh - 20px);
-    line-height: calc(66vh - 70px);
+    height: calc(31.3vh - 20px);
+    line-height: calc(64vh - 70px);
 }
 
 .timeline .timelines3 > .cancel-button {
@@ -178,8 +185,8 @@ a.item {
 }
 
 .timeline .timelines4 {
-    height: calc(25vh - 20px);
-    line-height: calc(50vh - 70px);
+    height: calc(23.5vh - 20px);
+    line-height: calc(47vh - 70px);
 }
 
 .timeline .timelines4 > .cancel-button {
@@ -187,8 +194,8 @@ a.item {
 }
 
 .timeline .timelines5 {
-    height: calc(20vh - 17px);
-    line-height: calc(40vh - 64px);
+    height: calc(19vh - 17px);
+    line-height: calc(38vh - 64px);
 }
 
 .timeline .timelines5 > .cancel-button {
@@ -203,7 +210,7 @@ a.item {
     position: absolute;
     top: 35px;
     margin-left: calc(30vh + 1px);
-    width: 100%;
+    width: 85vw;
 }
 
 .timeline-cell > .primary-transit-option, .timeline-cell > .transit-options{
@@ -219,12 +226,16 @@ a.item {
     border: 2px solid #525252;
     text-align: center;
     height: inherit;
+    padding: 5% 0;
+    line-height: initial;
+    transform: translate3d(-100% , 0,0);
 }
 
 .transit-options{
     border: 1px solid white;
     background-color: black;
     z-index: 2;
+    transform: translate3d(-100% , 0,0);
 }
 
 .transit-options .transit-option{
@@ -311,4 +322,42 @@ a.item {
 
 .weather i{
     font-size: 100px;
+}
+
+.minimap {
+    position: fixed;
+    transform: translate3d(15vw, -6vh, 1px);
+    height: 6vh;
+    width: 85vw;
+    background-color: black;
+}
+
+.minimap .timeline.timelines1 {
+    height: 100%;
+    line-height: initial;
+    margin-bottom: 5px;
+}
+
+.minimap .timeline.timelines2 {
+    height: 50%;
+    line-height: initial;
+    margin-bottom: 5px;
+}
+
+.minimap .timeline.timelines3 {
+    height: 33%;
+    line-height: initial;
+    margin-bottom: 5px;
+}
+
+.minimap .timeline.timelines4 {
+    height: 25%;
+    line-height: initial;
+    margin-bottom: 5px;
+}
+
+.minimap .timeline.timelines5 {
+    height: 20%;
+    line-height: initial;
+    margin-bottom: 5px;
 }

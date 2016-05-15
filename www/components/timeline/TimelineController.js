@@ -45,7 +45,7 @@ angular.module('app.controllers')
 	$scope.pixelWidthOfOneHour = $window.innerWidth / 4;
 
 	$scope.transitOptions = [
-		'car', 'walk', 'public transport', 'bike'
+		'car', 'walk', 'bus', 'bicycle'
 	];
 
 	$scope.$on("$ionicView.enter", function(event, data){
@@ -195,4 +195,21 @@ angular.module('app.controllers')
 			}
 		]}
 	];
+
+	var addDurationAndDistanceToEvents = function(){
+		for (var i = 0; i < $scope.calendars.length; i++){
+			for (var j = 0; j < $scope.calendars[i].events.length; j++){
+				var event = $scope.calendars[i].events[j];
+				if(j === 0){
+					$scope.calendars[i].events[j].distanceToEventBeforeInMinutes = event.start.getHours() * 60 + event.start.getMinutes() - 7 * 60;
+				} else {
+					var eventBefore = $scope.calendars[i].events[j - 1];
+					$scope.calendars[i].events[j].distanceToEventBeforeInMinutes = event.start.getHours()       * 60 + event.start.getMinutes() - eventBefore.end.getHours() * 60 + eventBefore.end.getMinutes();
+				}
+				$scope.calendars[i].events[j].durationInMinutes = event.end.getHours() * 60 + event.end.getMinutes() - event.start.getHours() * 60 - event.start.getMinutes();
+			}
+		}
+	}
+
+	addDurationAndDistanceToEvents();
 });

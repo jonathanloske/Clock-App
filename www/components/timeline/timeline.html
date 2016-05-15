@@ -55,29 +55,17 @@
                         ]"
                         ng-repeat="event in calendar.events track by $index"
                         ng-style="{
-                            'margin-left': ($index === 0?
-                                ((event.start.getHours() * 60 + event.start.getMinutes() - 07 * 60) / 60 * 25) :
-                                (((event.start.getHours() * 60 + event.start.getMinutes())
-                                    - (calendar.events[$index - 1].end.getHours() * 60 + calendar.events[$index - 1].end.getMinutes())) / 60 * 25)) + '%',
-                            'flex': '0 0 ' +
-                                (((event.end.getHours() * 60 + event.end.getMinutes()) -
-                                (event.start.getHours() * 60 + event.start.getMinutes())) / 60 * 25) + '%'
+                            'margin-left': $index === 0? '1px' : ((event.distanceToEventBeforeInMinutes / 60 * 25) + '%'),
+                            'flex': '0 0 ' + (event.durationInMinutes / 60 * 25) + '%'
                         }">
                         <div
                             class="primary-transit-option"
-                            ng-if="!editTransitOption || !(calendars[selectedUserIndex] === calendar && selectedCalendarIndex === $index)"
-                            ng-style="{
-                                'transform': 'translate3d(-' + (pixelWidthOfOneHour * 4 / 5 + 2) + 'px, 0,0)'
-                            }">
-                            {{transitOptions[$index]}}
+                            ng-if="!editTransitOption || !(calendars[selectedUserIndex] === calendar && selectedCalendarIndex === $index)">
+                            <i ng-class="['icon', 'ion-android-' + '{{transitOptions[$index]}}']"></i>
                         </div>
                         <div
-
                             class="transit-options"
-                            ng-if="editTransitOption && calendars[selectedUserIndex] === calendar &&selectedCalendarIndex === $index"
-                            ng-style="{
-                                'transform': 'translate3d(-' + (pixelWidthOfOneHour * 4 / 5 + 2) + 'px, 0,0)'
-                            }">
+                            ng-if="editTransitOption && calendars[selectedUserIndex] === calendar &&selectedCalendarIndex === $index">
                             <div ng-class="['transit-option', selectedTransitOptionIndex === $index? 'selected' : '' ]"
                                  ng-repeat="transitOption in transitOptions track by $index">
                                 {{transitOption}}
@@ -88,5 +76,23 @@
                 </div>
             </div>
         </ion-scroll>
+        <div class="minimap">
+            <div ng-class="['row', 'timeline', 'timeline-marker', 'timelines' + calendars.length]" ng-repeat="calendar in calendars">
+                <div class="minimap-indicator"></div>
+                <div
+                    ng-class="['col', 'timeline-cell', 'filled']"
+                    ng-repeat="event in calendar.events track by $index"
+                    ng-style="{
+                        'margin-left': ($index === 0?
+                            ((event.start.getHours() * 60 + event.start.getMinutes() - 07 * 60) * 10 / 99) :
+                            (((event.start.getHours() * 60 + event.start.getMinutes())
+                                - (calendar.events[$index - 1].end.getHours() * 60 + calendar.events[$index - 1].end.getMinutes())) * 10 / 99)) + '%',
+                        'flex': '0 0 ' +
+                            (((event.end.getHours() * 60 + event.end.getMinutes()) -
+                            (event.start.getHours() * 60 + event.start.getMinutes())) * 10 / 99) + '%'
+                    }">
+                </div>
+            </div>
+        </div>
     </ion-content>
 </ion-view>
