@@ -55,7 +55,7 @@
                         ]"
                         ng-repeat="event in calendar.events track by $index"
                         ng-style="{
-                            'margin-left': $index === 0? '1px' : ((event.distanceToEventBeforeInMinutes / 60 * 25) + '%'),
+                            'margin-left': ((event.distanceToEventBeforeInMinutes / 60 * 25) + '%'),
                             'flex': '0 0 ' + (event.durationInMinutes / 60 * 25) + '%'
                         }">
                         <div
