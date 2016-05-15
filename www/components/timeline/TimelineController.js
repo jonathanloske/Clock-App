@@ -205,7 +205,9 @@ angular.module('app.controllers')
 					$scope.calendars[i].events[j].distanceToEventBeforeInMinutes = event.start.getHours() * 60 + event.start.getMinutes() - 7 * 60;
 				} else {
 					var eventBefore = $scope.calendars[i].events[j - 1];
-					$scope.calendars[i].events[j].distanceToEventBeforeInMinutes = event.start.getHours()       * 60 + event.start.getMinutes() - eventBefore.end.getHours() * 60 + eventBefore.end.getMinutes();
+					$scope.calendars[i].events[j].distanceToEventBeforeInMinutes =
+						 event.start.getHours()     * 60 + event.start.getMinutes() -
+						(eventBefore.end.getHours() * 60 + eventBefore.end.getMinutes());
 				}
 				$scope.calendars[i].events[j].durationInMinutes = event.end.getHours() * 60 + event.end.getMinutes() - event.start.getHours() * 60 - event.start.getMinutes();
 			}
