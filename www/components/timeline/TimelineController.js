@@ -20,6 +20,7 @@ angular.module('app.controllers')
 		}
 		$scope.$apply();
 	});
+	$scope.floor = Math.floor;
 
 	// Fill up the time line with the hours between 7am and midnight.
 	$scope.timerange = [];
@@ -209,6 +210,12 @@ angular.module('app.controllers')
 				$scope.calendars[i].events[j].durationInMinutes = event.end.getHours() * 60 + event.end.getMinutes() - event.start.getHours() * 60 - event.start.getMinutes();
 			}
 		}
+	}
+
+	$scope.pixelWidthOfTimeline = $window.innerWidth * .85 * 4.125;
+
+	$scope.getScrollPositionLeftInViewWidth = function(){
+		return $ionicScrollDelegate.getScrollPosition().left / $scope.pixelWidthOfTimeline * 85;
 	}
 
 	addDurationAndDistanceToEvents();

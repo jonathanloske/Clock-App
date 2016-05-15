@@ -330,6 +330,7 @@ a.item {
     height: 6vh;
     width: 85vw;
     background-color: black;
+    overflow: hidden;
 }
 
 .minimap .timeline.timelines1 {
@@ -360,4 +361,11 @@ a.item {
     height: 20%;
     line-height: initial;
     margin-bottom: 5px;
+}
+
+.minimap-indicator{
+    background-color: rgba(0,0,0,0.3);
+    height: 6vh;
+    width: 20.606vw;
+    position: absolute;
 }

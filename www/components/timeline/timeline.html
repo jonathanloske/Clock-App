@@ -78,7 +78,9 @@
         </ion-scroll>
         <div class="minimap">
             <div ng-class="['row', 'timeline', 'timeline-marker', 'timelines' + calendars.length]" ng-repeat="calendar in calendars">
-                <div class="minimap-indicator"></div>
+                <div class="minimap-indicator"
+                     ng-style="{'transform':
+                    'translate3d(' + getScrollPositionLeftInViewWidth() + 'vw, 0, 0)'}"></div>
                 <div
                     ng-class="['col', 'timeline-cell', 'filled']"
                     ng-repeat="event in calendar.events track by $index"
