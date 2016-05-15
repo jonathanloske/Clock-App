@@ -1,25 +1,24 @@
 angular.module('app.controllers')
 
 .controller('TimeToLeaveController', function ($rootScope, $scope, $state, storage) {
-	// get the users' calendars from the storage and listen to updates
-	$scope.calendars = storage.getCalendars();
+    // get the users' calendars from the storage and listen to updates
+    $scope.calendars = storage.getCalendars();
     retrieveLeaveData();
     $scope.floor = Math.floor;
 
-	storage.subscribe($scope, function onStorageUpdated() {
-		$scope.calendars = storage.getCalendars();
+    storage.subscribe($scope, function onStorageUpdated() {
+        $scope.calendars = storage.getCalendars();
         retrieveLeaveData();
-		$scope.$apply();
-        console.log($scope.calendars);
-	});
+        $scope.$apply();
+    });
 
     $scope.weather = {
         condition: 'partlysunny',
         temperature: 23
     }
 
-    $scope.goToIndex = function(index){
-        if (index === 0 ){
+    $scope.goToIndex = function (index) {
+        if (index === 0) {
             $state.go('carStatus');
         } else {
             $state.go('timeline');
@@ -34,18 +33,18 @@ angular.module('app.controllers')
 
             // set the user data
             var parent = {
-                picture : calendar.picture,
-                nextEvent : "",
-                transit : []
+                picture: calendar.picture,
+                nextEvent: "",
+                transit: []
             };
 
             // find the next event for the user
             var nextEvent = {
-                msecsUntilStart : -1,
-                event : null
+                msecsUntilStart: -1,
+                event: null
             };
             var now = new Date();
-            calendar.events.forEach(function(event) {
+            calendar.events.forEach(function (event) {
                 var msecsUntilEvent = (event.start - now);
                 if (msecsUntilEvent < 0) return; // we dont want events that are already over
                 if (nextEvent.msecsUntilStart == -1 || nextEvent.msecsUntilStart > msecsUntilEvent) {
@@ -59,19 +58,19 @@ angular.module('app.controllers')
                 parent.nextEvent = nextEvent.event.title;
                 if (nextEvent.event.optimized_transit != undefined) {
                     // new Date(oldDateObj.getTime() + diff*60000);
-                    var timeToLeaveBest = new Date(nextEvent.event.start.getTime() + nextEvent.event.optimized_transit.best.duration *60000);
+                    var timeToLeaveBest = new Date(nextEvent.event.start.getTime() - nextEvent.event.optimized_transit.best.duration * 60000);
 
-                    var timeToLeaveSecondBest = new Date(nextEvent.event.start.getTime() + nextEvent.event.optimized_transit.alternative.duration *60000);
+                    var timeToLeaveSecondBest = new Date(nextEvent.event.start.getTime() - nextEvent.event.optimized_transit.alternative.duration * 60000);
                     parent.transit = [
-                      {
-                          type : nextEvent.event.optimized_transit.best.name,
-                          hoursLeft: Math.floor(Math.round((timeToLeaveBest - now) / 1000 / 60 / 60)),
-                          minutesLeft : Math.round((timeToLeaveBest - now) / 1000 / 60)
+                        {
+                            type: nextEvent.event.optimized_transit.best.name,
+                            hoursLeft: Math.floor(Math.round((timeToLeaveBest - now) / 1000 / 60 / 60)),
+                            minutesLeft: Math.round((timeToLeaveBest - now) / 1000 / 60)
                       },
                         {
-                          type : nextEvent.event.optimized_transit.alternative.name,
-                          hoursLeft: Math.floor(Math.round((timeToLeaveBest - now) / 1000 / 60 / 60)),
-                          minutesLeft : Math.round((timeToLeaveSecondBest - now) / 1000 / 60)
+                            type: nextEvent.event.optimized_transit.alternative.name,
+                            hoursLeft: Math.floor(Math.round((timeToLeaveBest - now) / 1000 / 60 / 60)),
+                            minutesLeft: Math.round((timeToLeaveSecondBest - now) / 1000 / 60)
                       }
 
                     ];
@@ -84,7 +83,7 @@ angular.module('app.controllers')
         };
     };
 
-	/*$scope.familyMembers = [
+    /*$scope.familyMembers = [
 		{
 			transit: [
 				{
@@ -112,29 +111,29 @@ angular.module('app.controllers')
 			picture: 'img/mother.png'
         }
     ];*/
-	$scope.children = [
-		{
-			transit: [
-				{
-					type: 'walk',
-					minutesLeft: 20
+    $scope.children = [
+        {
+            transit: [
+                {
+                    type: 'walk',
+                    minutesLeft: 20
                 },
-				{
-					type: 'bicycle',
-					minutesLeft: 50
+                {
+                    type: 'bicycle',
+                    minutesLeft: 50
                 }
             ],
             nextEvent: 'Template Event',
-			picture: 'img/child1.jpg'
+            picture: 'img/child1.jpg'
         }
     ];
 
-    $scope.$on("$ionicView.enter", function(event, data){
-        $rootScope.handleCounterClockwise = function(){
+    $scope.$on("$ionicView.enter", function (event, data) {
+        $rootScope.handleCounterClockwise = function () {
             $state.go('carStatus');
         };
 
-        $rootScope.handleClockwise = function(){
+        $rootScope.handleClockwise = function () {
             $state.go('timeline');
         };
     });
