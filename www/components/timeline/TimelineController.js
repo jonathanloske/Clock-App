@@ -12,7 +12,7 @@ angular.module('app.controllers')
 	$scope.floor = Math.floor;
 	$scope.keys = Object.keys;
 
-	storage.subscribe($scope, function onStorageUpdated() {
+	var prepareCalendarForTimeline = function(){
 		$scope.calendars = storage.getCalendars();
 		$scope.scrollToTime(new Date());
 		for(var i = 0; i < $scope.calendars.length; i++){
@@ -24,7 +24,9 @@ angular.module('app.controllers')
 		}
 		addDurationAndDistanceToEvents();
 		$scope.$apply();
-	});
+	};
+
+	storage.subscribe($scope, prepareCalendarForTimeline);
 	$scope.floor = Math.floor;
 
 	// Fill up the time line with the hours between 7am and midnight.
@@ -55,6 +57,8 @@ angular.module('app.controllers')
 	];
 
 	$scope.$on("$ionicView.enter", function(event, data){
+		prepareCalendarForTimeline();
+
 		$rootScope.toggleEditMode = function (event) {
 			if($scope.editTransitOption){
 				$scope.editMode = false;
