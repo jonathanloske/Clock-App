@@ -50,7 +50,7 @@ angular.module('app.controllers')
 	$scope.editMode = false;
 	$scope.editCalendarMode = false;
 	$scope.editTransitOption = false;
-	$scope.pixelWidthOfOneHour = $window.innerWidth / 4;
+	$scope.pixelWidthOfOneHour = $window.innerWidth * 0.85 / 4;
 
 	$scope.transitOptions = [
 		'car', 'walk', 'bus', 'bicycle'
