@@ -364,8 +364,9 @@ a.item {
 }
 
 .minimap-indicator{
-    background-color: rgba(0,0,0,0.3);
+    background-color: rgba(180, 180, 180, 0.4);
     height: 6vh;
     width: 20.606vw;
     position: absolute;
+    border-radius: 6px;
 }
