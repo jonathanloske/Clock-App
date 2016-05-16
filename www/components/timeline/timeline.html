@@ -19,6 +19,12 @@
             </div>
         </div>
         <ion-scroll direction="x" scrollbar-x="false" on-scroll="adjustMinimap()">
+            <!--
+                The visible width of the timeline is always 85vw since the left border is
+                occupied by a 15vw wide picture container. 85vw always contain 4 full hours
+                on the timeline which makes 1 hour === 85vw / 4 === 21.25vw.
+                All calculations on this page are based upon these values.
+            -->
             <div class="row timeline-hours">
                 <!-- Display the hour markers at the top of the screen.
                     One hour should take up 25% (horizontally) of the screen.-->
