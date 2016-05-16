@@ -59,8 +59,9 @@ angular.module('app.controllers')
 	$scope.$on("$ionicView.enter", function(event, data){
 		prepareCalendarForTimeline();
 
-		$rootScope.toggleEditMode = function (event) {
+		$rootScope.toggleEditMode = function () {
 			if($scope.editTransitOption){
+				$scope.calendars[$scope.selectedUserIndex].events[$scope.selectedCalendarIndex].preferredWayOfTransit = $scope.transitOptions[$scope.selectedTransitOptionIndex];
 				$scope.editMode = false;
 				$scope.editCalendarMode = false;
 				$scope.editTransitOption = false;
@@ -85,7 +86,7 @@ angular.module('app.controllers')
 			}
 		};
 
-		$rootScope.handleClockwise = function (event) {
+		$rootScope.handleClockwise = function () {
 			if($scope.editTransitOption){
 				$scope.selectedTransitOptionIndex = $scope.selectedTransitOptionIndex < $scope.transitOptions.length - 1? $scope.selectedTransitOptionIndex + 1 : $scope.selectedTransitOptionIndex;
 			} else if ($scope.editCalendarMode) {
@@ -98,7 +99,7 @@ angular.module('app.controllers')
 			}
 		};
 
-		$rootScope.handleCounterClockwise = function (event) {
+		$rootScope.handleCounterClockwise = function () {
 			if($scope.editTransitOption){
 				if($scope.selectedTransitOptionIndex > 0){
 					$scope.selectedTransitOptionIndex--;
