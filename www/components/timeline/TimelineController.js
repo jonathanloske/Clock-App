@@ -1,10 +1,11 @@
 angular.module('app.controllers')
 
-.controller('TimelineController', function ($scope, storage, $timeout, $document, $rootScope, $ionicScrollDelegate, $state, $window) {
+.controller('TimelineController', function ($scope, storage, $timeout, $document, $rootScope, $ionicScrollDelegate, $ionicViewSwitcher, $state, $window) {
 	// get the users' calendars from the storage and listen to updates
 	$scope.calendars = storage.getCalendars();
 
 	$scope.goTo = function(){
+		$ionicViewSwitcher.nextDirection('back');
 		$state.go('timeToLeaveOverview');
 	};
 
@@ -107,6 +108,7 @@ angular.module('app.controllers')
 				}
 			} else {
 				if ($ionicScrollDelegate.getScrollPosition().left === 0) {
+					$ionicViewSwitcher.nextDirection('back');
 					$state.go('timeToLeaveOverview');
 				} else {
 					$ionicScrollDelegate.scrollBy(-1 * $window.innerWidth / 4 - 2.5, 0, true);
@@ -209,15 +211,19 @@ angular.module('app.controllers')
 						 event.start.getHours()     * 60 + event.start.getMinutes() -
 						(eventBefore.end.getHours() * 60 + eventBefore.end.getMinutes());
 				}
-				$scope.calendars[i].events[j].durationInMinutes = event.end.getHours() * 60 + event.end.getMinutes() - event.start.getHours() * 60 - event.start.getMinutes();
+				$scope.calendars[i].events[j].durationInMinutes =
+					 event.end.getHours()   * 60 + event.end.getMinutes() -
+					(event.start.getHours() * 60 + event.start.getMinutes());
 			}
 		}
 	}
 
 	$scope.pixelWidthOfTimeline = $window.innerWidth * .85 * 4.125;
+	$scope.minimapScrollPosition = 0;
 
-	$scope.getScrollPositionLeftInViewWidth = function(){
-		return $ionicScrollDelegate.getScrollPosition().left / $scope.pixelWidthOfTimeline * 85;
+	$scope.adjustMinimap = function(){
+		$scope.minimapScrollPosition = $ionicScrollDelegate.getScrollPosition().left / $scope.pixelWidthOfTimeline * 85;
+		$scope.$apply();
 	}
 
 	addDurationAndDistanceToEvents();

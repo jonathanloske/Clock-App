@@ -1,6 +1,6 @@
 angular.module('app.controllers')
 
-.controller('TimeToLeaveController', function ($rootScope, $scope, $state, storage) {
+.controller('TimeToLeaveController', function ($rootScope, $scope, $state, $ionicViewSwitcher,storage) {
     // get the users' calendars from the storage and listen to updates
     $scope.calendars = storage.getCalendars();
     retrieveLeaveData();
@@ -19,8 +19,10 @@ angular.module('app.controllers')
 
     $scope.goToIndex = function (index) {
         if (index === 0) {
+            $ionicViewSwitcher.nextDirection('back');
             $state.go('carStatus');
         } else {
+            $ionicViewSwitcher.nextDirection('forward');
             $state.go('timeline');
         }
     }
@@ -130,10 +132,12 @@ angular.module('app.controllers')
 
     $scope.$on("$ionicView.enter", function (event, data) {
         $rootScope.handleCounterClockwise = function () {
+            $ionicViewSwitcher.nextDirection('back');
             $state.go('carStatus');
         };
 
         $rootScope.handleClockwise = function () {
+            $ionicViewSwitcher.nextDirection('forward');
             $state.go('timeline');
         };
     });
