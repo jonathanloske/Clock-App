@@ -159,7 +159,7 @@ a.item {
 
 .timeline .timelines1 {
     height: calc(94vh - 50px);
-    line-height: calc(200vh - 130px);
+    line-height: calc(190vh - 130px);
 }
 
 .timeline .timelines1 > .cancel-button {

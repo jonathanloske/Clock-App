@@ -9,6 +9,9 @@ angular.module('app.controllers')
 		$state.go('timeToLeaveOverview');
 	};
 
+	$scope.floor = Math.floor;
+	$scope.keys = Object.keys;
+
 	storage.subscribe($scope, function onStorageUpdated() {
 		$scope.calendars = storage.getCalendars();
 		$scope.scrollToTime(new Date());
@@ -19,6 +22,7 @@ angular.module('app.controllers')
 				}
 			}
 		}
+		addDurationAndDistanceToEvents();
 		$scope.$apply();
 	});
 	$scope.floor = Math.floor;
