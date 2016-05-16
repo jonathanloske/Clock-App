@@ -18,7 +18,7 @@
                 </div>
             </div>
         </div>
-        <ion-scroll direction="x">
+        <ion-scroll direction="x" on-scroll="adjustMinimap()">
             <div class="row timeline-hours">
                 <!-- Display the hour markers at the top of the screen.
                     One hour should take up 25% (horizontally) of the screen.-->
@@ -78,7 +78,7 @@
             <div ng-class="['row', 'timeline', 'timeline-marker', 'timelines' + calendars.length]" ng-repeat="calendar in calendars">
                 <div class="minimap-indicator"
                      ng-style="{'transform':
-                    'translate3d(' + getScrollPositionLeftInViewWidth() + 'vw, 0, 0)'}"></div>
+                    'translate3d(' + minimapScrollPosition + 'vw, 0, 0)'}"></div>
                 <div
                     ng-class="['col', 'timeline-cell', 'filled']"
                     ng-repeat="event in calendar.events track by $index"
