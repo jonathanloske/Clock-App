@@ -72,7 +72,7 @@ a.item {
     position: absolute;
     height: 100vh;
     border-left: 2px solid red;
-    margin-left: calc(15vw + 5px);
+    margin-left: 15vw;
 }
 
 .timeline-pictures{
