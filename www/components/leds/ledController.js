@@ -143,6 +143,8 @@ LEDController.prototype._spark = function () {
 }
 
 LEDController.prototype.spark = function () {
+    this.sparkRGB = [250, 0, 0];
+    this.sparkSide = [this.sparkRGB[0]/2, this.sparkRGB[1]/2, this.sparkRGB[2]/2];
     this.startTime = new Date().getTime();
     this._spark();
 }
