@@ -75,8 +75,10 @@ angular.module('starter', ['ionic', 'app.controllers', 'app.routes'])
 		getCalendars: function () {
 			return calendars;
 		},
-		updateCarSimulatorData: function (key, newCarSimulatorData) {
-			carSimulatorData[key] = newCarSimulatorData;
+		updateCarSimulatorData: function (key, data) {
+			carSimulatorData[key] = data;
+
+			console.log(carSimulatorData);
 
 			// notify controllers using this factory, that the storage has been updated
 			$rootScope.$emit('storage-has-changed');
@@ -115,12 +117,10 @@ angular.module('starter', ['ionic', 'app.controllers', 'app.routes'])
 		storage.deleteCalendar(username);
 	});
 
-	socket.on('[Car Simulator Data] - Battery Update', function (data) {
-		storage.updateCarSimulatorData('battery_level', data);
-	});
-
-	socket.on('[Car Simulator Data] - Oil Update', function (data) {
-		storage.updateCarSimulatorData('oil_level', data);
+	socket.on('[Car Simulator Data] -  Update', function (data) {
+		console.log('[Car Simulator Data] key: ' + data['key']);
+		console.log('[Car Simulator Data] payLoad: ' + data['payLoad']);
+		storage.updateCarSimulatorData(data['key'], data['payLoad']);
 	});
 
 	return {
