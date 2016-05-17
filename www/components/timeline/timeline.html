@@ -84,8 +84,9 @@
             </div>
         </ion-scroll>
         <div class="minimap">
-            <div ng-class="['row', 'timeline', 'timeline-marker', 'timelines' + calendars.length]" ng-repeat="calendar in calendars">
+            <div ng-class="['row', 'timeline', 'timeline-marker', 'timelines' + calendars.length]" ng-repeat="calendar in calendars track by $index">
                 <div class="minimap-indicator"
+                     ng-if="$index === 0"
                      ng-style="{'transform':
                     'translate3d(' + minimapScrollPosition + 'vw, 0, 0)'}"></div>
                 <div

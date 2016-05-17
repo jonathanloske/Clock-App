@@ -56,7 +56,7 @@ angular.module('app.controllers')
 		'car', 'walk', 'bus', 'bicycle'
 	];
 
-	$scope.$on("$ionicView.enter", function(event, data){
+	$scope.$on("$ionicView.beforeEnter", function(event, data){
 		prepareCalendarForTimeline();
 
 		$rootScope.toggleEditMode = function () {
