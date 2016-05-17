@@ -63,7 +63,9 @@
                             'flex': '0 0 ' + (event.durationInMinutes / 60 * 25) + '%'
                         }">
                         <div
-                            class="primary-transit-option"
+                            ng-class="['primary-transit-option',
+                                editCalendarMode && !editTransitOption && calendars[selectedUserIndex] === calendar && selectedCalendarIndex === $index?
+                                'selected' : '']"
                             ng-style="{
                                 'width': (event.transit_options[keys(event.transit_options)[0]].duration / 60 * 25) + '%'
                             }"
