@@ -1,6 +1,6 @@
 angular.module('app.controllers')
 
-.controller('TimelineController', function ($scope, storage, $timeout, $document, $rootScope, $ionicScrollDelegate, $ionicViewSwitcher, $state, $window) {
+.controller('TimelineController', function ($scope, storage, $interval, $document, $rootScope, $ionicScrollDelegate, $ionicViewSwitcher, $ionicNativeTransitions, $state, $window) {
 	// get the users' calendars from the storage and listen to updates
 	$scope.calendars = storage.getCalendars();
 
@@ -35,16 +35,13 @@ angular.module('app.controllers')
 	}
 
 	// Continually update the time so we can display it
-	var updateTime = function(){
+	$interval(function(){
 		$scope.currentHour = (new Date()).getHours();
 		$scope.currentMinutes = (new Date()).getMinutes();
 		if($scope.currentMinutes < 10){
 			$scope.currentMinutes = '0' + $scope.currentMinutes;
 		};
-		$timeout(updateTime, 300);
-	};
-
-	updateTime();
+	}, 300);
 
 	$scope.editMode = false;
 	$scope.editCalendarMode = false;
@@ -52,8 +49,13 @@ angular.module('app.controllers')
 	$scope.pixelWidthOfOneHour = $window.innerWidth * 0.85 / 4;
 
 	$scope.transitOptions = [
-		'car', 'walk', 'bus', 'bicycle'
+		'car', 'walk', 'bus', 'bicycle', 'cancel'
 	];
+	// These are the transit options we get from the server. Displaying them is not
+	// as consistent as our current options so we translate between the two.
+	$scope.transitTranslations = [
+		'car', 'walking', 'subway', 'bicycle'
+	]
 
 	$scope.$on("$ionicView.beforeEnter", function(event, data){
 		prepareCalendarForTimeline();
@@ -61,9 +63,12 @@ angular.module('app.controllers')
 	$scope.$on("$ionicView.enter", function(event, data){
 		$rootScope.toggleEditMode = function () {
 			if($scope.editTransitOption){
-				$scope.calendars[$scope.selectedUserIndex].events[$scope.selectedCalendarIndex].userSelectedTransitOption = $scope.transitOptions[$scope.selectedTransitOptionIndex];
-				$scope.editMode = false;
-				$scope.editCalendarMode = false;
+				if($scope.selectedTransitOptionIndex !== $scope.transitOptions.length - 1){
+					$scope.calendars[$scope.selectedUserIndex].events[$scope.selectedCalendarIndex].userSelectedTransitOption = $scope.transitTranslations[$scope.selectedTransitOptionIndex];
+					// Stay in selection mode even after selecting
+					// $scope.editMode = false;
+					// $scope.editCalendarMode = false;
+				}
 				$scope.editTransitOption = false;
 			} else if ($scope.editCalendarMode) {
 				if($scope.selectedCalendarIndex === -1){
@@ -76,7 +81,14 @@ angular.module('app.controllers')
 				if($scope.selectedUserIndex === -1){
 					$scope.editMode = false;
 				} else {
-					$scope.selectedCalendarIndex = 0;
+					// Find next event (no need to change transportation option
+					// for events that are over already)
+					var i;
+					for (i = 0;
+						 i < $scope.calendars[$scope.selectedUserIndex].events.length &&
+						 $scope.calendars[$scope.selectedUserIndex].events[i].start.getTime() < new Date().getTime();
+						 i++) {}
+					$scope.selectedCalendarIndex = i;
 					$scope.scrollToTime($scope.calendars[$scope.selectedUserIndex].events[$scope.selectedCalendarIndex].start);
 					$scope.editCalendarMode = true;
 				}
@@ -117,8 +129,11 @@ angular.module('app.controllers')
 				}
 			} else {
 				if ($ionicScrollDelegate.getScrollPosition().left === 0) {
-					$ionicViewSwitcher.nextDirection('back');
-					$state.go('timeToLeaveOverview');
+					// $state.go('timeToLeaveOverview');
+					$ionicNativeTransitions.stateGo('timeToLeaveOverview', {}, {
+						"type": "slide",
+						"direction": "right"
+					});
 				} else {
 					$ionicScrollDelegate.scrollBy(-1 * $window.innerWidth / 4 - 2.5, 0, true);
 				}

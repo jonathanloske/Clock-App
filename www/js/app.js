@@ -3,7 +3,7 @@
 // angular.module is a global place for creating, registering and retrieving Angular modules
 // 'starter' is the name of this angular module example (also set in a <body> attribute in index.html)
 // the 2nd parameter is an array of 'requires'
-angular.module('starter', ['ionic', 'app.controllers', 'app.routes'])
+angular.module('starter', ['ionic', 'ionic-native-transitions', 'app.controllers', 'app.routes'])
 
 .run(function ($ionicPlatform, $rootScope, $state, $ionicScrollDelegate, socket) {
 	$ionicPlatform.ready(function () {
@@ -40,6 +40,12 @@ angular.module('starter', ['ionic', 'app.controllers', 'app.routes'])
 	});
 })
 
+.config(function($ionicNativeTransitionsProvider){
+	$ionicNativeTransitionsProvider.setDefaultOptions({
+		triggerTransitionEvent: '$ionicView.afterEnter',
+		backInOppositeDirection: true,
+	});
+})
 
 .factory('storage', function ($rootScope) {
 
@@ -97,9 +103,27 @@ angular.module('starter', ['ionic', 'app.controllers', 'app.routes'])
 	};
 })
 
+.factory('leds', function ($rootScope) {
+	var leds = new LEDController('localhost', 7890);
+
+	var enabled = false;
+
+	return {
+		toggleFlash: function () {
+			if (enabled) {
+				leds.stopLEDs();
+				enabled = false;
+			} else {
+				leds.spark();
+				enabled = true;
+			}
+		}
+	}
+})
+
 .factory('socket', function ($rootScope, storage) {
 
-	var socket = io.connect("http://localhost:8080", {
+	var socket = io.connect("http://mtin.de:8080", {
 		query: 'id=clock'
 	});
 

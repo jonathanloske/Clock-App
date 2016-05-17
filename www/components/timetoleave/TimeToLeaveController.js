@@ -1,6 +1,6 @@
 angular.module('app.controllers')
 
-.controller('TimeToLeaveController', function ($rootScope, $scope, $state, $ionicViewSwitcher,storage) {
+.controller('TimeToLeaveController', function ($rootScope, $scope, $state, $ionicViewSwitcher, $ionicNativeTransitions, $interval, storage) {
     // get the users' calendars from the storage and listen to updates
     $scope.calendars = storage.getCalendars();
     retrieveLeaveData();
@@ -92,6 +92,10 @@ angular.module('app.controllers')
         };
     };
 
+    $interval(function(){
+        retrieveLeaveData();
+    }, 300);
+
     /*$scope.familyMembers = [
 		{
 			transit: [
@@ -139,13 +143,19 @@ angular.module('app.controllers')
 
     $scope.$on("$ionicView.enter", function (event, data) {
         $rootScope.handleCounterClockwise = function () {
-            $ionicViewSwitcher.nextDirection('back');
-            $state.go('carStatus');
+            // $state.go('carStatus');
+            $ionicNativeTransitions.stateGo('carStatus', {}, {
+                "type": "slide",
+                "direction": "right"
+            });
         };
 
         $rootScope.handleClockwise = function () {
-            $ionicViewSwitcher.nextDirection('forward');
-            $state.go('timeline');
+            // $state.go('timeline');
+            $ionicNativeTransitions.stateGo('timeline', {}, {
+                "type": "slide",
+                "direction": "left"
+            });
         };
     });
 });
