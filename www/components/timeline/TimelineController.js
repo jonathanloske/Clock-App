@@ -63,8 +63,9 @@ angular.module('app.controllers')
 			if($scope.editTransitOption){
 				if($scope.selectedTransitOptionIndex !== $scope.transitOptions.length - 1){
 					$scope.calendars[$scope.selectedUserIndex].events[$scope.selectedCalendarIndex].userSelectedTransitOption = $scope.transitOptions[$scope.selectedTransitOptionIndex];
-					$scope.editMode = false;
-					$scope.editCalendarMode = false;
+					// Stay in selection mode even after selecting
+					// $scope.editMode = false;
+					// $scope.editCalendarMode = false;
 				}
 				$scope.editTransitOption = false;
 			} else if ($scope.editCalendarMode) {
