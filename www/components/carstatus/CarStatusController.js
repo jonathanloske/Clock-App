@@ -29,4 +29,8 @@ angular.module('app.controllers')
                 });
             }
         });
+
+        $scope.$on("$ionicView.leave", function(event, data){
+            leds.toggleFlash();
+        });
     });
