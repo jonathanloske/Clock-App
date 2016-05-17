@@ -70,9 +70,11 @@ a.item {
 .timeline-current-marker{
     position: absolute;
     height: 100vh;
-    border-left: 2px solid red;
+    border-left: 4px solid red;
     margin-left: 15vw;
     z-index: 1;
+    /* Adjust for the wide border */
+    left: -2px;
 }
 
 .timeline-pictures{
