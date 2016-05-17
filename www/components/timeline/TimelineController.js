@@ -23,7 +23,6 @@ angular.module('app.controllers')
 			}
 		}
 		addDurationAndDistanceToEvents();
-		$scope.$apply();
 	};
 
 	storage.subscribe($scope, prepareCalendarForTimeline);
