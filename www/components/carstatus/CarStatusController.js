@@ -1,6 +1,6 @@
 angular.module('app.controllers')
 
-    .controller('CarStatusController', function ($scope, $state, $rootScope, $ionicViewSwitcher, storage) {
+    .controller('CarStatusController', function ($scope, $state, $rootScope, $ionicViewSwitcher, $ionicNativeTransitions, storage) {
         // get the users' carSimulatorData from the storage and listen to updates
         $scope.carSimulatorData = storage.getCarSimulatorData();
 
@@ -21,8 +21,11 @@ angular.module('app.controllers')
             };
 
             $rootScope.handleClockwise = function(){
-                $ionicViewSwitcher.nextDirection('forward');
-                $state.go('timeToLeaveOverview');
+                // $state.go('timeToLeaveOverview');
+                $ionicNativeTransitions.stateGo('timeToLeaveOverview', {}, {
+                    "type": "slide",
+                    "direction": "left"
+                });
             }
         });
     });

@@ -1,6 +1,6 @@
 angular.module('app.controllers')
 
-.controller('TimelineController', function ($scope, storage, $timeout, $document, $rootScope, $ionicScrollDelegate, $ionicViewSwitcher, $state, $window) {
+.controller('TimelineController', function ($scope, storage, $interval, $document, $rootScope, $ionicScrollDelegate, $ionicViewSwitcher, $ionicNativeTransitions, $state, $window) {
 	// get the users' calendars from the storage and listen to updates
 	$scope.calendars = storage.getCalendars();
 
@@ -132,8 +132,11 @@ angular.module('app.controllers')
 				}
 			} else {
 				if ($ionicScrollDelegate.getScrollPosition().left === 0) {
-					$ionicViewSwitcher.nextDirection('back');
-					$state.go('timeToLeaveOverview');
+					// $state.go('timeToLeaveOverview');
+					$ionicNativeTransitions.stateGo('timeToLeaveOverview', {}, {
+						"type": "slide",
+						"direction": "right"
+					});
 				} else {
 					$ionicScrollDelegate.scrollBy(-1 * $window.innerWidth / 4 - 2.5, 0, true);
 				}

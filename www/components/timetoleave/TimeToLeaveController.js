@@ -143,13 +143,19 @@ angular.module('app.controllers')
 
     $scope.$on("$ionicView.enter", function (event, data) {
         $rootScope.handleCounterClockwise = function () {
-            $ionicViewSwitcher.nextDirection('back');
-            $state.go('carStatus');
+            // $state.go('carStatus');
+            $ionicNativeTransitions.stateGo('carStatus', {}, {
+                "type": "slide",
+                "direction": "right"
+            });
         };
 
         $rootScope.handleClockwise = function () {
-            $ionicViewSwitcher.nextDirection('forward');
-            $state.go('timeline');
+            // $state.go('timeline');
+            $ionicNativeTransitions.stateGo('timeline', {}, {
+                "type": "slide",
+                "direction": "left"
+            });
         };
     });
 });
