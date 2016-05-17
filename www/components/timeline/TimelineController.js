@@ -52,7 +52,7 @@ angular.module('app.controllers')
 	$scope.pixelWidthOfOneHour = $window.innerWidth * 0.85 / 4;
 
 	$scope.transitOptions = [
-		'car', 'walk', 'bus', 'bicycle'
+		'car', 'walk', 'bus', 'bicycle', 'cancel'
 	];
 
 	$scope.$on("$ionicView.beforeEnter", function(event, data){
@@ -61,9 +61,11 @@ angular.module('app.controllers')
 	$scope.$on("$ionicView.enter", function(event, data){
 		$rootScope.toggleEditMode = function () {
 			if($scope.editTransitOption){
-				$scope.calendars[$scope.selectedUserIndex].events[$scope.selectedCalendarIndex].userSelectedTransitOption = $scope.transitOptions[$scope.selectedTransitOptionIndex];
-				$scope.editMode = false;
-				$scope.editCalendarMode = false;
+				if($scope.selectedTransitOptionIndex !== $scope.transitOptions.length - 1){
+					$scope.calendars[$scope.selectedUserIndex].events[$scope.selectedCalendarIndex].userSelectedTransitOption = $scope.transitOptions[$scope.selectedTransitOptionIndex];
+					$scope.editMode = false;
+					$scope.editCalendarMode = false;
+				}
 				$scope.editTransitOption = false;
 			} else if ($scope.editCalendarMode) {
 				if($scope.selectedCalendarIndex === -1){
