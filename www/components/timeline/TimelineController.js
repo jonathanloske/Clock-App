@@ -35,16 +35,13 @@ angular.module('app.controllers')
 	}
 
 	// Continually update the time so we can display it
-	var updateTime = function(){
+	$interval(function(){
 		$scope.currentHour = (new Date()).getHours();
 		$scope.currentMinutes = (new Date()).getMinutes();
 		if($scope.currentMinutes < 10){
 			$scope.currentMinutes = '0' + $scope.currentMinutes;
 		};
-		$timeout(updateTime, 300);
-	};
-
-	updateTime();
+	}, 300);
 
 	$scope.editMode = false;
 	$scope.editCalendarMode = false;
