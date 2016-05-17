@@ -79,7 +79,14 @@ angular.module('app.controllers')
 				if($scope.selectedUserIndex === -1){
 					$scope.editMode = false;
 				} else {
-					$scope.selectedCalendarIndex = 0;
+					// Find next event (no need to change transportation option
+					// for events that are over already)
+					var i;
+					for (i = 0;
+						 i < $scope.calendars[$scope.selectedUserIndex].events.length &&
+						 $scope.calendars[$scope.selectedUserIndex].events[i].start.getTime() < new Date().getTime();
+						 i++) {}
+					$scope.selectedCalendarIndex = i;
 					$scope.scrollToTime($scope.calendars[$scope.selectedUserIndex].events[$scope.selectedCalendarIndex].start);
 					$scope.editCalendarMode = true;
 				}
