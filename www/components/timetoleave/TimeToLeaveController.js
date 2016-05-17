@@ -14,7 +14,7 @@ angular.module('app.controllers')
 
     $scope.weather = {
         condition: 'partlysunny',
-        temperature: 23
+        temperature: 71
     }
 
     $scope.goToIndex = function (index) {
