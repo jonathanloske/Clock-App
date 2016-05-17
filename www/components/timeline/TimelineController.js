@@ -54,6 +54,11 @@ angular.module('app.controllers')
 	$scope.transitOptions = [
 		'car', 'walk', 'bus', 'bicycle', 'cancel'
 	];
+	// These are the transit options we get from the server. Displaying them is not
+	// as consistent as our current options so we translate between the two.
+	$scope.transitTranslations = [
+		'car', 'walking', 'subway', 'bicycle'
+	]
 
 	$scope.$on("$ionicView.beforeEnter", function(event, data){
 		prepareCalendarForTimeline();
@@ -62,7 +67,7 @@ angular.module('app.controllers')
 		$rootScope.toggleEditMode = function () {
 			if($scope.editTransitOption){
 				if($scope.selectedTransitOptionIndex !== $scope.transitOptions.length - 1){
-					$scope.calendars[$scope.selectedUserIndex].events[$scope.selectedCalendarIndex].userSelectedTransitOption = $scope.transitOptions[$scope.selectedTransitOptionIndex];
+					$scope.calendars[$scope.selectedUserIndex].events[$scope.selectedCalendarIndex].userSelectedTransitOption = $scope.transitTranslations[$scope.selectedTransitOptionIndex];
 					// Stay in selection mode even after selecting
 					// $scope.editMode = false;
 					// $scope.editCalendarMode = false;
