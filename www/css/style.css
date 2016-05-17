@@ -13,6 +13,10 @@ a.item {
     padding: 0;
 }
 
+.row.children{
+    height: 50%;
+}
+
 .selected{
     box-shadow: 0 0 10px 6px white !important;
 }
