@@ -57,10 +57,11 @@ angular.module('app.controllers')
 
 	$scope.$on("$ionicView.beforeEnter", function(event, data){
 		prepareCalendarForTimeline();
-
+	});
+	$scope.$on("$ionicView.enter", function(event, data){
 		$rootScope.toggleEditMode = function () {
 			if($scope.editTransitOption){
-				$scope.calendars[$scope.selectedUserIndex].events[$scope.selectedCalendarIndex].preferredWayOfTransit = $scope.transitOptions[$scope.selectedTransitOptionIndex];
+				$scope.calendars[$scope.selectedUserIndex].events[$scope.selectedCalendarIndex].userSelectedTransitOption = $scope.transitOptions[$scope.selectedTransitOptionIndex];
 				$scope.editMode = false;
 				$scope.editCalendarMode = false;
 				$scope.editTransitOption = false;

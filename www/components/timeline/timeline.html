@@ -68,7 +68,7 @@
                                 'width': (event.transit_options[keys(event.transit_options)[0]].duration / 60 * 25) + '%'
                             }"
                             ng-if="!editTransitOption || !(calendars[selectedUserIndex] === calendar && selectedCalendarIndex === $index)">
-                            <i ng-class="['icon', 'ion-android-' + (event.preferredWayOfTransit? event.preferredWayOfTransit : keys(event.transit_options)[0])]"></i>
+                            <i ng-class="['icon', 'ion-android-' + (event.userSelectedTransitOption? event.userSelectedTransitOption : keys(event.transit_options)[0])]"></i>
                         </div>
                         <div
                             class="transit-options"
