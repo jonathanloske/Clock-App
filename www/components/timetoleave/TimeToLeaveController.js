@@ -1,6 +1,6 @@
 angular.module('app.controllers')
 
-.controller('TimeToLeaveController', function ($rootScope, $scope, $state, $ionicViewSwitcher, $interval, storage) {
+.controller('TimeToLeaveController', function ($rootScope, $scope, $state, $ionicViewSwitcher, $ionicNativeTransitions, $interval, storage) {
     // get the users' calendars from the storage and listen to updates
     $scope.calendars = storage.getCalendars();
     retrieveLeaveData();
