@@ -63,12 +63,14 @@
                             'flex': '0 0 ' + (event.durationInMinutes / 60 * 25) + '%'
                         }">
                         <div
-                            class="primary-transit-option"
+                            ng-class="['primary-transit-option',
+                                editCalendarMode && !editTransitOption && calendars[selectedUserIndex] === calendar && selectedCalendarIndex === $index?
+                                'selected' : '']"
                             ng-style="{
-                                'width': (event.transit_options[keys(event.transit_options)[0]].duration / 60 * 25) + '%'
+                                'width': ((event.userSelectedTransitOption? event.transit_options[event.userSelectedTransitOption].duration : event.optimized_transit.best.duration) / 60 * 25) + '%'
                             }"
                             ng-if="!editTransitOption || !(calendars[selectedUserIndex] === calendar && selectedCalendarIndex === $index)">
-                            <i ng-class="['icon', 'ion-android-' + (event.preferredWayOfTransit? event.preferredWayOfTransit : keys(event.transit_options)[0])]"></i>
+                            <i ng-class="['transit-option-icon', 'icon', 'ion-android-' + (event.userSelectedTransitOption? transitOptions[transitTranslations.indexOf(event.userSelectedTransitOption)] : transitOptions[transitTranslations.indexOf(event.optimized_transit.best.name)])]"></i>
                         </div>
                         <div
                             class="transit-options"
@@ -88,7 +90,7 @@
                 <div class="minimap-indicator"
                      ng-if="$index === 0"
                      ng-style="{'transform':
-                    'translate3d(' + minimapScrollPosition + 'vw, 0, 0)'}"></div>
+                        'translate3d(' + minimapScrollPosition + 'vw, 0, 0)'}"></div>
                 <div
                     ng-class="['col', 'timeline-cell', 'filled']"
                     ng-repeat="event in calendar.events track by $index"

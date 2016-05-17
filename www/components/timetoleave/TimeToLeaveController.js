@@ -1,6 +1,6 @@
 angular.module('app.controllers')
 
-.controller('TimeToLeaveController', function ($rootScope, $scope, $state, $ionicViewSwitcher,storage) {
+.controller('TimeToLeaveController', function ($rootScope, $scope, $state, $ionicViewSwitcher, $interval, storage) {
     // get the users' calendars from the storage and listen to updates
     $scope.calendars = storage.getCalendars();
     retrieveLeaveData();
@@ -14,7 +14,7 @@ angular.module('app.controllers')
 
     $scope.weather = {
         condition: 'partlysunny',
-        temperature: 23
+        temperature: 71
     }
 
     $scope.goToIndex = function (index) {
@@ -48,8 +48,16 @@ angular.module('app.controllers')
             var now = new Date();
             calendar.events.forEach(function (event) {
                 var msecsUntilEvent = (event.start - now);
-                if (msecsUntilEvent < 0) return; // we dont want events that are already over
-                if (nextEvent.msecsUntilStart == -1 || nextEvent.msecsUntilStart > msecsUntilEvent) {
+                // we dont want events that are already over or ones that the user is
+                // too late for anyway (we take 2 minutes after having left for the next
+                // event as being too late)
+                if (msecsUntilEvent < 0 ||
+                    (event.start.getTime() -
+                     event.optimized_transit.best.duration * 60000 - now.getTime() < -1000 * 60 * 2 &&
+                     event.start.getTime() - event.optimized_transit.alternative.duration * 60000 - now.getTime() < -1000 * 60 * 2)){
+                    return;
+                }
+                if (nextEvent.msecsUntilStart === -1 || nextEvent.msecsUntilStart > msecsUntilEvent) {
                     nextEvent.msecsUntilStart = msecsUntilEvent;
                     nextEvent.event = event;
                 }
@@ -59,7 +67,6 @@ angular.module('app.controllers')
             if (nextEvent.event != null) {
                 parent.nextEvent = nextEvent.event.title;
                 if (nextEvent.event.optimized_transit != undefined) {
-                    // new Date(oldDateObj.getTime() + diff*60000);
                     var timeToLeaveBest = new Date(nextEvent.event.start.getTime() - nextEvent.event.optimized_transit.best.duration * 60000);
 
                     var timeToLeaveSecondBest = new Date(nextEvent.event.start.getTime() - nextEvent.event.optimized_transit.alternative.duration * 60000);
@@ -84,6 +91,10 @@ angular.module('app.controllers')
             $scope.familyMembers.push(parent);
         };
     };
+
+    $interval(function(){
+        retrieveLeaveData();
+    }, 300);
 
     /*$scope.familyMembers = [
 		{
@@ -132,13 +143,19 @@ angular.module('app.controllers')
 
     $scope.$on("$ionicView.enter", function (event, data) {
         $rootScope.handleCounterClockwise = function () {
-            $ionicViewSwitcher.nextDirection('back');
-            $state.go('carStatus');
+            // $state.go('carStatus');
+            $ionicNativeTransitions.stateGo('carStatus', {}, {
+                "type": "slide",
+                "direction": "right"
+            });
         };
 
         $rootScope.handleClockwise = function () {
-            $ionicViewSwitcher.nextDirection('forward');
-            $state.go('timeline');
+            // $state.go('timeline');
+            $ionicNativeTransitions.stateGo('timeline', {}, {
+                "type": "slide",
+                "direction": "left"
+            });
         };
     });
 });

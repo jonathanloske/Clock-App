@@ -47,6 +47,14 @@
         "is_top_level": true,
         "variables": {}
     },
+    "com.telerik.plugins.nativepagetransitions": {
+        "source": {
+            "type": "registry",
+            "id": "com.telerik.plugins.nativepagetransitions"
+        },
+        "is_top_level": true,
+        "variables": {}
+    },
     "cordova-plugin-crosswalk-webview": {
         "source": {
             "type": "registry",
