@@ -27,8 +27,8 @@ a.item {
 
 .timeline-time {
     position: absolute;
-    font-size: 90px;
-    color: black;
+    font-size: 6.5vw;
+    color: white;
     top: 16px;
     left: -1vw;
     z-index: 2;
