@@ -52,7 +52,7 @@ angular.module('app.controllers')
                 // too late for anyway (we take 2 minutes after having left for the next
                 // event as being too late)
                 if (msecsUntilEvent < 0 ||
-                    (event.start.getTime() -
+                    (event.optimized_transit && event.start.getTime() -
                      event.optimized_transit.best.duration * 60000 - now.getTime() < -1000 * 60 * 2 &&
                      event.start.getTime() - event.optimized_transit.alternative.duration * 60000 - now.getTime() < -1000 * 60 * 2)){
                     return;
