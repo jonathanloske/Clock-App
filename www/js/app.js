@@ -95,9 +95,27 @@ angular.module('starter', ['ionic', 'app.controllers', 'app.routes'])
 	};
 })
 
+.factory('leds', function ($rootScope) {
+	var leds = new LEDController('localhost', 7890);
+
+	var enabled = false;
+
+	return {
+		toggleFlash: function () {
+			if (enabled) {
+				leds.stopLEDs();
+				enabled = false;
+			} else {
+				leds.spark();
+				enabled = true;
+			}
+		}
+	}
+})
+
 .factory('socket', function ($rootScope, storage) {
 
-	var socket = io.connect("http://localhost:8080", {
+	var socket = io.connect("http://mtin.de:8080", {
 		query: 'id=clock'
 	});
 

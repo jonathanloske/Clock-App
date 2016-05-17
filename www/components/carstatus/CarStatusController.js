@@ -1,6 +1,6 @@
 angular.module('app.controllers')
 
-    .controller('CarStatusController', function ($scope, $state, $rootScope, $ionicViewSwitcher, storage) {
+    .controller('CarStatusController', function ($scope, $state, $rootScope, $ionicViewSwitcher, storage, leds) {
         // get the users' carSimulatorData from the storage and listen to updates
         $scope.carSimulatorData = storage.getCarSimulatorData();
 
@@ -17,6 +17,7 @@ angular.module('app.controllers')
 
 
         $scope.$on("$ionicView.enter", function(event, data){
+            leds.toggleFlash();
             $rootScope.handleCounterClockwise = function(){
             };
 
