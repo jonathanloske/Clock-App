@@ -14,7 +14,7 @@ a.item {
 }
 
 .selected{
-    box-shadow: 0 0 10px 6px #387ef5 !important;
+    box-shadow: 0 0 10px 6px white !important;
 }
 
 .timeline-page, .timetoleave-page{
@@ -210,7 +210,7 @@ a.item {
 .timelines{
     position: absolute;
     top: 35px;
-    margin-left: calc(30vh + 1px);
+    margin-left: 15vw;
     width: 85vw;
 }
 
@@ -253,7 +253,7 @@ a.item {
 }
 
 .timeline:nth-of-type(1) .filled > .primary-transit-option{
-    background: repeating-linear-gradient(45deg, #387ef5, #387ef5 10px, #525252 10px, #525252 13px);
+    background: repeating-linear-gradient(45deg, black, black 10px, #387ef5 10px, #387ef5 16px);
 }
 
 .timeline:nth-of-type(2) .filled{
@@ -261,7 +261,7 @@ a.item {
 }
 
 .timeline:nth-of-type(2) .filled > .primary-transit-option{
-    background: repeating-linear-gradient(45deg, #33cd5f, #33cd5f 10px, #525252 10px, #525252 13px);
+    background: repeating-linear-gradient(45deg, black, black 10px, #33cd5f 10px, #33cd5f 16px);
 }
 
 .timeline:nth-of-type(3) .filled{
@@ -269,7 +269,7 @@ a.item {
 }
 
 .timeline:nth-of-type(3) .filled > .primary-transit-option{
-    background: repeating-linear-gradient(45deg, #886aea, #886aea 10px, #525252 10px, #525252 13px);
+    background: repeating-linear-gradient(45deg, black, black 10px, #886aea 10px, #886aea 16px);
 }
 
 .timeline:nth-of-type(4) .filled{
@@ -277,7 +277,7 @@ a.item {
 }
 
 .timeline:nth-of-type(4) .filled > .primary-transit-option{
-    background: repeating-linear-gradient(45deg, #ef473a, #ef473a 10px, #525252 10px, #525252 13px);
+    background: repeating-linear-gradient(45deg, black, black 10px, #ef473a 10px, #ef473a 16px);
 }
 
 .timeline:nth-of-type(5) .filled{
@@ -285,7 +285,7 @@ a.item {
 }
 
 .timeline:nth-of-type(5) .filled > .primary-transit-option{
-    background: repeating-linear-gradient(45deg, #444, #444 10px, #525252 10px, #525252 13px);
+    background: repeating-linear-gradient(45deg, black, black 10px, #444 10px, #444 16px);
 }
 
 .row:nth-of-type(1) .col:nth-of-type(1) .radial-progress .fill{
