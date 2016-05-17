@@ -105,6 +105,7 @@ a.item {
     width: 12vw;
     border-radius: 6px;
     box-shadow: 0 0 6px 0px black;
+    margin-top: 40px;
 }
 
 .cancel-button{
@@ -152,10 +153,10 @@ a.item {
 
 .timeline .filled{
     color: white;
-    white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
     font-size: 30px;
+    line-height: 28px;
     font-weight: bold;
     border-left: 1px solid black;
     border-right: 1px solid black;
@@ -165,7 +166,6 @@ a.item {
 
 .timeline .timelines1 {
     height: calc(94vh - 50px);
-    line-height: calc(190vh - 130px);
 }
 
 .timeline .timelines1 > .cancel-button {
@@ -174,7 +174,6 @@ a.item {
 
 .timeline .timelines2 {
     height: calc(47vh - 26px);
-    line-height: calc(94vh - 82px);
 }
 
 .timeline .timelines2 > .cancel-button {
@@ -183,7 +182,6 @@ a.item {
 
 .timeline .timelines3 {
     height: calc(31.3vh - 20px);
-    line-height: calc(64vh - 70px);
 }
 
 .timeline .timelines3 > .cancel-button {
@@ -192,7 +190,6 @@ a.item {
 
 .timeline .timelines4 {
     height: calc(23.5vh - 20px);
-    line-height: calc(47vh - 70px);
 }
 
 .timeline .timelines4 > .cancel-button {
@@ -201,7 +198,6 @@ a.item {
 
 .timeline .timelines5 {
     height: calc(19vh - 17px);
-    line-height: calc(38vh - 64px);
 }
 
 .timeline .timelines5 > .cancel-button {
