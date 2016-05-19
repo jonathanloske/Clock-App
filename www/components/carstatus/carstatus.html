@@ -1,21 +1,52 @@
 <ion-view title="Car Status">
-    <ion-content ng-click="goTo()">
+    <ion-content class="car-status-view">
 
-        <div class="card">
-            <div class="item item-divider">
-                Car Battery Level:
-            </div>
-            <div class="item item-text-wrap">
-                {{ carSimulatorData.battery_level }}
-            </div>
-        </div>
+        <div class="row">
+            <div class="car-info-card-box col">
 
-        <div class="card">
-            <div class="item item-divider">
-                Car Oil Level:
+                <div class="car-info-card">
+                    <div class="row">
+                        <div class="car-info-headline col">BATTERY</div>
+                        <div class="car-info-sensor-data col">
+                            <div class="car-info-sensor-data-number">50</div>
+                            <div class="car-info-sensor-data-unit">mi.</div>
+                        </div>
+                    </div>
+                    <div class="car-info-level">50</div>
+                    <div class="car-info-prefix">Please charge for upcoming trip:</div>
+                    <div class="car-info-subject">San Francisco</div>
+                    <div class="car-info-detail">pick up John at de young museum</div>
+
+                </div>
+                <div class="car-info-card">
+                    <div class="car-info-headline">MAINTENANCE</div>
+                    <div class="car-info-level">70</div>
+                    <div class="car-info-prefix">Oil change appointment:</div>
+                    <div class="car-info-subject">July 4th, Sunday</div>
+                    <div class="car-info-detail">Audi Palo Alto</div>
+                </div>
+                <div class="car-info-card">
+                    <div class="row">
+                        <div class="col">
+                            <div class="car-info-headline">PARKING</div>
+                            <div class="car-info-subject car-info-subject-map">Serra St.</div>
+                            <div class="car-info-detail">Stanford, CA</div>
+                        </div>
+                        <div class="col">
+                            <div class="car-info-map">X Y</div>
+                        </div>
+                    </div>
+
+
+                </div>
+
             </div>
-            <div class="item item-text-wrap">
-                {{ carSimulatorData.oil_level }}
+
+            <div class="car-schematic col">
+                <div class="car-lock-status-front">Locked</div>
+                <div class="car-lock-status-left">Unocked</div>
+                <div class="car-lock-status-right">Locked</div>
+                <div class="car-lock-status-back">Locked</div>
             </div>
         </div>
 

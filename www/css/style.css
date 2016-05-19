@@ -376,3 +376,67 @@ a.item {
     position: absolute;
     border-radius: 6px;
 }
+
+.car-info-card-box {
+    height: 100vh;
+}
+
+.car-schematic {
+    height: 100vh;
+}
+
+.car-info-card {
+    height: 31vh;
+    margin: 2vh;
+    padding: 2vh;
+}
+
+.car-info-subject {
+    font-weight: bold;
+    font-size: 4vh;
+}
+
+.car-info-headline.col {
+    font-size: 4vh;
+}
+
+.car-info-sensor-data-number {
+    font-size: 5vh;
+    font-weight: bold;
+    display: inline;
+}
+
+.car-info-sensor-data-unit {
+    display: inline;
+    font-size: 3vh;
+}
+
+.car-info-subject {
+    margin-top: 3vh;
+}
+
+.car-info-prefix {
+    margin-top: 1vh;
+}
+
+.car-info-level {
+    margin-top: 4vh;
+}
+
+.car-info-sensor-data.col {
+    margin-left: 16vw;
+    margin-top: 1vh;
+}
+
+.car-info-subject.car-info-subject-map {
+    margin-top: 12vh;
+}
+
+.car-status-view{
+    background: black;
+    color: white;
+}
+
+.car-info-card {
+    background-color: #525252;
+}
