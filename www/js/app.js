@@ -43,6 +43,7 @@ angular.module('starter', ['ionic', 'ionic-native-transitions', 'app.controllers
 .config(function($ionicNativeTransitionsProvider){
 	$ionicNativeTransitionsProvider.setDefaultOptions({
 		triggerTransitionEvent: '$ionicView.afterEnter',
+		slowdownfactor: 1,
 		backInOppositeDirection: true,
 	});
 })
