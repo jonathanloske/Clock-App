@@ -26,10 +26,10 @@ angular.module('starter', ['ionic', 'ionic-native-transitions', 'app.controllers
 		// If user presses 'a' or turns the knob counterclockwise
 		if (event.keyCode === 65) {
 			$rootScope.handleCounterClockwise();
-		// If user presses 'd' or turns the knob clockwise
+			// If user presses 'd' or turns the knob clockwise
 		} else if (event.keyCode === 68) {
 			$rootScope.handleClockwise();
-		// If user presses the Space bar or presses the knob
+			// If user presses the Space bar or presses the knob
 		} else if (event.keyCode === 32) {
 			$rootScope.toggleEditMode();
 		}
@@ -40,7 +40,7 @@ angular.module('starter', ['ionic', 'ionic-native-transitions', 'app.controllers
 	});
 })
 
-.config(function($ionicNativeTransitionsProvider){
+.config(function ($ionicNativeTransitionsProvider) {
 	$ionicNativeTransitionsProvider.setDefaultOptions({
 		triggerTransitionEvent: '$ionicView.afterEnter',
 		slowdownfactor: 1,
@@ -124,7 +124,7 @@ angular.module('starter', ['ionic', 'ionic-native-transitions', 'app.controllers
 
 .factory('socket', function ($rootScope, storage) {
 
-	var socket = io.connect("http://mtin.de:8080", {
+	var socket = io.connect("http://localhost:8080", {
 		query: 'id=clock'
 	});
 
@@ -170,7 +170,7 @@ angular.module('starter', ['ionic', 'ionic-native-transitions', 'app.controllers
 	};
 })
 
-.directive('leaveTimeIndicator', function() {
+.directive('leaveTimeIndicator', function () {
 	return {
 		scope: {
 			transit: '=',
