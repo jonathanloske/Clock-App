@@ -124,7 +124,7 @@ LEDController.prototype._spark = function () {
         this.stop = 0;
         return;
     } else {
-        console.log("[LEDController] Next spark with " + (thisTime - this.startTime));
+        //console.log("[LEDController] Next spark with " + (thisTime - this.startTime));
     }
 
     this.Frame.clean();
@@ -138,7 +138,7 @@ LEDController.prototype._spark = function () {
     }
 
     this._advancedFrame(this.Frame);
-    console.log("[LEDController] setting timeout to: " + dT);
+    //console.log("[LEDController] setting timeout to: " + dT);
     setTimeout(this._spark.bind(this), dT);
 }
 
