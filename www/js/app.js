@@ -29,8 +29,8 @@ angular.module('starter', ['ionic', 'ionic-native-transitions', 'app.controllers
 			// If user presses 'd' or turns the knob clockwise
 		} else if (event.keyCode === 68) {
 			$rootScope.handleClockwise();
-			// If user presses the Space bar or presses the knob
-		} else if (event.keyCode === 32) {
+			// If user presses 'k' or presses the knob
+		} else if (event.keyCode === 75) {
 			$rootScope.toggleEditMode();
 		}
 	};
