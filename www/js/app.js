@@ -124,7 +124,7 @@ angular.module('starter', ['ionic', 'ionic-native-transitions', 'app.controllers
 
 .factory('socket', function ($rootScope, storage) {
 
-	var socket = io.connect("http://localhost:8080", {
+	var socket = io.connect("http://mtin.de:8080", {
 		query: 'id=clock'
 	});
 
