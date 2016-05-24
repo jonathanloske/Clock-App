@@ -174,7 +174,9 @@ a.item {
 }
 
 .timeline .timelines2 {
-    height: calc(47vh - 26px);
+    height: calc(37vh - 26px);
+    margin-top: 5vh;
+    margin-bottom: 5vh;
 }
 
 .timeline .timelines2 > .cancel-button {
@@ -182,7 +184,9 @@ a.item {
 }
 
 .timeline .timelines3 {
-    height: calc(31.3vh - 20px);
+    height: calc(26.3vh - 20px);
+    margin-top: 2.5vh;
+    margin-bottom: 2.5vh;
 }
 
 .timeline .timelines3 > .cancel-button {
@@ -190,7 +194,9 @@ a.item {
 }
 
 .timeline .timelines4 {
-    height: calc(23.5vh - 20px);
+    height: calc(19.5vh - 20px);
+    margin-top: 2vh;
+    margin-bottom: 2vh;
 }
 
 .timeline .timelines4 > .cancel-button {
@@ -198,7 +204,9 @@ a.item {
 }
 
 .timeline .timelines5 {
-    height: calc(19vh - 17px);
+    height: calc(16vh - 17px);
+    margin-top: 1.5vh;
+    margin-bottom: 1.vh;
 }
 
 .timeline .timelines5 > .cancel-button {
