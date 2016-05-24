@@ -93,7 +93,7 @@ angular.module('starter', ['ionic', 'ionic-native-transitions', 'app.controllers
 		deleteCalendar: function (username) {
 			calendars.forEach(function (currentCal, index) {
 				if (currentCal.name == username) {
-					delete calendars[index];
+					calendars.splice(index, 1);
 					$rootScope.$emit('storage-has-changed');
 				}
 			});
