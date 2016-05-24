@@ -13,7 +13,7 @@
                         </div>
                     </div>
                     <div class="car-info-level">
-                        <span ng-style="{'width': carSimulatorData['battery'] + '%'}" class="alert"></span>
+                        <span ng-style="{'width': carSimulatorData['battery'] + '%'}" class="{{ carSimulatorData['battery'] > 35 ? 'assertive' : 'alert' }}"></span>
                     </div>
                     <div class="car-info-prefix">Please charge for upcoming trip:</div>
                     <div class="car-info-subject">San Francisco</div>
@@ -23,7 +23,7 @@
                 <div class="car-info-card">
                     <div class="car-info-headline">MAINTENANCE</div>
                     <div class="car-info-level">
-                        <span ng-style="{'width': carSimulatorData['oil'] + '%'}" class="assertive"></span>
+                        <span ng-style="{'width': carSimulatorData['oil'] + '%'}" class="{{ carSimulatorData['oil'] > 35 ? 'assertive' : 'alert' }}"></span>
                     </div>
                     <div class="car-info-prefix">Oil change appointment:</div>
                     <div class="car-info-subject">July 4th, Sunday</div>
