@@ -9,23 +9,25 @@ a.item {
     height: calc(50vh - 16px);
 }
 
-.row, .col{
+.row,
+.col {
     padding: 0;
 }
 
-.row.children{
+.row.children {
     height: 50%;
 }
 
-.selected{
+.selected {
     box-shadow: 0 0 10px 6px white !important;
 }
 
-.timeline-page, .timetoleave-page{
+.timeline-page,
+.timetoleave-page {
     background-color: black;
 }
 
-.timetoleave-page .col{
+.timetoleave-page .col {
     text-align: center;
 }
 
@@ -37,41 +39,42 @@ a.item {
     z-index: 2;
 }
 
-.transportation{
+.transportation {
     border-radius: 100%;
     overflow: hidden;
     background-size: cover;
     color: white;
 }
-.transportation-with-shadow{
+
+.transportation-with-shadow {
     box-shadow: inset 0px 0px 40vh grey;
 }
 
-.radial-progress .transportation i{
+.radial-progress .transportation i {
     line-height: 25vh;
     font-size: 20vh;
     vertical-align: bottom;
 }
 
-.radial-progress.small .transportation i{
+.radial-progress.small .transportation i {
     line-height: 10vh;
     font-size: 7vh;
 }
 
-.transportation .primary-transportation{
+.transportation .primary-transportation {
     width: 40vh;
     height: 40vh;
     text-align: center;
     font-size: 50px;
 }
 
-.transportation .secondary-transportation{
+.transportation .secondary-transportation {
     width: 20vh;
     height: 20vh;
     font-size: 4vh;
 }
 
-.timeline-current-marker{
+.timeline-current-marker {
     position: absolute;
     height: 100vh;
     border-left: 4px solid red;
@@ -82,7 +85,7 @@ a.item {
     transition: transform 0.3s linear;
 }
 
-.timeline-pictures{
+.timeline-pictures {
     position: absolute;
     /* Make the element 100% wide so that even when the user completely overscrolls,
        the background is still in the background-color of this element. */
@@ -95,21 +98,21 @@ a.item {
        is never visible since we already made the container really wide) */
     box-shadow: 0 0 20px 0 black inset;
     padding-left: 100%;
-    width: calc( 100% + 15vw );
+    width: calc( 100% + 15vw);
     height: 110vh;
     background-color: #525252;
     padding-top: calc( 10px + 5vh);
     text-align: center;
 }
 
-.timeline-pictures img{
+.timeline-pictures img {
     width: 12vw;
     border-radius: 6px;
     box-shadow: 0 0 6px 0px black;
     margin-top: 40px;
 }
 
-.cancel-button{
+.cancel-button {
     width: 12vw;
     text-align: center;
     color: black;
@@ -125,13 +128,13 @@ a.item {
     box-shadow: 0 0 6px 2px black;
 }
 
-.timeline-pictures .col > .cancel-button{
+.timeline-pictures .col > .cancel-button {
     position: relative;
     top: -10px;
     line-height: initial;
 }
 
-.timeline-hours{
+.timeline-hours {
     color: white;
     padding-top: 0px;
     margin-left: 15vw;
@@ -141,7 +144,7 @@ a.item {
     width: 85vw;
 }
 
-.timeline-hours .hour-marker{
+.timeline-hours .hour-marker {
     height: 100vh;
     border-right: 1px solid grey;
     border-left: 1px solid grey;
@@ -152,7 +155,7 @@ a.item {
     margin-right: 12.5%;
 }
 
-.timeline .filled{
+.timeline .filled {
     color: white;
     overflow: hidden;
     text-overflow: ellipsis;
@@ -219,18 +222,19 @@ a.item {
     margin-top: -26vh;
 }
 
-.timeline{
+.timeline {
     margin-bottom: 10px;
 }
 
-.timelines{
+.timelines {
     position: absolute;
     top: 35px;
     margin-left: 15vw;
     width: 85vw;
 }
 
-.timeline-cell > .primary-transit-option, .timeline-cell > .transit-options{
+.timeline-cell > .primary-transit-option,
+.timeline-cell > .transit-options {
     position: absolute;
     /* Choose a value that just fits all of the transit options*/
     width: 20%;
@@ -239,96 +243,96 @@ a.item {
     word-wrap: break-word;
 }
 
-.primary-transit-option{
+.primary-transit-option {
     border: 2px solid #525252;
     text-align: center;
     height: inherit;
     padding: 5% 0;
     line-height: initial;
-    transform: translate3d(-100% , 0,0);
+    transform: translate3d(-100%, 0, 0);
 }
 
-.transit-option-icon{
+.transit-option-icon {
     font-size: 100px;
 }
 
-.transit-options{
+.transit-options {
     border: 1px solid white;
     background-color: black;
     z-index: 2;
-    transform: translate3d(-100% , 0,0);
+    transform: translate3d(-100%, 0, 0);
 }
 
-.transit-options .transit-option{
+.transit-options .transit-option {
     line-height: initial;
     text-align: right;
 }
 
-.transit-options :not(.transit-option:last-of-type){
+.transit-options:not(.transit-option:last-of-type) {
     border-bottom: 1px solid white;
 }
 
-.timeline:nth-of-type(1) .filled{
-    background-color: #387ef5;
+.timeline:nth-of-type(1) .filled {
+    background: linear-gradient(135deg, #DAA28C 10%, #B06983 100%)
 }
 
-.timeline:nth-of-type(1) .filled > .primary-transit-option{
-    background: repeating-linear-gradient(45deg, black, black 10px, #387ef5 10px, #387ef5 16px);
+.timeline:nth-of-type(1) .filled > .primary-transit-option {
+    background: repeating-linear-gradient(45deg, black, black 10px, #DAA28C 10px, #DAA28C 16px);
 }
 
-.timeline:nth-of-type(2) .filled{
-    background-color: #33cd5f;
+.timeline:nth-of-type(2) .filled {
+    background: linear-gradient(135deg, #BCDE7E 10%, #73B542 100%);
 }
 
-.timeline:nth-of-type(2) .filled > .primary-transit-option{
-    background: repeating-linear-gradient(45deg, black, black 10px, #33cd5f 10px, #33cd5f 16px);
+.timeline:nth-of-type(2) .filled > .primary-transit-option {
+    background: repeating-linear-gradient(45deg, black, black 10px, #BCDE7E 10px, #BCDE7E 16px);
 }
 
-.timeline:nth-of-type(3) .filled{
-    background-color: #886aea;
+.timeline:nth-of-type(3) .filled {
+    background: linear-gradient(135deg, #81B8BC 10%, #349685 100%);
 }
 
-.timeline:nth-of-type(3) .filled > .primary-transit-option{
-    background: repeating-linear-gradient(45deg, black, black 10px, #886aea 10px, #886aea 16px);
+.timeline:nth-of-type(3) .filled > .primary-transit-option {
+    background: repeating-linear-gradient(45deg, black, black 10px, #81B8BC 10px, #81B8BC 16px);
 }
 
-.timeline:nth-of-type(4) .filled{
-    background-color: #ef473a;
+.timeline:nth-of-type(4) .filled {
+    background: linear-gradient(135deg, #D19C7E 10%, #F86451 100%);
 }
 
-.timeline:nth-of-type(4) .filled > .primary-transit-option{
-    background: repeating-linear-gradient(45deg, black, black 10px, #ef473a 10px, #ef473a 16px);
+.timeline:nth-of-type(4) .filled > .primary-transit-option {
+    background: repeating-linear-gradient(45deg, black, black 10px, #D19C7E 10px, #D19C7E 16px);
 }
 
-.timeline:nth-of-type(5) .filled{
-    background-color: #444;
+.timeline:nth-of-type(5) .filled {
+    background: linear-gradient(135deg, #8A8BD1 10%, #9148F8 100%);
 }
 
-.timeline:nth-of-type(5) .filled > .primary-transit-option{
-    background: repeating-linear-gradient(45deg, black, black 10px, #444 10px, #444 16px);
+.timeline:nth-of-type(5) .filled > .primary-transit-option {
+    background: repeating-linear-gradient(45deg, black, black 10px, #8A8BD1 10px, #8A8BD1 16px);
 }
 
-.row:nth-of-type(1) .col:nth-of-type(1) .radial-progress .fill{
-    background-color: #387ef5;
+.row:nth-of-type(1) .col:nth-of-type(1) .radial-progress .fill {
+    background-color: #B06983;
 }
 
-.row:nth-of-type(1) .col:nth-of-type(2) .radial-progress .fill{
-    background-color: #33cd5f;
+.row:nth-of-type(1) .col:nth-of-type(2) .radial-progress .fill {
+    background-color: #73B542;
 }
 
-.row:nth-of-type(2) .col:nth-of-type(1) .radial-progress .fill{
-    background-color: #886aea;
+.row:nth-of-type(2) .col:nth-of-type(1) .radial-progress .fill {
+    background-color: #349685;
 }
 
-.row:nth-of-type(2) .col:nth-of-type(2) .radial-progress .fill{
-    background-color: #ef473a;
+.row:nth-of-type(2) .col:nth-of-type(2) .radial-progress .fill {
+    background-color: #F86451;
 }
 
-.row:nth-of-type(2) .col:nth-of-type(3) .radial-progress .fill{
-    background-color: #444;
+.row:nth-of-type(2) .col:nth-of-type(3) .radial-progress .fill {
+    background-color: #8A8BD1;
 }
 
-.weather{
+.weather {
     color: white;
     transform: translate3d(45vw, calc(-60vh - 60px), 0);
     width: 10vw;
@@ -336,12 +340,12 @@ a.item {
     text-align: center;
 }
 
-.weather p{
+.weather p {
     transform: translate3d(0, -10px, 0);
     font-size: 40px;
 }
 
-.weather i{
+.weather i {
     font-size: 100px;
 }
 
@@ -384,7 +388,7 @@ a.item {
     margin-bottom: 5px;
 }
 
-.minimap-indicator{
+.minimap-indicator {
     background-color: rgba(180, 180, 180, 0.4);
     height: 6vh;
     width: 20.606vw;
@@ -452,18 +456,19 @@ a.item {
     margin-top: 12vh;
 }
 
-.car-status-view{
+.car-status-view {
     background: black;
     color: white;
 }
 
 .car-info-level {
-    height: 20px;  /* Can be anything */
+    height: 20px;
+    /* Can be anything */
     position: relative;
     background: #555;
     border-radius: 25px;
     padding: 10px;
-    box-shadow: inset 0 -1px 1px rgba(255,255,255,0.3);
+    box-shadow: inset 0 -1px 1px rgba(255, 255, 255, 0.3);
 }
 
 .car-info-level > span {
@@ -473,9 +478,7 @@ a.item {
     border-bottom-right-radius: 8px;
     border-top-left-radius: 20px;
     border-bottom-left-radius: 20px;
-    box-shadow:
-            inset 0 2px 9px  rgba(255,255,255,0.3),
-            inset 0 -2px 6px rgba(0,0,0,0.4);
+    box-shadow: inset 0 2px 9px rgba(255, 255, 255, 0.3), inset 0 -2px 6px rgba(0, 0, 0, 0.4);
     position: relative;
     overflow: hidden;
     top: -10px;

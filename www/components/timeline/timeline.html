@@ -70,7 +70,12 @@
                                 'width': ((event.userSelectedTransitOption? event.transit_options[event.userSelectedTransitOption].duration : event.optimized_transit.best.duration) / 60 * 25) + '%'
                             }"
                             ng-if="!editTransitOption || !(calendars[selectedUserIndex] === calendar && selectedCalendarIndex === $index)">
-                            <i ng-class="['transit-option-icon', 'icon', 'ion-android-' + (event.userSelectedTransitOption? transitOptions[transitTranslations.indexOf(event.userSelectedTransitOption)] : transitOptions[transitTranslations.indexOf(event.optimized_transit.best.name)])]"></i>
+                            <i ng-class="['transit-option-icon', 'icon', 'ion-android-' + (event.userSelectedTransitOption? transitOptions[transitTranslations.indexOf(event.userSelectedTransitOption)] : transitOptions[transitTranslations.indexOf(event.optimized_transit.best.name)])]"
+                               ng-style="{
+                                'font-size' : ((event.userSelectedTransitOption? event.transit_options[event.userSelectedTransitOption].duration : event.optimized_transit.best.duration) / 60 * 25) < 8? (((event.userSelectedTransitOption? event.transit_options[event.userSelectedTransitOption].duration : event.optimized_transit.best.duration) / 60 * 25) < 4? '0px': '50px'):'',
+                                'position': ((event.userSelectedTransitOption? event.transit_options[event.userSelectedTransitOption].duration : event.optimized_transit.best.duration) / 60 * 25) < 8? 'relative' : '',
+                                'top': ((event.userSelectedTransitOption? event.transit_options[event.userSelectedTransitOption].duration : event.optimized_transit.best.duration) / 60 * 25) < 8? '30px' : ''
+                                }"></i>
                         </div>
                         <div
                             class="transit-options"
