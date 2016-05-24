@@ -33,4 +33,11 @@ angular.module('app.controllers')
         $scope.$on("$ionicView.leave", function(event, data){
             leds.toggleFlash();
         });
+
+
+        $scope.getMap = function () {
+            if ( $scope.carSimulatorData['location'] == 'Home' ) { return 'car-info-map car-info-map-home';}
+            else if ( $scope.carSimulatorData['location'] == 'School' ) { return 'car-info-map car-info-map-school';}
+            else if ( $scope.carSimulatorData['location'] == 'Work' ) { return 'car-info-map car-info-map-work';}
+        }
     });
