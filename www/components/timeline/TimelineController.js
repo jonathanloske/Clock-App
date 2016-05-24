@@ -81,7 +81,7 @@ angular.module('app.controllers')
 	// These are the transit options we get from the server. Displaying them is not
 	// as consistent as our current options so we translate between the two.
 	$scope.transitTranslations = [
-		'car', 'walking', 'subway', 'bicycle'
+		'car', 'walk', 'subway', 'bicycle'
 	]
 
 	$scope.$on("$ionicView.beforeEnter", function (event, data) {
@@ -171,7 +171,7 @@ angular.module('app.controllers')
 
 	$scope.scrollToTime = function (time) {
 		// Center the time
-		$ionicScrollDelegate.scrollTo((time.getHours() - 7) * $scope.pixelWidthOfOneHour + time.getMinutes() / 60 * $scope.pixelWidthOfOneHour - $window.innerWidth / 4, 0, true);
+		$ionicScrollDelegate.scrollTo((time.getHours() - 7) * $scope.pixelWidthOfOneHour + time.getMinutes() / 60 * $scope.pixelWidthOfOneHour - $scope.pixelWidthOfOneHour, 0, true);
 	};
 
 	$scope.calendars = [
