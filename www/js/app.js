@@ -93,7 +93,7 @@ angular.module('starter', ['ionic', 'ionic-native-transitions', 'app.controllers
 		deleteCalendar: function (username) {
 			calendars.forEach(function (currentCal, index) {
 				if (currentCal.name == username) {
-					delete calendars[index];
+					calendars.splice(index, 1);
 					$rootScope.$emit('storage-has-changed');
 				}
 			});
@@ -143,8 +143,6 @@ angular.module('starter', ['ionic', 'ionic-native-transitions', 'app.controllers
 	});
 
 	socket.on('[Car Simulator Data] -  Update', function (data) {
-		console.log('[Car Simulator Data] key: ' + data['key']);
-		console.log('[Car Simulator Data] payLoad: ' + data['payLoad']);
 		storage.updateCarSimulatorData(data['key'], data['payLoad']);
 	});
 

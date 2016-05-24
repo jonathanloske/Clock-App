@@ -52,12 +52,39 @@ angular.module('app.controllers')
 		if ($scope.currentMinutes < 10) {
 			$scope.currentMinutes = '0' + $scope.currentMinutes;
 		};
+		if(!$scope.scrubTimelineMarker){
+			setTimelineMarker($scope.currentHour,$scope.currentMinutes);
+		}
 	}, 300);
 
+	var setTimelineMarker = function(hour, minute){
+		$scope.timelineMarkerPosition = ((hour - 7) + minute / 60 ) * 85 / 4;
+	}
+
+	var markEventAtTimeMarker = function(){
+		var date = new Date();
+		date.setHours($scope.currentHour + $scope.scrubMarkerHour);
+		$scope.scrollToTime(date);
+		// Find all events that occur at the given time
+		for(var i = 0; i < $scope.calendars[$scope.selectedUserIndex].events.length; i++){
+			var event = $scope.calendars[$scope.selectedUserIndex].events[i];
+			var timelineMarkerDate = new Date();
+			timelineMarkerDate.setHours($scope.currentHour + $scope.scrubMarkerHour);
+			if(event.end.getTime() - timelineMarkerDate.getTime() > 0 && timelineMarkerDate.getTime() - event.start.getTime() > 0){
+				// Highlight the event we just found
+				$scope.selectedCalendarIndex = i;
+				$scope.scrollToTime(event.start);
+			}
+		}
+	}
+
+	$scope.scrubTimelineMarker = false;
 	$scope.editMode = false;
 	$scope.editCalendarMode = false;
 	$scope.editTransitOption = false;
 	$scope.pixelWidthOfOneHour = $window.innerWidth * 0.85 / 4;
+	$scope.scrubMarkerHour = 0;
+	$scope.selectedTransitOptionIndex = 0;
 
 	$scope.transitOptions = [
 		'car', 'walk', 'bus', 'bicycle', 'cancel'
@@ -90,42 +117,34 @@ angular.module('app.controllers')
 					// $scope.editCalendarMode = false;
 				}
 				$scope.editTransitOption = false;
-			} else if ($scope.editCalendarMode) {
-				if ($scope.selectedCalendarIndex === -1) {
-					$scope.editCalendarMode = false;
-				} else {
-					$scope.selectedTransitOptionIndex = 0;
-					$scope.editTransitOption = true;
-				}
-			} else if ($scope.editMode) {
-				if ($scope.selectedUserIndex === -1) {
-					$scope.editMode = false;
-				} else {
-					// Find next event (no need to change transportation option
-					// for events that are over already)
-					var i;
-					for (i = 0; i < $scope.calendars[$scope.selectedUserIndex].events.length &&
-						$scope.calendars[$scope.selectedUserIndex].events[i].start.getTime() < new Date().getTime(); i++) {}
-					$scope.selectedCalendarIndex = i;
-					$scope.scrollToTime($scope.calendars[$scope.selectedUserIndex].events[$scope.selectedCalendarIndex].start);
-					$scope.editCalendarMode = true;
-				}
+				$scope.selectEventMode = false;
+				scrubTimelineMarker = false;
+				$scope.scrubMarkerHour = 0;
+				$scope.scrollToTime(new Date());
+			} else if ($scope.selectEventMode){
+				$scope.editTransitOption = true;
 			} else {
-				$scope.editMode = true;
+				$scope.selectEventMode = true;
 				$scope.selectedUserIndex = 0;
+				markEventAtTimeMarker();
 			}
 		};
 
 		$rootScope.handleClockwise = function () {
 			if ($scope.editTransitOption) {
 				$scope.selectedTransitOptionIndex = $scope.selectedTransitOptionIndex < $scope.transitOptions.length - 1 ? $scope.selectedTransitOptionIndex + 1 : $scope.selectedTransitOptionIndex;
-			} else if ($scope.editCalendarMode) {
-				$scope.selectedCalendarIndex = $scope.selectedCalendarIndex < $scope.calendars[$scope.selectedUserIndex].events.length - 1 ? $scope.selectedCalendarIndex + 1 : $scope.selectedCalendarIndex;
-				$scope.scrollToTime($scope.calendars[$scope.selectedUserIndex].events[$scope.selectedCalendarIndex].start);
-			} else if ($scope.editMode) {
-				$scope.selectedUserIndex = $scope.selectedUserIndex < $scope.calendars.length - 1 ? $scope.selectedUserIndex + 1 : $scope.selectedUserIndex;
+			} else if ($scope.selectEventMode){
+				if($scope.selectedUserIndex < $scope.calendars.length){
+					$scope.selectedUserIndex++;
+				}
+				markEventAtTimeMarker();
 			} else {
-				$ionicScrollDelegate.scrollBy($window.innerWidth / 4 - 2.5, 0, true);
+				$scope.scrubTimelineMarker = true;
+				$scope.scrubMarkerHour++;
+				setTimelineMarker($scope.currentHour + $scope.scrubMarkerHour, $scope.currentMinutes);
+				var date = new Date();
+				date.setHours($scope.currentHour + $scope.scrubMarkerHour);
+				$scope.scrollToTime(date);
 			}
 		};
 
@@ -134,17 +153,11 @@ angular.module('app.controllers')
 				if ($scope.selectedTransitOptionIndex > 0) {
 					$scope.selectedTransitOptionIndex--;
 				}
-			} else if ($scope.editCalendarMode) {
-				if ($scope.selectedCalendarIndex >= 0) {
-					$scope.selectedCalendarIndex--;
-					if ($scope.selectedCalendarIndex >= 0) {
-						$scope.scrollToTime($scope.calendars[$scope.selectedUserIndex].events[$scope.selectedCalendarIndex].start);
-					}
-				}
-			} else if ($scope.editMode) {
-				if ($scope.selectedUserIndex >= 0) {
+			} else if ($scope.selectEventMode){
+				if ($scope.selectedUserIndex > 0) {
 					$scope.selectedUserIndex--;
 				}
+				markEventAtTimeMarker();
 			} else {
 				if ($ionicScrollDelegate.getScrollPosition().left === 0) {
 					// $state.go('timeToLeaveOverview');
@@ -153,10 +166,18 @@ angular.module('app.controllers')
 						"direction": "right"
 					});
 				} else {
-					$ionicScrollDelegate.scrollBy(-1 * $window.innerWidth / 4 - 2.5, 0, true);
+					$scope.scrubTimelineMarker = true;
+					$scope.scrubMarkerHour--;
+					setTimelineMarker($scope.currentHour + $scope.scrubMarkerHour, $scope.currentMinutes);
+					var date = new Date();
+					date.setHours($scope.currentHour + $scope.scrubMarkerHour);
+					$scope.scrollToTime(date);
 				}
 			}
 		};
+
+		$scope.scrubTimelineMarker = false;
+		$scope.scrubMarkerHour = 0;
 	});
 
 	$scope.scrollToTime = function (time) {
