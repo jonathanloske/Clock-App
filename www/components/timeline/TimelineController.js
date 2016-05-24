@@ -1,6 +1,17 @@
 angular.module('app.controllers')
 
-.controller('TimelineController', function ($scope, storage, socket, $interval, $document, $rootScope, $ionicScrollDelegate, $ionicViewSwitcher, $ionicNativeTransitions, $state, $window) {
+.controller('TimelineController', function ($scope, storage, socket, $interval, $document, $rootScope, $ionicScrollDelegate, $ionicViewSwitcher, $ionicNativeTransitions, $state, $window) {        // get the users' carSimulatorData from the storage and listen to updates
+	// get the users' carSimulatorData from the storage and listen to updates
+	$scope.carSimulatorData = storage.getCarSimulatorData();
+	$scope.carSimulatorData['time'] = -1;
+
+	storage.subscribe($scope, function onStorageUpdated() {
+        $scope.carSimulatorData = storage.getCarSimulatorData();
+        $scope.$apply();
+        console.log("carSimulatorData: " + JSON.stringify($scope.carSimulatorData));
+    });
+
+
 	// get the users' calendars from the storage and listen to updates
 	$scope.calendars = storage.getCalendars();
 
@@ -36,8 +47,8 @@ angular.module('app.controllers')
 
 	// Continually update the time so we can display it
 	$interval(function () {
-		$scope.currentHour = (new Date()).getHours();
-		$scope.currentMinutes = (new Date()).getMinutes();
+		$scope.currentHour = (($scope.carSimulatorData['time'] == -1) ? new Date().getHours() : Math.floor($scope.carSimulatorData['time'] / 3600));
+		$scope.currentMinutes = (($scope.carSimulatorData['time'] == -1) ? new Date().getMinutes() : Math.floor($scope.carSimulatorData['time'] / 60 % 60));
 		if ($scope.currentMinutes < 10) {
 			$scope.currentMinutes = '0' + $scope.currentMinutes;
 		};
