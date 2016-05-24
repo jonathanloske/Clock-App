@@ -53,6 +53,8 @@ angular.module('starter', ['ionic', 'ionic-native-transitions', 'app.controllers
 	var calendars = [];
 	var carSimulatorData = {};
 
+	carSimulatorData['location'] = 'Serra St.';
+
 	return {
 		// controllers can listen to changes of the storage
 		subscribe: function (scope, callback) {
