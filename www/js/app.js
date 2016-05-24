@@ -36,7 +36,7 @@ angular.module('starter', ['ionic', 'ionic-native-transitions', 'app.controllers
 	};
 
 	socket.emit('clock - request all calendars', {
-		day: new Date()
+		day: new Date().toString()
 	});
 })
 
