@@ -412,6 +412,7 @@ a.item {
     margin: 4vh;
     padding: 2vh;
     background-color: #525252;
+    border-radius: 6px;
 }
 
 .car-info-subject {
@@ -522,8 +523,20 @@ span.assertive {
 }
 
 .car-info-map {
-    background-image: url('../img/map.png');
-    height: 21vh;
+    height: 20vh;
     background-repeat: no-repeat;
     margin-top: 2vh;
+    border-radius: 6px;
+}
+
+.car-info-map-home {
+    background-image: url('../img/map_home.png');
+}
+
+.car-info-map-work {
+    background-image: url('../img/map_work.png');
+}
+
+.car-info-map-school {
+    background-image: url('../img/map_school.png');
 }
