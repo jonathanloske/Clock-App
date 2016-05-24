@@ -143,8 +143,6 @@ angular.module('starter', ['ionic', 'ionic-native-transitions', 'app.controllers
 	});
 
 	socket.on('[Car Simulator Data] -  Update', function (data) {
-		console.log('[Car Simulator Data] key: ' + data['key']);
-		console.log('[Car Simulator Data] payLoad: ' + data['payLoad']);
 		storage.updateCarSimulatorData(data['key'], data['payLoad']);
 	});
 
