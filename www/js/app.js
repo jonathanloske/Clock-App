@@ -105,7 +105,7 @@ angular.module('starter', ['ionic', 'ionic-native-transitions', 'app.controllers
 })
 
 .factory('leds', function ($rootScope) {
-	var leds = new LEDController('173.21.227.2', 7890);
+	var leds = new LEDController('172.21.227.2', 7890);
 
 	var enabled = false;
 
