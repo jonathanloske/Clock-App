@@ -35,6 +35,12 @@ angular.module('app.controllers')
 		addDurationAndDistanceToEvents();
 	};
 
+	$scope.categoryTranslations = {
+		work: 'briefcase',
+		sports: 'ios-americanfootball',
+		leisure: 'ios-game-controller-a'
+	}
+
 	storage.subscribe($scope, prepareCalendarForTimeline);
 	$scope.floor = Math.floor;
 

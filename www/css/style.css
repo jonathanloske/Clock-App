@@ -165,6 +165,12 @@ a.item {
     margin-right: 0.5px;
 }
 
+.event-category i.icon{
+    position: absolute;
+    margin-top: 16%;
+    font-size: 100px;
+}
+
 .timeline .timelines1 {
     height: calc(94vh - 50px);
 }
