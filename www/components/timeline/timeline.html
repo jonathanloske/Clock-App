@@ -80,6 +80,11 @@
                                 {{transitOption}}
                             </div>
                         </div>
+                        <div class="event-category" ng-style="{
+                            'margin-left' : 'calc(' + (event.durationInMinutes / 60 * 85 / 4) + 'vw - 95px)'
+                        }">
+                            <i class="icon ion-{{categoryTranslations[event.category]}}"></i>
+                        </div>
                         <div class="event-title">
                             {{event.title}} @ {{event.location.split(',')[0]}}
                         </div>
