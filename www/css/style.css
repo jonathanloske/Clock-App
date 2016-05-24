@@ -79,6 +79,7 @@ a.item {
     z-index: 1;
     /* Adjust for the wide border */
     left: -2px;
+    transition: transform 0.3s linear;
 }
 
 .timeline-pictures{

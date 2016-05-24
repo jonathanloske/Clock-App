@@ -35,7 +35,7 @@
             </div>
             <div class="timeline-current-marker"
                  ng-style="{'transform':
-                    'translate3d(' + ((currentHour - 7) + currentMinutes / 60 ) * 85 / 4 + 'vw, -100vh, 1px)'}">
+                    'translate3d(' + timelineMarkerPosition + 'vw, -100vh, 1px)'}">
             </div>
             <div class="timelines">
                 <div class="row timeline timeline-marker" ng-repeat="calendar in calendars">
@@ -54,7 +54,7 @@
                     <div
                         ng-class="['col', 'timeline-cell', 'filled',
                             'timelines' + calendars.length,
-                            editCalendarMode && !editTransitOption && calendars[selectedUserIndex] === calendar && selectedCalendarIndex === $index?
+                            selectEventMode && !editTransitOption && calendars[selectedUserIndex] === calendar && selectedCalendarIndex === $index?
                                 'selected' : ''
                         ]"
                         ng-repeat="event in calendar.events track by $index"
@@ -74,7 +74,7 @@
                         </div>
                         <div
                             class="transit-options"
-                            ng-if="editTransitOption && calendars[selectedUserIndex] === calendar &&selectedCalendarIndex === $index">
+                            ng-if="editTransitOption && calendars[selectedUserIndex] === calendar && selectedCalendarIndex === $index">
                             <div ng-class="['transit-option', selectedTransitOptionIndex === $index? 'selected' : '' ]"
                                  ng-repeat="transitOption in transitOptions track by $index">
                                 {{transitOption}}
