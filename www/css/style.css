@@ -389,11 +389,12 @@ a.item {
 }
 
 .minimap-indicator {
-    background-color: rgba(180, 180, 180, 0.4);
+    background-color: rgba(255, 255, 255, 1);
     height: 6vh;
     width: 20.606vw;
     position: absolute;
     border-radius: 6px;
+    mix-blend-mode: difference;
 }
 
 .car-info-card-box {
