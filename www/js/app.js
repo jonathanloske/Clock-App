@@ -35,8 +35,11 @@ angular.module('starter', ['ionic', 'ionic-native-transitions', 'app.controllers
 		}
 	};
 
+	var yesterday = new Date();
+	yesterday.setDate(yesterday.getDate() - 1);
+	console.log(yesterday);
 	socket.emit('clock - request all calendars', {
-		day: new Date().toString()
+		day: yesterday
 	});
 })
 
