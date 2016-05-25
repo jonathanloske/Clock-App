@@ -55,6 +55,7 @@ angular.module('starter', ['ionic', 'ionic-native-transitions', 'app.controllers
 
 	carSimulatorData['location'] = 'Home';
 	carSimulatorData['battery'] = 80;
+	carSimulatorData['range'] = carSimulatorData['battery'] * 3;
 	carSimulatorData['oil'] = 30;
 
 	return {
@@ -90,6 +91,8 @@ angular.module('starter', ['ionic', 'ionic-native-transitions', 'app.controllers
 			carSimulatorData[key] = data;
 
 			console.log(carSimulatorData);
+			
+			carSimulatorData['range'] = carSimulatorData['battery'] * 3;
 
 			// notify controllers using this factory, that the storage has been updated
 			$rootScope.$emit('storage-has-changed');
