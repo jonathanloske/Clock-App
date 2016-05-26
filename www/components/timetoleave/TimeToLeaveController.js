@@ -1,6 +1,6 @@
 angular.module('app.controllers')
 
-.controller('TimeToLeaveController', function ($rootScope, $scope, $state, $ionicViewSwitcher, $ionicNativeTransitions, $interval, storage) {
+.controller('TimeToLeaveController', function ($rootScope, $scope, $state, $ionicViewSwitcher, $ionicNativeTransitions, $interval, storage, leds) {
     // get the users' calendars from the storage and listen to updates
     $scope.calendars = storage.getCalendars();
     retrieveLeaveData();
@@ -157,5 +157,17 @@ angular.module('app.controllers')
                 "direction": "left"
             });
         };
+
+
+        var ledData = [];
+        Object.keys($scope.familyMembers).forEach(function (key) {
+            var userData = {
+                minutes: $scope.familyMembers[key].transit[0].minutesLeft,
+                color: [Math.floor(Math.random() * 255), Math.floor(Math.random() * 255), Math.floor(Math.random() * 255)]
+            }
+
+            ledData.push(userData);
+        });
+        leds.displayTimeLeftGrowing(ledData);
     });
 });
