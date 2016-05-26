@@ -17,7 +17,7 @@ angular.module('app.controllers')
 
 
         $scope.$on("$ionicView.enter", function(event, data){
-            leds.toggleFlash();
+            //leds.toggleFlash();
             $rootScope.handleCounterClockwise = function(){
             };
 
@@ -29,11 +29,6 @@ angular.module('app.controllers')
                 });
             }
         });
-
-        $scope.$on("$ionicView.leave", function(event, data){
-            leds.toggleFlash();
-        });
-
 
         $scope.getMap = function () {
             if ( $scope.carSimulatorData['location'] == 'Home' ) { return 'car-info-map car-info-map-home';}

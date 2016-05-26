@@ -122,12 +122,18 @@ angular.module('starter', ['ionic', 'ionic-native-transitions', 'app.controllers
 	return {
 		toggleFlash: function () {
 			if (enabled) {
+				//leds.displayTimeLeftGrowing([{color: [255,255,255], minutes: 0}, {color: [111,111,111], minutes: 10}]);
 				leds.stopLEDs();
 				enabled = false;
 			} else {
+				//leds.displayTimeLeftGrowing([{color: [255,255,255], minutes: 120}, {color: [111,111,111], minutes: 10}, {color: [3,3,3], minutes: 1}]);
 				leds.spark();
 				enabled = true;
 			}
+		},
+		/* usage: displayTimeLeftGrowing( [ { color: [r,g,b], minutes: x } , ... ] ) */
+		displayTimeLeftGrowing: function(timeLeftInformation) {
+			leds.displayTimeLeftGrowing(timeLeftInformation);
 		}
 	}
 })
