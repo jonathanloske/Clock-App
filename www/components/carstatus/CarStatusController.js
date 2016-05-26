@@ -17,7 +17,7 @@ angular.module('app.controllers')
 
 
         $scope.$on("$ionicView.enter", function(event, data){
-            leds.toggleFlash();
+            //leds.toggleFlash();
             $rootScope.handleCounterClockwise = function(){
             };
 

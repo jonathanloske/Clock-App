@@ -165,8 +165,9 @@ angular.module('app.controllers')
 
         var ledData = [];
         Object.keys($scope.familyMembers).forEach(function (key) {
+
             var userData = {
-                minutes: $scope.familyMembers[key].transit[0].minutesLeft,
+                minutes: $scope.familyMembers[key].transit.length > 0 ? $scope.familyMembers[key].transit[0].minutesLeft : 60,
                 color: [Math.floor(Math.random() * 255), Math.floor(Math.random() * 255), Math.floor(Math.random() * 255)]
             }
 

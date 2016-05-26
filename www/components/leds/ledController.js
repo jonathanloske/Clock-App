@@ -212,7 +212,7 @@ LEDController.prototype._displayTimeLeft = function (timeLeftInformation, growin
             packet[4 + i * 3 + 2] = timeLeftInformation[user].color[2];
         }
 
-        //console.log('[LEDController] s: ' + userLedAreaStart + ' e: ' + userLedAreaEnd + ' av: ' + availableLedsForUser + ' actLED: ' + numberOfActiveLeds + ' litS: ' + litLedStart + ' litE: ' + litLedEnd);
+        console.log('[LEDController] s: ' + userLedAreaStart + ' e: ' + userLedAreaEnd + ' av: ' + availableLedsForUser + ' actLED: ' + numberOfActiveLeds + ' litS: ' + litLedStart + ' litE: ' + litLedEnd);
 
     }
     this._writePacket(packet);
