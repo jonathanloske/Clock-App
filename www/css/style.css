@@ -7,99 +7,99 @@
 }
 
 .full-width {
-    width: 100%;
-    height: auto;
+	width: 100%;
+	height: auto;
 }
 
 a.item {
-    height: calc(50vh - 16px);
+	height: calc(50vh - 16px);
 }
 
 .row,
 .col {
-    padding: 0;
+	padding: 0;
 }
 
 .row.children {
-    height: 50%;
+	height: 50%;
 }
 
 .selected {
-    box-shadow: 0 0 10px 6px white !important;
+	box-shadow: 0 0 10px 6px white !important;
 }
 
 .timeline-page,
 .timetoleave-page {
-    background-color: black;
+	background-color: black;
 }
 
 .timetoleave-page .col {
-    text-align: center;
+	text-align: center;
 }
 
 .timeline-time {
-    position: absolute;
-    font-size: 6vw;
-    color: white;
-    top: 28px;
-    z-index: 2;
+	position: absolute;
+	font-size: 6vw;
+	color: white;
+	top: 28px;
+	z-index: 2;
 }
 
 .timeline-scroll {
-    padding-left: 50vw;
+	padding-left: 50vw;
 }
 
 .transportation {
-    border-radius: 100%;
-    overflow: hidden;
-    background-size: cover;
-    color: white;
+	border-radius: 100%;
+	overflow: hidden;
+	background-size: cover;
+	color: white;
 }
 
 .transportation-with-shadow {
-    box-shadow: inset 0px 0px 40vh grey;
+	box-shadow: inset 0px 0px 40vh grey;
 }
 
 .radial-progress .transportation i {
-    line-height: 25vh;
-    font-size: 20vh;
-    vertical-align: bottom;
+	line-height: 25vh;
+	font-size: 20vh;
+	vertical-align: bottom;
 }
 
 .radial-progress.small .transportation i {
-    line-height: 10vh;
-    font-size: 7vh;
+	line-height: 10vh;
+	font-size: 7vh;
 }
 
 .transportation .primary-transportation {
-    width: 40vh;
-    height: 40vh;
-    text-align: center;
-    font-size: 50px;
+	width: 40vh;
+	height: 40vh;
+	text-align: center;
+	font-size: 50px;
 }
 
 .transportation .secondary-transportation {
-    width: 20vh;
-    height: 20vh;
-    font-size: 4vh;
+	width: 20vh;
+	height: 20vh;
+	font-size: 4vh;
 }
 
 .timeline-current-marker {
-    position: fixed;
-    height: 94vh;
-    border-left: 4px solid red;
-    z-index: 1;
-    left: 50vw;
+	position: fixed;
+	height: 94vh;
+	border-left: 4px solid red;
+	z-index: 1;
+	left: 50vw;
 }
 
 .timeline-pictures {
-    position: absolute;
-    /* Make the element 100% wide so that even when the user completely overscrolls,
+	position: absolute;
+	/* Make the element 100% wide so that even when the user completely overscrolls,
        the background is still in the background-color of this element. */
-    left: -100%;
-    top: -5vh;
-    z-index: 1;
-    /* Abusing the inset box-shadow a bit. Usually it will give a shadow on all
+	left: -100%;
+	top: -5vh;
+	z-index: 1;
+	/* Abusing the inset box-shadow a bit. Usually it will give a shadow on all
        four edges but we only want it on the right edge so we make the container
        a lot higher and move the upper and lower edge out of view (the left edge
        is never visible since we already made the container really wide) */
@@ -113,462 +113,484 @@ a.item {
 }
 
 .timeline-pictures img {
-    width: 12vw;
-    border-radius: 6px;
-    box-shadow: 0 0 6px 0px black;
-    margin-top: 40px;
+	width: 12vw;
+	border-radius: 6px;
+	box-shadow: 0 0 6px 0px black;
+	margin-top: 40px;
 }
 
 .cancel-button {
-    width: 12vw;
-    text-align: center;
-    color: black;
-    font-size: 36px;
-    padding-top: 6px;
-    padding-bottom: 6px;
-    border-radius: 6px;
-    position: absolute;
-    margin: 0 1.5vw;
-    z-index: 2;
-    top: 10px;
-    background-color: #f8f8f8;
-    box-shadow: 0 0 6px 2px black;
+	width: 12vw;
+	text-align: center;
+	color: black;
+	font-size: 36px;
+	padding-top: 6px;
+	padding-bottom: 6px;
+	border-radius: 6px;
+	position: absolute;
+	margin: 0 1.5vw;
+	z-index: 2;
+	top: 10px;
+	background-color: #f8f8f8;
+	box-shadow: 0 0 6px 2px black;
 }
 
 .timeline-pictures .col > .cancel-button {
-    position: relative;
-    top: -10px;
-    line-height: initial;
+	position: relative;
+	top: -10px;
+	line-height: initial;
 }
 
 .timeline-hours {
-    color: white;
-    padding-top: 0px;
-    /*margin-left: 15vw;*/
-    line-height: 5vh;
-    font-size: 6vh;
-    z-index: 1;
-    width: 85vw;
+	color: white;
+	padding-top: 0px;
+	/*margin-left: 15vw;*/
+	line-height: 5vh;
+	font-size: 6vh;
+	z-index: 1;
+	width: 85vw;
 }
 
 .timeline-hours .hour-marker {
-    height: 100vh;
-    border-right: 1px solid grey;
-    border-left: 1px solid grey;
-    /* Flex is the width of one element. One hour-marker should represent one hour.
+	height: 100vh;
+	border-right: 1px solid grey;
+	border-left: 1px solid grey;
+	/* Flex is the width of one element. One hour-marker should represent one hour.
        We achieve this by making it half an hour wide and giving it a margin of another
        30 minutes. Since 100% === 85vw === 4 hours, 30 minutes === 85vw / 8 === 10.625*/
-    flex: 0 0 12.5%;
-    margin-right: 12.5%;
+	flex: 0 0 12.5%;
+	margin-right: 12.5%;
 }
 
 .timeline-hours .hour-marker:last-of-type {
-    margin-left: -12.5%;
-    padding-right: 100vw;
+	margin-left: -12.5%;
+	padding-right: 100vw;
 }
 
 .timeline .filled {
-    color: white;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    font-size: 30px;
-    line-height: 28px;
-    font-weight: bold;
-    border-left: 1px solid black;
-    border-right: 1px solid black;
-    border-radius: 6px;
-    margin-right: 0.5px;
+	color: white;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	font-size: 30px;
+	line-height: 28px;
+	font-weight: bold;
+	border-left: 1px solid black;
+	border-right: 1px solid black;
+	border-radius: 6px;
+	margin-right: 0.5px;
 }
 
 .event-category i.icon {
-    position: absolute;
-    font-size: 100px;
+	position: absolute;
+	font-size: 100px;
+}
+
+@font-face {
+	font-family: 'Avenir';
+	src: url("http://www.myfontfree.com/data/556/a/avenir/Avenir Roman.otf");
+}
+
+@font-face {
+	font-family: 'FuturaLight';
+	src: url("http://www.myfontfree.com/data/518/f/futuralightlight/FuturaLight Light.ttf");
+}
+
+.event-title {
+	text-align: center;
+	margin: 20px 10px 0 10px;
+	font-family: Avenir;
+}
+
+.event-location {
+	text-align: center;
+	font-size: 0.7em;
+	font-family: Avenir;
 }
 
 .timeline .timelines1 {
-    height: calc(94vh - 50px);
+	height: calc(94vh - 50px);
 }
 
 .timeline .timelines1 > .cancel-button {
-    margin-top: -100vh;
+	margin-top: -100vh;
 }
 
-.timeline .timelines1 .event-category i.icon{
-    margin-top: 9%;
+.timeline .timelines1 .event-category i.icon {
+	margin-top: 9%;
 }
 
 .timeline .timelines2 {
-    height: calc(37vh - 26px);
-    margin-top: 5vh;
-    margin-bottom: 5vh;
+	height: calc(37vh - 26px);
+	margin-top: 5vh;
+	margin-bottom: 5vh;
 }
 
 .timeline .timelines2 > .cancel-button {
-    margin-top: -55vh;
+	margin-top: -55vh;
 }
 
-.timeline .timelines2 .event-category i.icon{
-    margin-top: 16%;
+.timeline .timelines2 .event-category i.icon {
+	margin-top: 16%;
 }
 
 .timeline .timelines3 {
-    height: calc(26.3vh - 20px);
-    margin-top: 2.5vh;
-    margin-bottom: 2.5vh;
+	height: calc(26.3vh - 20px);
+	margin-top: 2.5vh;
+	margin-bottom: 2.5vh;
 }
 
 .timeline .timelines3 > .cancel-button {
-    margin-top: -40vh;
+	margin-top: -40vh;
 }
 
-.timeline .timelines3 .event-category i.icon{
-    margin-top: 9%;
+.timeline .timelines3 .event-category i.icon {
+	margin-top: 9%;
 }
 
 .timeline .timelines4 {
-    height: calc(19.5vh - 20px);
-    margin-top: 2vh;
-    margin-bottom: 2vh;
+	height: calc(19.5vh - 20px);
+	margin-top: 2vh;
+	margin-bottom: 2vh;
 }
 
 .timeline .timelines4 > .cancel-button {
-    margin-top: -31vh;
+	margin-top: -31vh;
 }
 
-.timeline .timelines4 .event-category i.icon{
-    margin-top: 9%;
+.timeline .timelines4 .event-category i.icon {
+	margin-top: 9%;
 }
 
 .timeline .timelines5 {
-    height: calc(16vh - 17px);
-    margin-top: 1.5vh;
-    margin-bottom: 1.vh;
+	height: calc(16vh - 17px);
+	margin-top: 1.5vh;
+	margin-bottom: 1.vh;
 }
 
 .timeline .timelines5 > .cancel-button {
-    margin-top: -26vh;
+	margin-top: -26vh;
 }
 
-.timeline .timelines5 .event-category i.icon{
-    margin-top: 9%;
+.timeline .timelines5 .event-category i.icon {
+	margin-top: 9%;
 }
 
 .timeline {
-    margin-bottom: 10px;
+	margin-bottom: 10px;
 }
 
 .timelines {
-    position: absolute;
-    top: 35px;
-    /*margin-left: 15vw;*/
-    width: 85vw;
+	position: absolute;
+	top: 35px;
+	/*margin-left: 15vw;*/
+	width: 85vw;
 }
 
 .timeline-cell > .primary-transit-option,
 .timeline-cell > .transit-options {
-    position: absolute;
-    /* Choose a value that just fits all of the transit options*/
-    width: 20%;
-    border-radius: 6px;
-    /*box-shadow: 0 0 10px 6px black;*/
-    word-wrap: break-word;
+	position: absolute;
+	/* Choose a value that just fits all of the transit options*/
+	width: 20%;
+	border-radius: 6px;
+	/*box-shadow: 0 0 10px 6px black;*/
+	word-wrap: break-word;
 }
 
 .primary-transit-option {
-    border: 2px solid #525252;
-    text-align: center;
-    height: inherit;
-    padding: 5% 0;
-    line-height: initial;
-    transform: translate3d(-100%, 0, 0);
+	border: 2px solid #525252;
+	text-align: center;
+	height: inherit;
+	padding: 5% 0;
+	line-height: initial;
+	transform: translate3d(-100%, 0, 0);
 }
 
 .transit-option-icon {
-    font-size: 100px;
+	font-size: 100px;
 }
 
 .transit-options {
-    border: 1px solid white;
-    background-color: black;
-    z-index: 2;
-    transform: translate3d(-100%, 0, 0);
+	border: 1px solid white;
+	background-color: black;
+	z-index: 2;
+	transform: translate3d(-100%, 0, 0);
 }
 
 .transit-options .transit-option {
-    line-height: initial;
-    text-align: right;
+	line-height: initial;
+	text-align: right;
 }
 
 .transit-options:not(.transit-option:last-of-type) {
-    border-bottom: 1px solid white;
+	border-bottom: 1px solid white;
 }
 
 .timeline:nth-of-type(1) .filled {
-    background: linear-gradient(135deg, #DAA28C 10%, #B06983 100%)
+	background: linear-gradient(135deg, #DAA28C 10%, #B06983 100%)
 }
 
 .timeline:nth-of-type(1) .filled > .primary-transit-option {
-    background: repeating-linear-gradient(45deg, black, black 10px, #DAA28C 10px, #DAA28C 16px);
+	background: repeating-linear-gradient(45deg, black, black 10px, #DAA28C 10px, #DAA28C 16px);
 }
 
 .timeline:nth-of-type(2) .filled {
-    background: linear-gradient(135deg, #BCDE7E 10%, #73B542 100%);
+	background: linear-gradient(135deg, #BCDE7E 10%, #73B542 100%);
 }
 
 .timeline:nth-of-type(2) .filled > .primary-transit-option {
-    background: repeating-linear-gradient(45deg, black, black 10px, #BCDE7E 10px, #BCDE7E 16px);
+	background: repeating-linear-gradient(45deg, black, black 10px, #BCDE7E 10px, #BCDE7E 16px);
 }
 
 .timeline:nth-of-type(3) .filled {
-    background: linear-gradient(135deg, #81B8BC 10%, #349685 100%);
+	background: linear-gradient(135deg, #81B8BC 10%, #349685 100%);
 }
 
 .timeline:nth-of-type(3) .filled > .primary-transit-option {
-    background: repeating-linear-gradient(45deg, black, black 10px, #81B8BC 10px, #81B8BC 16px);
+	background: repeating-linear-gradient(45deg, black, black 10px, #81B8BC 10px, #81B8BC 16px);
 }
 
 .timeline:nth-of-type(4) .filled {
-    background: linear-gradient(135deg, #D19C7E 10%, #F86451 100%);
+	background: linear-gradient(135deg, #D19C7E 10%, #F86451 100%);
 }
 
 .timeline:nth-of-type(4) .filled > .primary-transit-option {
-    background: repeating-linear-gradient(45deg, black, black 10px, #D19C7E 10px, #D19C7E 16px);
+	background: repeating-linear-gradient(45deg, black, black 10px, #D19C7E 10px, #D19C7E 16px);
 }
 
 .timeline:nth-of-type(5) .filled {
-    background: linear-gradient(135deg, #8A8BD1 10%, #9148F8 100%);
+	background: linear-gradient(135deg, #8A8BD1 10%, #9148F8 100%);
 }
 
 .timeline:nth-of-type(5) .filled > .primary-transit-option {
-    background: repeating-linear-gradient(45deg, black, black 10px, #8A8BD1 10px, #8A8BD1 16px);
+	background: repeating-linear-gradient(45deg, black, black 10px, #8A8BD1 10px, #8A8BD1 16px);
 }
 
 .row:nth-of-type(1) .col:nth-of-type(1) .radial-progress .fill {
-    background-color: #B06983;
+	background-color: #B06983;
 }
 
 .row:nth-of-type(1) .col:nth-of-type(2) .radial-progress .fill {
-    background-color: #73B542;
+	background-color: #73B542;
 }
 
 .row:nth-of-type(2) .col:nth-of-type(1) .radial-progress .fill {
-    background-color: #349685;
+	background-color: #349685;
 }
 
 .row:nth-of-type(2) .col:nth-of-type(2) .radial-progress .fill {
-    background-color: #F86451;
+	background-color: #F86451;
 }
 
 .row:nth-of-type(2) .col:nth-of-type(3) .radial-progress .fill {
-    background-color: #8A8BD1;
+	background-color: #8A8BD1;
 }
 
 .weather {
-    color: white;
-    transform: translate3d(45vw, calc(-60vh - 60px), 0);
-    width: 10vw;
-    height: 10vh;
-    text-align: center;
+	color: white;
+	transform: translate3d(45vw, calc(-60vh - 60px), 0);
+	width: 10vw;
+	height: 10vh;
+	text-align: center;
 }
 
 .weather p {
-    transform: translate3d(0, -10px, 0);
-    font-size: 40px;
+	transform: translate3d(0, -10px, 0);
+	font-size: 40px;
 }
 
 .weather i {
-    font-size: 100px;
+	font-size: 100px;
 }
 
 .minimap {
-    position: fixed;
-    transform: translate3d(15vw, -6vh, 1px);
-    height: 6vh;
-    width: 85vw;
-    background-color: black;
-    overflow: hidden;
+	position: fixed;
+	transform: translate3d(15vw, -6vh, 1px);
+	height: 6vh;
+	width: 85vw;
+	background-color: black;
+	overflow: hidden;
 }
 
 .minimap .timeline.timelines1 {
-    height: 100%;
-    line-height: initial;
-    margin-bottom: 5px;
+	height: 100%;
+	line-height: initial;
+	margin-bottom: 5px;
 }
 
 .minimap .timeline.timelines2 {
-    height: 50%;
-    line-height: initial;
-    margin-bottom: 5px;
+	height: 50%;
+	line-height: initial;
+	margin-bottom: 5px;
 }
 
 .minimap .timeline.timelines3 {
-    height: 33%;
-    line-height: initial;
-    margin-bottom: 5px;
+	height: 33%;
+	line-height: initial;
+	margin-bottom: 5px;
 }
 
 .minimap .timeline.timelines4 {
-    height: 25%;
-    line-height: initial;
-    margin-bottom: 5px;
+	height: 25%;
+	line-height: initial;
+	margin-bottom: 5px;
 }
 
 .minimap .timeline.timelines5 {
-    height: 20%;
-    line-height: initial;
-    margin-bottom: 5px;
+	height: 20%;
+	line-height: initial;
+	margin-bottom: 5px;
 }
 
 .minimap-indicator {
-    background-color: rgba(255, 255, 255, 1);
-    height: 6vh;
-    width: 20vw;
-    position: absolute;
-    border-radius: 6px;
-    mix-blend-mode: difference;
+	background-color: rgba(255, 255, 255, 1);
+	height: 6vh;
+	width: 20vw;
+	position: absolute;
+	border-radius: 6px;
+	mix-blend-mode: difference;
 }
 
 .car-info-card-box {
-    height: 100vh;
+	height: 100vh;
 }
 
 .car-schematic {
-    background-image: url('../img/car.png');
-    height: 100vh;
-    width: 50vw;
-    background-size: 100%;
+	background-image: url('../img/car.png');
+	height: 100vh;
+	width: 50vw;
+	background-size: 100%;
 }
 
 .car-info-card {
-    height: 28vh;
-    margin: 4vh;
-    padding: 2vh;
-    background-color: #525252;
-    border-radius: 6px;
+	height: 28vh;
+	margin: 4vh;
+	padding: 2vh;
+	background-color: #525252;
+	border-radius: 6px;
 }
 
 .car-info-subject {
-    font-weight: bold;
-    font-size: 4vh;
+	font-weight: bold;
+	font-size: 4vh;
 }
 
 .car-info-headline {
-    font-size: 4vh;
+	font-size: 4vh;
 }
 
 .car-info-sensor-data-number {
-    font-size: 5vh;
-    font-weight: bold;
-    display: inline;
+	font-size: 5vh;
+	font-weight: bold;
+	display: inline;
 }
 
 .car-info-sensor-data-unit {
-    display: inline;
-    font-size: 3vh;
+	display: inline;
+	font-size: 3vh;
 }
 
 .car-info-subject {
-    margin-top: 3vh;
+	margin-top: 3vh;
 }
 
 .car-info-prefix {
-    margin-top: 1vh;
+	margin-top: 1vh;
 }
 
 .car-info-level {
-    margin-top: 4vh;
+	margin-top: 4vh;
 }
 
 .car-info-sensor-data.col {
-    margin-left: 16vw;
-    margin-top: 1vh;
+	margin-left: 16vw;
+	margin-top: 1vh;
 }
 
 .car-info-subject.car-info-subject-map {
-    margin-top: 12vh;
+	margin-top: 12vh;
 }
 
 .car-status-view {
-    background: black;
-    color: white;
+	background: black;
+	color: white;
 }
 
 .car-info-level {
-    height: 20px;
-    /* Can be anything */
-    position: relative;
-    background: #555;
-    border-radius: 25px;
-    padding: 10px;
-    box-shadow: inset 0 -1px 1px rgba(255, 255, 255, 0.3);
+	height: 20px;
+	/* Can be anything */
+	position: relative;
+	background: #555;
+	border-radius: 25px;
+	padding: 10px;
+	box-shadow: inset 0 -1px 1px rgba(255, 255, 255, 0.3);
 }
 
 .car-info-level > span {
-    display: block;
-    height: inherit;
-    border-top-right-radius: 8px;
-    border-bottom-right-radius: 8px;
-    border-top-left-radius: 20px;
-    border-bottom-left-radius: 20px;
-    box-shadow: inset 0 2px 9px rgba(255, 255, 255, 0.3), inset 0 -2px 6px rgba(0, 0, 0, 0.4);
-    position: relative;
-    overflow: hidden;
-    top: -10px;
-    left: -10px;
+	display: block;
+	height: inherit;
+	border-top-right-radius: 8px;
+	border-bottom-right-radius: 8px;
+	border-top-left-radius: 20px;
+	border-bottom-left-radius: 20px;
+	box-shadow: inset 0 2px 9px rgba(255, 255, 255, 0.3), inset 0 -2px 6px rgba(0, 0, 0, 0.4);
+	position: relative;
+	overflow: hidden;
+	top: -10px;
+	left: -10px;
 }
 
 span.alert {
-    background-color: rgb(194, 34, 27);
+	background-color: rgb(194, 34, 27);
 }
 
 span.assertive {
-    background-color: rgb(140, 194, 11);
+	background-color: rgb(140, 194, 11);
 }
 
 .car-info-detail {
-    margin-top: 1vh;
+	margin-top: 1vh;
 }
 
 .car-lock-status {
-    background-image: url('../img/lock.png');
-    height: 20vh;
-    width: 14vw;
+	background-image: url('../img/lock.png');
+	height: 20vh;
+	width: 14vw;
 }
 
 .car-lock-status.car-lock-status-front {
-    margin-left: 18vw;
-    margin-top: 8vh;
+	margin-left: 18vw;
+	margin-top: 8vh;
 }
 
 .col.car-lock-status.car-lock-status-left {
-    margin-top: 10vh;
+	margin-top: 10vh;
 }
 
 .col.car-lock-status.car-lock-status-right {
-    margin-top: 10vh;
-    margin-left: 22vw;
+	margin-top: 10vh;
+	margin-left: 22vw;
 }
 
 .car-lock-status.car-lock-status-back {
-    margin-left: 18vw;
-    margin-top: 8vh;
+	margin-left: 18vw;
+	margin-top: 8vh;
 }
 
 .car-info-map {
-    height: 20vh;
-    background-repeat: no-repeat;
-    margin-top: 2vh;
-    border-radius: 6px;
+	height: 20vh;
+	background-repeat: no-repeat;
+	margin-top: 2vh;
+	border-radius: 6px;
 }
 
 .car-info-map-home {
-    background-image: url('../img/map_home.png');
+	background-image: url('../img/map_home.png');
 }
 
 .car-info-map-work {
-    background-image: url('../img/map_work.png');
+	background-image: url('../img/map_work.png');
 }
 
 .car-info-map-school {
-    background-image: url('../img/map_school.png');
+	background-image: url('../img/map_school.png');
 }
