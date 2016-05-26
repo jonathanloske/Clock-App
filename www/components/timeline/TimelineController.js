@@ -1,14 +1,15 @@
 angular.module('app.controllers')
 
-.controller('TimelineController', function ($scope, storage, socket, $interval, $document, $rootScope, $ionicScrollDelegate, $ionicViewSwitcher, $ionicNativeTransitions, $state, $window) {        // get the users' carSimulatorData from the storage and listen to updates
+.controller('TimelineController', function ($scope, storage, socket, $interval, $document, $rootScope, $ionicScrollDelegate, $ionicViewSwitcher, $ionicNativeTransitions, $state, $window) { // get the users' carSimulatorData from the storage and listen to updates
 	// get the users' carSimulatorData from the storage and listen to updates
 	$scope.carSimulatorData = storage.getCarSimulatorData();
 	$scope.carSimulatorData['time'] = -1;
+	console.log($scope.carSimulatorData);
 
 	storage.subscribe($scope, function onStorageUpdated() {
-        $scope.carSimulatorData = storage.getCarSimulatorData();
-        $scope.$apply();
-    });
+		$scope.carSimulatorData = storage.getCarSimulatorData();
+		$scope.$apply();
+	});
 
 
 	// get the users' calendars from the storage and listen to updates
@@ -24,7 +25,7 @@ angular.module('app.controllers')
 
 	var prepareCalendarForTimeline = function () {
 		$scope.calendars = storage.getCalendars();
-		$scope.scrollToTime(new Date());
+		//$scope.scrollToTime(new Date());
 		for (var i = 0; i < $scope.calendars.length; i++) {
 			for (var j = $scope.calendars[i].events.length - 1; j >= 0; j--) {
 				if ($scope.calendars[i].events[j].start.getDay() !== new Date().getDay()) {
@@ -57,25 +58,25 @@ angular.module('app.controllers')
 		if ($scope.currentMinutes < 10) {
 			$scope.currentMinutes = '0' + $scope.currentMinutes;
 		};
-		if(!$scope.scrubTimelineMarker){
-			setTimelineMarker($scope.currentHour,$scope.currentMinutes);
+		if (!$scope.scrubTimelineMarker) {
+			setTimelineMarker($scope.currentHour, $scope.currentMinutes);
 		}
 	}, 300);
 
-	var setTimelineMarker = function(hour, minute){
-		$scope.timelineMarkerPosition = ((hour - 7) + minute / 60 ) * 85 / 4;
+	var setTimelineMarker = function (hour, minute) {
+		$scope.timelineMarkerPosition = ((hour - 7) + minute / 60) * 85 / 4;
 	}
 
-	var markEventAtTimeMarker = function(){
+	var markEventAtTimeMarker = function () {
 		var date = new Date();
 		date.setHours($scope.currentHour + $scope.scrubMarkerHour);
 		$scope.scrollToTime(date);
 		// Find all events that occur at the given time
-		for(var i = 0; i < $scope.calendars[$scope.selectedUserIndex].events.length; i++){
+		for (var i = 0; i < $scope.calendars[$scope.selectedUserIndex].events.length; i++) {
 			var event = $scope.calendars[$scope.selectedUserIndex].events[i];
 			var timelineMarkerDate = new Date();
 			timelineMarkerDate.setHours($scope.currentHour + $scope.scrubMarkerHour);
-			if(event.end.getTime() - timelineMarkerDate.getTime() > 0 && timelineMarkerDate.getTime() - event.start.getTime() > 0){
+			if (event.end.getTime() - timelineMarkerDate.getTime() > 0 && timelineMarkerDate.getTime() - event.start.getTime() > 0) {
 				// Highlight the event we just found
 				$scope.selectedCalendarIndex = i;
 				$scope.scrollToTime(event.start);
@@ -126,7 +127,7 @@ angular.module('app.controllers')
 				scrubTimelineMarker = false;
 				$scope.scrubMarkerHour = 0;
 				$scope.scrollToTime(new Date());
-			} else if ($scope.selectEventMode){
+			} else if ($scope.selectEventMode) {
 				$scope.editTransitOption = true;
 			} else {
 				$scope.selectEventMode = true;
@@ -138,8 +139,8 @@ angular.module('app.controllers')
 		$rootScope.handleClockwise = function () {
 			if ($scope.editTransitOption) {
 				$scope.selectedTransitOptionIndex = $scope.selectedTransitOptionIndex < $scope.transitOptions.length - 1 ? $scope.selectedTransitOptionIndex + 1 : $scope.selectedTransitOptionIndex;
-			} else if ($scope.selectEventMode){
-				if($scope.selectedUserIndex < $scope.calendars.length){
+			} else if ($scope.selectEventMode) {
+				if ($scope.selectedUserIndex < $scope.calendars.length) {
 					$scope.selectedUserIndex++;
 				}
 				markEventAtTimeMarker();
@@ -158,7 +159,7 @@ angular.module('app.controllers')
 				if ($scope.selectedTransitOptionIndex > 0) {
 					$scope.selectedTransitOptionIndex--;
 				}
-			} else if ($scope.selectEventMode){
+			} else if ($scope.selectEventMode) {
 				if ($scope.selectedUserIndex > 0) {
 					$scope.selectedUserIndex--;
 				}
