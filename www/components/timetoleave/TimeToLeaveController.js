@@ -49,7 +49,6 @@ angular.module('app.controllers')
                 event: null
             };
             var now = ($scope.carSimulatorData['time'] == -1) ? new Date() : new Date(new Date().getTime() - (new Date().getTime() % 86400000) + 25200000 + $scope.carSimulatorData['time'] * 1000);
-            console.log('now ' + now);
             calendar.events.forEach(function (event) {
                 var msecsUntilEvent = (event.start - now);
                 // we dont want events that are already over or ones that the user is
