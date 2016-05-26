@@ -64,10 +64,12 @@ angular.module('app.controllers')
 		addDurationAndDistanceToEvents();
 	};
 
-	storage.subscribe($scope, prepareCalendarForTimeline);
+	$scope.scrollToTime = function (time) {
+		$ionicScrollDelegate.scrollTo((time.getHours() - 7) * $scope.pixelWidthOfOneHour + time.getMinutes() / 60 * $scope.pixelWidthOfOneHour, 0, true);
+	};
 
 	// Continually update the time so we can display it
-	$interval(function () {
+	var updateTime = $interval(function () {
 		if($scope.carSimulatorData && $scope.carSimulatorData['time']){
 			$scope.currentHour = Math.floor($scope.carSimulatorData['time'] / 3600);
 			$scope.currentMinutes = Math.floor($scope.carSimulatorData['time'] / 60 % 60);
@@ -89,9 +91,10 @@ angular.module('app.controllers')
 
 	$scope.$on("$ionicView.beforeEnter", function (event, data) {
 		prepareCalendarForTimeline();
-		$scope.scrollToTime(new Date);
 	});
 	$scope.$on("$ionicView.enter", function (event, data) {
+		storage.subscribe($scope, prepareCalendarForTimeline);
+		$scope.scrollToTime(new Date());
 		$scope.scrubTimelineMarker = false;
 		$scope.scrubMarkerMinute = 0;
 		$scope.selectedTransitOptionIndex = 0;
@@ -124,8 +127,6 @@ angular.module('app.controllers')
 				$scope.selectedTransitOptionIndex = 0;
 				$scope.editTransitOption = true;
 			} else {
-				$scope.selectEventMode = true;
-				$scope.selectedEvent = 0;
 				// Find all events that coincide with the selected time
 				var timelineMarkerDate = new Date();
 				timelineMarkerDate.setMinutes(Number($scope.currentMinutes) + $scope.scrubMarkerMinute);
@@ -137,13 +138,18 @@ angular.module('app.controllers')
 						}
 					}
 				}
-				$scope.selectedUserIndex = $scope.selectableEvents[0][0];
-				$scope.selectedCalendarIndex = $scope.selectableEvents[0][1];
-				$scope.scrollToTime($scope.calendars[$scope.selectedUserIndex].events[$scope.selectedCalendarIndex].start);
+				if($scope.selectableEvents.length > 0){
+					$scope.selectEventMode = true;
+					$scope.selectedEvent = 0;
+					$scope.selectedUserIndex = $scope.selectableEvents[0][0];
+					$scope.selectedCalendarIndex = $scope.selectableEvents[0][1];
+					$scope.scrollToTime($scope.calendars[$scope.selectedUserIndex].events[$scope.selectedCalendarIndex].start);
+				}
 			}
 		};
 
 		$rootScope.handleClockwise = function () {
+			console.log('clock');
 			if ($scope.editTransitOption) {
 				$scope.selectedTransitOptionIndex = $scope.selectedTransitOptionIndex < $scope.transitOptions.length - 1 ? $scope.selectedTransitOptionIndex + 1 : $scope.selectedTransitOptionIndex;
 			} else if ($scope.selectEventMode){
@@ -190,10 +196,9 @@ angular.module('app.controllers')
 			}
 		};
 	});
-
-	$scope.scrollToTime = function (time) {
-		$ionicScrollDelegate.scrollTo((time.getHours() - 7) * $scope.pixelWidthOfOneHour + time.getMinutes() / 60 * $scope.pixelWidthOfOneHour, 0, true);
-	};
+	$scope.$on("$ionicView.leave", function (event, data) {
+		$interval.cancel(updateTime);
+	});
 
 	$scope.calendars = [
 		{
