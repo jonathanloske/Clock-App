@@ -1,9 +1,9 @@
 .view-container {
-    background-color: black;
+	background-color: black;
 }
 
-.pane{
-    border-radius: 30px;
+.pane {
+	border-radius: 30px;
 }
 
 .full-width {
@@ -103,13 +103,13 @@ a.item {
        four edges but we only want it on the right edge so we make the container
        a lot higher and move the upper and lower edge out of view (the left edge
        is never visible since we already made the container really wide) */
-    box-shadow: 0 0 20px 4px black;
-    padding-left: 100%;
-    width: calc( 100% + 15vw);
-    height: 110vh;
-    background-color: #525252;
-    padding-top: calc( 10px + 5vh);
-    text-align: center;
+	box-shadow: 0 0 20px 4px black;
+	padding-left: 100%;
+	width: calc( 100% + 15vw);
+	height: 110vh;
+	background-color: #525252;
+	padding-top: calc( 10px + 5vh);
+	text-align: center;
 }
 
 .timeline-pictures img {
@@ -197,13 +197,15 @@ a.item {
 
 .event-title {
 	text-align: center;
-	margin: 20px 10px 0 10px;
+	margin: 20px 10px 10px 10px;
 	font-family: Avenir;
+	font-size: 1.3em;
+	line-height: 1.1
 }
 
 .event-location {
 	text-align: center;
-	font-size: 0.7em;
+	font-size: 0.9em;
 	font-family: Avenir;
 }
 
