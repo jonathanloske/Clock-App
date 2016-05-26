@@ -1,18 +1,6 @@
 angular.module('app.controllers')
 
-.controller('TimelineController', function ($scope, storage, socket, $interval, $document, $rootScope, $ionicScrollDelegate, $ionicViewSwitcher, $ionicNativeTransitions, $state, $window) {        // get the users' carSimulatorData from the storage and listen to updates
-	// get the users' carSimulatorData from the storage and listen to updates
-	$scope.carSimulatorData = storage.getCarSimulatorData();
-	$scope.carSimulatorData['time'] = -1;
-
-	storage.subscribe($scope, function onStorageUpdated() {
-        $scope.carSimulatorData = storage.getCarSimulatorData();
-        $scope.$apply();
-    });
-
-
-	// get the users' calendars from the storage and listen to updates
-	$scope.calendars = storage.getCalendars();
+.controller('TimelineController', function ($scope, storage, socket, $interval, $document, $rootScope, $ionicScrollDelegate, $ionicViewSwitcher, $ionicNativeTransitions, $state, $window) {
 
 	$scope.goTo = function () {
 		$ionicViewSwitcher.nextDirection('back');
@@ -21,8 +9,49 @@ angular.module('app.controllers')
 
 	$scope.floor = Math.floor;
 	$scope.keys = Object.keys;
+	$scope.editMode = false;
+	$scope.editCalendarMode = false;
+	$scope.editTransitOption = false;
+	$scope.pixelWidthOfOneHour = $window.innerWidth * 0.85 / 4;
+
+	$scope.transitOptions = [
+		'car', 'walk', 'bus', 'bicycle', 'cancel'
+	];
+	// These are the transit options we get from the server. Displaying them is not
+	// as consistent as our current options so we translate between the two.
+	$scope.transitTranslations = [
+		'car', 'walk', 'subway', 'bicycle'
+	];
+
+	// Fill up the time line with the hours between 7am and midnight.
+	$scope.timerange = [];
+	for (var i = 7; i < 24; i++) {
+		$scope.timerange.push(i > 12 ? i % 12 : i);
+	}
+	$scope.timerange.push('');
+
+	$scope.categoryTranslations = {
+		work: 'briefcase',
+		sports: 'ios-americanfootball',
+		leisure: 'ios-game-controller-a'
+	}
+
+	$scope.pixelWidthOfTimeline = $window.innerWidth * .85;
+	$scope.minimapScrollPosition = 0;
+
+	$scope.adjustMinimap = function () {
+		// Subtract the 'empty' part of the timeline so the alignment works
+		// The empty part is 0.85 - 0.5 of the width.
+		// Divide that by the value of the whole timeline and multiply it again
+		// by the width of the visible timeline.
+		$scope.minimapScrollPosition = ($ionicScrollDelegate.getScrollPosition().left - $window.innerWidth * 0.34) / ($scope.pixelWidthOfOneHour * $scope.timerange.length - 1) * 85;
+		$scope.$apply();
+	};
 
 	var prepareCalendarForTimeline = function () {
+		// get the users' carSimulatorData from the storage and listen to updates
+		$scope.carSimulatorData = storage.getCarSimulatorData();
+		// get the users' calendars from the storage and listen to updates
 		$scope.calendars = storage.getCalendars();
 		$scope.scrollToTime(new Date());
 		for (var i = 0; i < $scope.calendars.length; i++) {
@@ -35,75 +64,34 @@ angular.module('app.controllers')
 		addDurationAndDistanceToEvents();
 	};
 
-	$scope.categoryTranslations = {
-		work: 'briefcase',
-		sports: 'ios-americanfootball',
-		leisure: 'ios-game-controller-a'
-	}
-
 	storage.subscribe($scope, prepareCalendarForTimeline);
-	$scope.floor = Math.floor;
-
-	// Fill up the time line with the hours between 7am and midnight.
-	$scope.timerange = [];
-	for (var i = 7; i < 24; i++) {
-		$scope.timerange.push(i > 12 ? i % 12 : i);
-	}
-
-	// Continually update the time so we can display it
-	$interval(function () {
-		$scope.currentHour = (($scope.carSimulatorData['time'] == -1) ? new Date().getHours() : Math.floor($scope.carSimulatorData['time'] / 3600));
-		$scope.currentMinutes = (($scope.carSimulatorData['time'] == -1) ? new Date().getMinutes() : Math.floor($scope.carSimulatorData['time'] / 60 % 60));
-		if ($scope.currentMinutes < 10) {
-			$scope.currentMinutes = '0' + $scope.currentMinutes;
-		};
-		if(!$scope.scrubTimelineMarker){
-			setTimelineMarker($scope.currentHour,$scope.currentMinutes);
-		}
-	}, 300);
 
 	var setTimelineMarker = function(hour, minute){
 		$scope.timelineMarkerPosition = ((hour - 7) + minute / 60 ) * 85 / 4;
 	}
 
-	var markEventAtTimeMarker = function(){
-		var date = new Date();
-		date.setHours($scope.currentHour + $scope.scrubMarkerHour);
-		$scope.scrollToTime(date);
-		// Find all events that occur at the given time
-		for(var i = 0; i < $scope.calendars[$scope.selectedUserIndex].events.length; i++){
-			var event = $scope.calendars[$scope.selectedUserIndex].events[i];
-			var timelineMarkerDate = new Date();
-			timelineMarkerDate.setHours($scope.currentHour + $scope.scrubMarkerHour);
-			if(event.end.getTime() - timelineMarkerDate.getTime() > 0 && timelineMarkerDate.getTime() - event.start.getTime() > 0){
-				// Highlight the event we just found
-				$scope.selectedCalendarIndex = i;
-				$scope.scrollToTime(event.start);
-			}
+	// Continually update the time so we can display it
+	$interval(function () {
+		$scope.currentHour = ((!$scope.carSimulatorData['time']) ? new Date().getHours() : Math.floor($scope.carSimulatorData['time'] / 3600));
+		$scope.currentMinutes = ((!$scope.carSimulatorData['time']) ? new Date().getMinutes() : Math.floor($scope.carSimulatorData['time'] / 60 % 60));
+		if ($scope.currentMinutes < 10) {
+			$scope.currentMinutes = '0' + $scope.currentMinutes;
+		};
+		if(!$scope.scrubTimelineMarker){
+			setTimelineMarker($scope.currentHour,$scope.currentMinutes);
+			$scope.scrubMarkerMinute = 0;
 		}
-	}
-
-	$scope.scrubTimelineMarker = false;
-	$scope.editMode = false;
-	$scope.editCalendarMode = false;
-	$scope.editTransitOption = false;
-	$scope.pixelWidthOfOneHour = $window.innerWidth * 0.85 / 4;
-	$scope.scrubMarkerHour = 0;
-	$scope.selectedTransitOptionIndex = 0;
-
-	$scope.transitOptions = [
-		'car', 'walk', 'bus', 'bicycle', 'cancel'
-	];
-	// These are the transit options we get from the server. Displaying them is not
-	// as consistent as our current options so we translate between the two.
-	$scope.transitTranslations = [
-		'car', 'walk', 'subway', 'bicycle'
-	]
+	}, 300);
 
 	$scope.$on("$ionicView.beforeEnter", function (event, data) {
 		prepareCalendarForTimeline();
 	});
 	$scope.$on("$ionicView.enter", function (event, data) {
+		$scope.scrubTimelineMarker = false;
+		$scope.scrubMarkerMinute = 0;
+		$scope.selectedTransitOptionIndex = 0;
+		$scope.selectedEvent = 0;
+
 		$rootScope.toggleEditMode = function () {
 			if ($scope.editTransitOption) {
 				if ($scope.selectedTransitOptionIndex !== $scope.transitOptions.length - 1) {
@@ -123,15 +111,30 @@ angular.module('app.controllers')
 				}
 				$scope.editTransitOption = false;
 				$scope.selectEventMode = false;
-				scrubTimelineMarker = false;
-				$scope.scrubMarkerHour = 0;
-				$scope.scrollToTime(new Date());
+				$scope.selectedTransitOptionIndex;
+				var timelineMarkerDate = new Date();
+				timelineMarkerDate.setMinutes(Number($scope.currentMinutes) + $scope.scrubMarkerMinute);
+				$scope.scrollToTime(timelineMarkerDate);
 			} else if ($scope.selectEventMode){
+				$scope.selectedTransitOptionIndex = 0;
 				$scope.editTransitOption = true;
 			} else {
 				$scope.selectEventMode = true;
-				$scope.selectedUserIndex = 0;
-				markEventAtTimeMarker();
+				$scope.selectedEvent = 0;
+				// Find all events that coincide with the selected time
+				var timelineMarkerDate = new Date();
+				timelineMarkerDate.setMinutes(Number($scope.currentMinutes) + $scope.scrubMarkerMinute);
+				$scope.selectableEvents = [];
+				for(var i = 0; i < $scope.calendars.length; i++){
+					for(var j = 0; j < $scope.calendars[i].events.length; j++){
+						if(timelineMarkerDate.getTime() >  $scope.calendars[i].events[j].start && timelineMarkerDate.getTime() < $scope.calendars[i].events[j].end){
+							$scope.selectableEvents.push([i, j]);
+						}
+					}
+				}
+				$scope.selectedUserIndex = $scope.selectableEvents[0][0];
+				$scope.selectedCalendarIndex = $scope.selectableEvents[0][1];
+				$scope.scrollToTime($scope.calendars[$scope.selectedUserIndex].events[$scope.selectedCalendarIndex].start);
 			}
 		};
 
@@ -139,16 +142,17 @@ angular.module('app.controllers')
 			if ($scope.editTransitOption) {
 				$scope.selectedTransitOptionIndex = $scope.selectedTransitOptionIndex < $scope.transitOptions.length - 1 ? $scope.selectedTransitOptionIndex + 1 : $scope.selectedTransitOptionIndex;
 			} else if ($scope.selectEventMode){
-				if($scope.selectedUserIndex < $scope.calendars.length){
-					$scope.selectedUserIndex++;
+				if($scope.selectedEvent < $scope.selectableEvents.length - 1){
+					$scope.selectedEvent++;
+					$scope.selectedUserIndex = $scope.selectableEvents[$scope.selectedEvent][0];
+					$scope.selectedCalendarIndex = $scope.selectableEvents[$scope.selectedEvent][1];
+					$scope.scrollToTime($scope.calendars[$scope.selectedUserIndex].events[$scope.selectedCalendarIndex].start);
 				}
-				markEventAtTimeMarker();
 			} else {
 				$scope.scrubTimelineMarker = true;
-				$scope.scrubMarkerHour++;
-				setTimelineMarker($scope.currentHour + $scope.scrubMarkerHour, $scope.currentMinutes);
+				$scope.scrubMarkerMinute += 30;
 				var date = new Date();
-				date.setHours($scope.currentHour + $scope.scrubMarkerHour);
+				date.setMinutes(Number($scope.currentMinutes) + $scope.scrubMarkerMinute);
 				$scope.scrollToTime(date);
 			}
 		};
@@ -159,35 +163,31 @@ angular.module('app.controllers')
 					$scope.selectedTransitOptionIndex--;
 				}
 			} else if ($scope.selectEventMode){
-				if ($scope.selectedUserIndex > 0) {
-					$scope.selectedUserIndex--;
+				if($scope.selectedEvent > 0){
+					$scope.selectedEvent--;
+					$scope.selectedUserIndex = $scope.selectableEvents[$scope.selectedEvent][0];
+					$scope.selectedCalendarIndex = $scope.selectableEvents[$scope.selectedEvent][1];
+					$scope.scrollToTime($scope.calendars[$scope.selectedUserIndex].events[$scope.selectedCalendarIndex].start);
 				}
-				markEventAtTimeMarker();
 			} else {
 				if ($ionicScrollDelegate.getScrollPosition().left === 0) {
-					// $state.go('timeToLeaveOverview');
 					$ionicNativeTransitions.stateGo('timeToLeaveOverview', {}, {
 						"type": "slide",
 						"direction": "right"
 					});
 				} else {
 					$scope.scrubTimelineMarker = true;
-					$scope.scrubMarkerHour--;
-					setTimelineMarker($scope.currentHour + $scope.scrubMarkerHour, $scope.currentMinutes);
+					$scope.scrubMarkerMinute -= 30;
 					var date = new Date();
-					date.setHours($scope.currentHour + $scope.scrubMarkerHour);
+					date.setMinutes(Number($scope.currentMinutes) + $scope.scrubMarkerMinute);
 					$scope.scrollToTime(date);
 				}
 			}
 		};
-
-		$scope.scrubTimelineMarker = false;
-		$scope.scrubMarkerHour = 0;
 	});
 
 	$scope.scrollToTime = function (time) {
-		// Center the time
-		$ionicScrollDelegate.scrollTo((time.getHours() - 7) * $scope.pixelWidthOfOneHour + time.getMinutes() / 60 * $scope.pixelWidthOfOneHour - $scope.pixelWidthOfOneHour, 0, true);
+		$ionicScrollDelegate.scrollTo((time.getHours() - 7) * $scope.pixelWidthOfOneHour + time.getMinutes() / 60 * $scope.pixelWidthOfOneHour, 0, true);
 	};
 
 	$scope.calendars = [
@@ -290,15 +290,7 @@ angular.module('app.controllers')
 					(event.start.getHours() * 60 + event.start.getMinutes());
 			}
 		}
-	}
-
-	$scope.pixelWidthOfTimeline = $window.innerWidth * .85 * 4.125;
-	$scope.minimapScrollPosition = 0;
-
-	$scope.adjustMinimap = function () {
-		$scope.minimapScrollPosition = $ionicScrollDelegate.getScrollPosition().left / $scope.pixelWidthOfTimeline * 85;
-		$scope.$apply();
-	}
+	};
 
 	addDurationAndDistanceToEvents();
 });

@@ -39,6 +39,10 @@ a.item {
     z-index: 2;
 }
 
+.timeline-scroll {
+    padding-left: 50vw;
+}
+
 .transportation {
     border-radius: 100%;
     overflow: hidden;
@@ -75,14 +79,12 @@ a.item {
 }
 
 .timeline-current-marker {
-    position: absolute;
-    height: 100vh;
+    position: fixed;
+    height: 94vh;
     border-left: 4px solid red;
     margin-left: 15vw;
     z-index: 1;
-    /* Adjust for the wide border */
-    left: -2px;
-    transition: transform 0.3s linear;
+    left: 35vw;
 }
 
 .timeline-pictures {
@@ -137,7 +139,7 @@ a.item {
 .timeline-hours {
     color: white;
     padding-top: 0px;
-    margin-left: 15vw;
+    /*margin-left: 15vw;*/
     line-height: 5vh;
     font-size: 6vh;
     z-index: 1;
@@ -155,6 +157,11 @@ a.item {
     margin-right: 12.5%;
 }
 
+.timeline-hours .hour-marker:last-of-type {
+    margin-left: -12.5%;
+    padding-right: 100vw;
+}
+
 .timeline .filled {
     color: white;
     overflow: hidden;
@@ -170,7 +177,6 @@ a.item {
 
 .event-category i.icon{
     position: absolute;
-    margin-top: 16%;
     font-size: 100px;
 }
 
@@ -180,6 +186,10 @@ a.item {
 
 .timeline .timelines1 > .cancel-button {
     margin-top: -100vh;
+}
+
+.timeline .timelines1 .event-category i.icon{
+    margin-top: 9%;
 }
 
 .timeline .timelines2 {
@@ -192,6 +202,10 @@ a.item {
     margin-top: -55vh;
 }
 
+.timeline .timelines2 .event-category i.icon{
+    margin-top: 16%;
+}
+
 .timeline .timelines3 {
     height: calc(26.3vh - 20px);
     margin-top: 2.5vh;
@@ -200,6 +214,10 @@ a.item {
 
 .timeline .timelines3 > .cancel-button {
     margin-top: -40vh;
+}
+
+.timeline .timelines3 .event-category i.icon{
+    margin-top: 9%;
 }
 
 .timeline .timelines4 {
@@ -212,6 +230,10 @@ a.item {
     margin-top: -31vh;
 }
 
+.timeline .timelines4 .event-category i.icon{
+    margin-top: 9%;
+}
+
 .timeline .timelines5 {
     height: calc(16vh - 17px);
     margin-top: 1.5vh;
@@ -222,6 +244,10 @@ a.item {
     margin-top: -26vh;
 }
 
+.timeline .timelines5 .event-category i.icon{
+    margin-top: 9%;
+}
+
 .timeline {
     margin-bottom: 10px;
 }
@@ -229,7 +255,7 @@ a.item {
 .timelines {
     position: absolute;
     top: 35px;
-    margin-left: 15vw;
+    /*margin-left: 15vw;*/
     width: 85vw;
 }
 
@@ -391,7 +417,7 @@ a.item {
 .minimap-indicator {
     background-color: rgba(255, 255, 255, 1);
     height: 6vh;
-    width: 20.606vw;
+    width: 20vw;
     position: absolute;
     border-radius: 6px;
     mix-blend-mode: difference;

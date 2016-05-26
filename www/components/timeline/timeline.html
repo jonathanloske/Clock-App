@@ -18,7 +18,9 @@
                 </div>
             </div>
         </div>
-        <ion-scroll direction="x" scrollbar-x="false" on-scroll="adjustMinimap()">
+        <div class="timeline-current-marker"></div>
+
+        <ion-scroll class="timeline-scroll" direction="x" scrollbar-x="false" on-scroll="adjustMinimap()">
             <!--
                 The visible width of the timeline is always 85vw since the left border is
                 occupied by a 15vw wide picture container. 85vw always contain 4 full hours
@@ -32,10 +34,6 @@
                      ng-repeat="time in timerange track by $index">
                     {{time}}
                 </div>
-            </div>
-            <div class="timeline-current-marker"
-                 ng-style="{'transform':
-                    'translate3d(' + timelineMarkerPosition + 'vw, -100vh, 1px)'}">
             </div>
             <div class="timelines">
                 <div class="row timeline timeline-marker" ng-repeat="calendar in calendars">
@@ -107,8 +105,8 @@
                     ng-class="['col', 'timeline-cell', 'filled']"
                     ng-repeat="event in calendar.events track by $index"
                     ng-style="{
-                        'margin-left': ((event.distanceToEventBeforeInMinutes / 60 * 100 / 16.5) + '%'),
-                        'flex': '0 0 ' + (event.durationInMinutes / 60 * 100 / 16.5) + '%'
+                        'margin-left': ((event.distanceToEventBeforeInMinutes / 60 * 100 / (timerange.length - 1)) + '%'),
+                        'flex': '0 0 ' + (event.durationInMinutes / 60 * 100 / (timerange.length - 1)) + '%'
                     }">
                 </div>
             </div>
