@@ -1,6 +1,9 @@
 // Simple red/blue fade with Node and opc.js
 var LEDController = function(host, port)
 {
+    //time left growing parameters
+    this.maximumMinutes = 60;
+
     this.color = {r: 255, g: 0, b: 0};
     this.urgence = 6;
     this.stop = 0;
@@ -48,20 +51,6 @@ var LEDController = function(host, port)
 
 LEDController.prototype._writeFrame = function (red, green, blue) {
     var packet = new Uint8ClampedArray(4 + this.leds * 3);
-
-    if (this.socket.readyState != 1 /* OPEN */) {
-        console.log("[LEDController] The server connection isn't open. Nothing to do.");
-        return;
-    }
-
-    if (this.socket.bufferedAmount > packet.length) {
-        console.log("[LEDController] The network is lagging, and we still haven't sent the previous frame.");
-        // Don't flood the network, it will just make us laggy.
-        // If fcserver is running on the same computer, it should always be able
-        // to keep up with the frames we send, so we shouldn't reach this point.
-        return;
-    }
-
     // Dest position in our packet. Start right after the header.
     var dest = 4;
 
@@ -71,18 +60,12 @@ LEDController.prototype._writeFrame = function (red, green, blue) {
         packet[dest++] = green;
         packet[dest++] = blue;
     }
-    this.socket.send(packet.buffer);
+    this._writePacket(packet);
 }
 
 // extended from writeFrame, can write a certain light pattern rather than single color
 LEDController.prototype._advancedFrame = function (Fra) {
     var packet = new Uint8ClampedArray(4 + this.leds * 3);
-    if (this.socket.readyState != 1 /* OPEN */) {
-        return;
-    }
-
-    if (this.socket.bufferedAmount > packet.length) {return;
-    }
     var dest = 4;
 
     // Sample the center pixel of each LED
@@ -91,7 +74,21 @@ LEDController.prototype._advancedFrame = function (Fra) {
         packet[dest++] = Fra.g[led];
         packet[dest++] = Fra.b[led];
     }
-    // console.log(packet.toString());
+
+    this._writePacket(packet);
+}
+
+LEDController.prototype._writePacket = function (packet) {
+    if (this.socket.readyState != 1 /* OPEN */) {
+        console.log("[LEDController] The server connection isn't open. Nothing to do.");
+        return;
+    }
+
+    if (this.socket.bufferedAmount > packet.length) {
+        console.log("[LEDController] The network is lagging, and we still haven't sent the previous frame.");
+        return;
+    }
+    console.log(packet.toString());
     this.socket.send(packet.buffer);
 }
 
@@ -152,6 +149,7 @@ LEDController.prototype.spark = function () {
 LEDController.prototype.stopLEDs = function () {
     console.log("[LEDController] stopping sparking");
     this.stop = 1;
+    this._allOff();
 }
 
 LEDController.prototype.showTime = function(){
@@ -173,4 +171,49 @@ LEDController.prototype.showTime = function(){
     this.Frame.writeOne(minPos, 255, 0, 0);
     console.log("[LEDController] Display the Time: " + hour + ':' + min);
     this.advancedFrame(this.Frame);
+}
+
+
+
+
+LEDController.prototype.displayTimeLeftGrowing = function (timeLeftInformation) {
+    this._displayTimeLeft(timeLeftInformation, true);
+}
+
+LEDController.prototype.displayTimeLeftShrinking = function (timeLeftInformation) {
+    this._displayTimeLeft(timeLeftInformation, false);
+}
+
+LEDController.prototype._displayTimeLeft = function (timeLeftInformation, growing) {
+    //this.leds
+    var packet = new Uint8ClampedArray(4 + this.leds * 3);
+
+    if (timeLeftInformation.length < 1 || timeLeftInformation.length > 4) {
+        console.log('[LEDController] unsupported amount of users for this glow type');
+        return;
+    }
+
+    for (var user = 0; user < timeLeftInformation.length; user++) {
+        var userLedAreaStart = Math.floor(this.leds / timeLeftInformation.length * (user));
+        var userLedAreaEnd = Math.floor(this.leds / timeLeftInformation.length * (user+1)) - 1;
+
+        var availableLedsForUser = userLedAreaEnd - userLedAreaStart;
+
+        var numberOfActiveLeds = Math.min(timeLeftInformation[user].minutes, this.maximumMinutes) / this.maximumMinutes * availableLedsForUser;
+
+        if (growing) numberOfActiveLeds = availableLedsForUser - numberOfActiveLeds;
+
+        var litLedStart = Math.floor(userLedAreaStart + (availableLedsForUser - numberOfActiveLeds)/2);
+        var litLedEnd = Math.floor(litLedStart + numberOfActiveLeds);
+
+        for (var i = litLedStart; i < litLedEnd; i++) {
+            packet[4 + i * 3    ] = timeLeftInformation[user].color[0];
+            packet[4 + i * 3 + 1] = timeLeftInformation[user].color[1];
+            packet[4 + i * 3 + 2] = timeLeftInformation[user].color[2];
+        }
+
+        console.log('[LEDController] s: ' + userLedAreaStart + ' e: ' + userLedAreaEnd + ' av: ' + availableLedsForUser + ' actLED: ' + numberOfActiveLeds + ' litS: ' + litLedStart + ' litE: ' + litLedEnd);
+
+    }
+    this._writePacket(packet);
 }

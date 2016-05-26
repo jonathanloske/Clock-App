@@ -1,13 +1,16 @@
 angular.module('app.controllers')
 
-.controller('TimeToLeaveController', function ($rootScope, $scope, $state, $ionicViewSwitcher, $ionicNativeTransitions, $interval, storage) {
+.controller('TimeToLeaveController', function ($rootScope, $scope, $state, $ionicViewSwitcher, $ionicNativeTransitions, $interval, storage, leds) {
     // get the users' calendars from the storage and listen to updates
     $scope.calendars = storage.getCalendars();
+    $scope.carSimulatorData = storage.getCarSimulatorData();
+	$scope.carSimulatorData['time'] = -1;
     retrieveLeaveData();
     $scope.floor = Math.floor;
 
     storage.subscribe($scope, function onStorageUpdated() {
         $scope.calendars = storage.getCalendars();
+        $scope.carSimulatorData = storage.getCarSimulatorData();
         retrieveLeaveData();
         $scope.$apply();
     });
@@ -45,7 +48,7 @@ angular.module('app.controllers')
                 msecsUntilStart: -1,
                 event: null
             };
-            var now = new Date();
+            var now = ($scope.carSimulatorData['time'] == -1) ? new Date() : new Date(new Date().getTime() - (new Date().getTime() % 86400000) + 25200000 + $scope.carSimulatorData['time'] * 1000);
             calendar.events.forEach(function (event) {
                 var msecsUntilEvent = (event.start - now);
                 // we dont want events that are already over or ones that the user is
@@ -157,5 +160,18 @@ angular.module('app.controllers')
                 "direction": "left"
             });
         };
+
+
+        var ledData = [];
+        Object.keys($scope.familyMembers).forEach(function (key) {
+
+            var userData = {
+                minutes: $scope.familyMembers[key].transit.length > 0 ? $scope.familyMembers[key].transit[0].minutesLeft : 60,
+                color: [Math.floor(Math.random() * 255), Math.floor(Math.random() * 255), Math.floor(Math.random() * 255)]
+            }
+
+            ledData.push(userData);
+        });
+        leds.displayTimeLeftGrowing(ledData);
     });
 });

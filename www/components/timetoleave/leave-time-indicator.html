@@ -1,21 +1,18 @@
 <div ng-class="['radial-progress', small? 'small': '']" data-progress="{{transit.minutesLeft > 30? '100' : floor(transit.minutesLeft * 10/3)}}">
-    <div class="circle">
-        <div class="mask full">
-            <div class="fill"></div>
-        </div>
-        <div class="mask half">
-            <div class="fill"></div>
-            <div class="fill fix"></div>
-        </div>
-    </div>
-    <div ng-class="['transportation',
-                    'inset',
-                    transit.minutesLeft < 60? 'transportation-with-shadow' : '']"
-            ng-style="{'background-image': 'url({{picture}})'}">
-        <div ng-class="[small? 'secondary-transportation' : 'primary-transportation']"
-                ng-if="transit.minutesLeft < 60">
-            <i ng-class="['icon', 'ion-android-' + '{{transit.type}}']"></i>
-            <p>{{transit.minutesLeft}} mins</p>
-        </div>
-    </div>
+	<div class="circle">
+		<div class="mask full">
+			<div class="fill"></div>
+		</div>
+		<div class="mask half">
+			<div class="fill"></div>
+			<div class="fill fix"></div>
+		</div>
+	</div>
+	<div class="transportation inset transportation-with-shadow" ng-style="{'background-image': 'url({{picture}})'}">
+		<div ng-class="[small? 'secondary-transportation' : 'primary-transportation']">
+			<i ng-class="['icon', 'ion-android-' + '{{transit.type}}']"></i>
+			<p>{{transit.minutesLeft > 60 ? floor(transit.minutesLeft / 60) + ':' + (transit.minutesLeft % 60
+				< 10 ? '0' : '') + transit.minutesLeft % 60 + ' mins' : transit.minutesLeft + ' mins'}}</p>
+		</div>
+	</div>
 </div>

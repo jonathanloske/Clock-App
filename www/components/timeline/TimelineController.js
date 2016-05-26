@@ -53,7 +53,7 @@ angular.module('app.controllers')
 		$scope.carSimulatorData = storage.getCarSimulatorData();
 		// get the users' calendars from the storage and listen to updates
 		$scope.calendars = storage.getCalendars();
-		$scope.scrollToTime(new Date());
+		//$scope.scrollToTime(new Date());
 		for (var i = 0; i < $scope.calendars.length; i++) {
 			for (var j = $scope.calendars[i].events.length - 1; j >= 0; j--) {
 				if ($scope.calendars[i].events[j].start.getDay() !== new Date().getDay()) {
@@ -66,25 +66,30 @@ angular.module('app.controllers')
 
 	storage.subscribe($scope, prepareCalendarForTimeline);
 
-	var setTimelineMarker = function(hour, minute){
-		$scope.timelineMarkerPosition = ((hour - 7) + minute / 60 ) * 85 / 4;
-	}
-
 	// Continually update the time so we can display it
 	$interval(function () {
-		$scope.currentHour = ((!$scope.carSimulatorData['time']) ? new Date().getHours() : Math.floor($scope.carSimulatorData['time'] / 3600));
-		$scope.currentMinutes = ((!$scope.carSimulatorData['time']) ? new Date().getMinutes() : Math.floor($scope.carSimulatorData['time'] / 60 % 60));
+		if($scope.carSimulatorData && $scope.carSimulatorData['time']){
+			$scope.currentHour = Math.floor($scope.carSimulatorData['time'] / 3600);
+			$scope.currentMinutes = Math.floor($scope.carSimulatorData['time'] / 60 % 60);
+		} else {
+			$scope.currentHour = new Date().getHours();
+			$scope.currentMinutes = new Date().getMinutes();
+		}
 		if ($scope.currentMinutes < 10) {
 			$scope.currentMinutes = '0' + $scope.currentMinutes;
-		};
+		}
 		if(!$scope.scrubTimelineMarker){
-			setTimelineMarker($scope.currentHour,$scope.currentMinutes);
 			$scope.scrubMarkerMinute = 0;
+			var date = new Date();
+			date.setHours($scope.currentHour);
+			date.setMinutes($scope.currentMinutes);
+			$scope.scrollToTime(date);
 		}
 	}, 300);
 
 	$scope.$on("$ionicView.beforeEnter", function (event, data) {
 		prepareCalendarForTimeline();
+		$scope.scrollToTime(new Date);
 	});
 	$scope.$on("$ionicView.enter", function (event, data) {
 		$scope.scrubTimelineMarker = false;
