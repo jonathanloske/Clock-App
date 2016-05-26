@@ -11,7 +11,8 @@
 	<div class="transportation inset transportation-with-shadow" ng-style="{'background-image': 'url({{picture}})'}">
 		<div ng-class="[small? 'secondary-transportation' : 'primary-transportation']">
 			<i ng-class="['icon', 'ion-android-' + '{{transit.type}}']"></i>
-			<p>{{transit.minutesLeft}} mins</p>
+			<p>{{transit.minutesLeft > 60 ? floor(transit.minutesLeft / 60) + ':' + (transit.minutesLeft % 60
+				< 10 ? '0' : '') + transit.minutesLeft % 60 + ' mins' : transit.minutesLeft + ' mins'}}</p>
 		</div>
 	</div>
 </div>
