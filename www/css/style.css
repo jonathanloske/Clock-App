@@ -82,9 +82,8 @@ a.item {
     position: fixed;
     height: 94vh;
     border-left: 4px solid red;
-    margin-left: 15vw;
     z-index: 1;
-    left: 35vw;
+    left: 50vw;
 }
 
 .timeline-pictures {
