@@ -2,6 +2,22 @@
 	background-color: black;
 }
 
+.gradient-overlay {
+	position: absolute;
+	display: block;
+	width: 100%;
+	height: 100%;
+	z-index: 10;
+}
+
+.gradient-overlay-right {
+	background: -webkit-linear-gradient(left, rgba(0, 0, 0, 0) 0%, rgba(0, 0, 0, 0.05) 90%, rgba(0, 0, 0, .5) 96%, rgba(0, 0, 0, .9) 100%);
+}
+
+.gradient-overlay-left {
+	background: -webkit-linear-gradient(left, rgba(0, 0, 0, .9) 0%, rgba(0, 0, 0, 0.5) 1%, rgba(0, 0, 0, 0) 7%, rgba(0, 0, 0, 0) 100%);
+}
+
 .pane {
 	border-radius: 30px;
 }
@@ -25,7 +41,7 @@ a.item {
 }
 
 .selected {
-	box-shadow: 0 0 10px 6px white !important;
+	box-shadow: 0 0 20px 15px rgba(255,255,255,0.7) !important;
 }
 
 .timeline-page,
@@ -110,6 +126,7 @@ a.item {
 	background-color: #525252;
 	padding-top: calc( 10px + 5vh);
 	text-align: center;
+	background: -webkit-linear-gradient(left, rgba(0, 0, 0, 1) 80%, rgba(70, 70, 70, 1) 98%, rgba(90, 90, 90, 1) 100%);
 }
 
 .timeline-pictures img {
@@ -182,7 +199,7 @@ a.item {
 
 .event-category i.icon {
 	position: absolute;
-	font-size: 100px;
+	font-size: 55px;
 }
 
 @font-face {
@@ -256,7 +273,9 @@ a.item {
 }
 
 .timeline .timelines3 .event-category i.icon {
-	margin-top: 4.5%;
+	margin-top: 8%;
+	margin-left: 3.5%;
+	overflow: hidden;
 }
 
 .timeline .timelines3 .transit-option {
@@ -274,21 +293,22 @@ a.item {
 }
 
 .timeline .timelines3 .transit-option-icon {
-    position: relative;
-    top: -5px;
+	position: relative;
+	top: -5px;
 }
 
-.timeline .timelines3 .transit-option-icon.ion-android-car {
-    position: relative;
-    top: -10px;
-}
+
+/*.timeline .timelines3 .transit-option-icon.ion-android-car {
+	position: relative;
+	top: -10px;
+}*/
 
 .timeline .timelines3 .event-description {
-    margin-top: -20vh;
+	margin-top: -22vh;
 }
 
 .timeline .timelines3 .event-category {
-    margin-top: -18vh;
+	margin-top: -18vh;
 }
 
 .timeline .timelines4 {
@@ -341,14 +361,13 @@ a.item {
 	width: 85vw;
 }
 
-.timeline-cell{
+.timeline-cell {
 	transition: height 1s;
 }
 
-.timeline .timeline-cell.transit-selection-focus {
-}
+.timeline .timeline-cell.transit-selection-focus {}
 
-.ng-hide.enter{
+.ng-hide.enter {
 	display: hidden;
 }
 

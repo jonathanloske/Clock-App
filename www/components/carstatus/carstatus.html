@@ -15,9 +15,9 @@
                     <div class="car-info-level">
                         <span ng-style="{'width': carSimulatorData['battery'] + '%'}" class="{{ carSimulatorData['battery'] > 35 ? 'assertive' : 'alert' }}"></span>
                     </div>
-                    <div class="car-info-prefix">Please charge for upcoming trip:</div>
+                    <div class="car-info-prefix">Please charge for upcoming trip to:</div>
                     <div class="car-info-subject">San Francisco</div>
-                    <div class="car-info-detail">pick up John at de young museum</div>
+                    <div class="car-info-detail">Pick up John at de Young Museum</div>
 
                 </div>
                 <div class="car-info-card">
@@ -25,8 +25,8 @@
                     <div class="car-info-level">
                         <span ng-style="{'width': carSimulatorData['oil'] + '%'}" class="{{ carSimulatorData['oil'] > 35 ? 'assertive' : 'alert' }}"></span>
                     </div>
-                    <div class="car-info-prefix">Oil change appointment:</div>
-                    <div class="car-info-subject">July 6th, Sunday</div>
+                    <div class="car-info-prefix">Service appointment:</div>
+                    <div class="car-info-subject">July 6th, Wednesday</div>
                     <div class="car-info-detail">Audi Palo Alto</div>
                 </div>
                 <div class="car-info-card">
@@ -34,7 +34,7 @@
                         <div class="col">
                             <div class="car-info-headline">PARKING</div>
                             <div class="car-info-subject car-info-subject-map">{{ carSimulatorData['location'] }}</div>
-                            <div class="car-info-detail">Stanford, CA</div>
+                            <div class="car-info-detail">Facebook HQ, Menlo Park</div>
                         </div>
                         <div class="col">
                             <div class="{{ getMap(); }}"></div>
