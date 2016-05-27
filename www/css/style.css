@@ -100,12 +100,18 @@ a.item {
 	font-size: 4vh;
 }
 
-.timeline-current-marker {
+.timeline-marker {
 	position: fixed;
 	height: 94vh;
 	border-left: 4px solid red;
 	z-index: 1;
 	left: 50vw;
+}
+
+.timeline-current-marker{
+	border-left: 4px solid rgba(255,0,0,0.6);
+	height: 94vh;
+	z-index: 1;
 }
 
 .timeline-pictures {
@@ -363,8 +369,6 @@ a.item {
 .timeline-cell {
 	transition: height 1s;
 }
-
-.timeline .timeline-cell.transit-selection-focus {}
 
 .ng-hide.enter {
 	display: hidden;

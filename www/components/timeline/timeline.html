@@ -17,7 +17,7 @@
 			</div>
 		</div>
 
-		<div class="timeline-current-marker"></div>
+		<div class="timeline-marker"></div>
 
 		<ion-scroll class="timeline-scroll" direction="x" scrollbar-x="false" on-scroll="adjustMinimap()">
 			<!--
@@ -32,6 +32,10 @@
 				<div class="col hour-marker" ng-repeat="time in timerange track by $index">
 					{{time}}
 				</div>
+			</div>
+			<div class="timeline-current-marker"
+				ng-style="{'transform':
+					'translate3d(' + timelineMarkerPosition + 'vw, -100vh, 1px)'}">
 			</div>
 			<div class="timelines">
 				<div class="row timeline timeline-marker" ng-repeat="calendar in calendars">

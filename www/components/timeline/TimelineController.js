@@ -87,6 +87,7 @@ angular.module('app.controllers')
 			date.setMinutes($scope.currentMinutes);
 			$scope.scrollToTime(date);
 		}
+		$scope.timelineMarkerPosition = (($scope.currentHour - 7) + Number($scope.currentMinutes) / 60 ) * 85 / 4;
 	}, 300);
 
 	$scope.shouldTransitOptionDisplay = function(event, transitName, calendarEmail){
