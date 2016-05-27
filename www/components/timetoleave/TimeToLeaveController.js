@@ -94,9 +94,27 @@ angular.module('app.controllers')
         };
     };
 
+    function triggerLEDs() {
+        var ledData = [];
+        Object.keys($scope.familyMembers).forEach(function (key) {
+
+            var userData = {
+                minutes: $scope.familyMembers[key].transit.length > 0 ? $scope.familyMembers[key].transit[0].minutesLeft : 60,
+                color: [Math.floor(Math.random() * 255), Math.floor(Math.random() * 255), Math.floor(Math.random() * 255)]
+            }
+
+            ledData.push(userData);
+        });
+        leds.displayTimeLeftGrowing(ledData);
+    };
+
     $interval(function(){
         retrieveLeaveData();
     }, 300);
+
+    $interval(function(){
+        triggerLEDs();
+    }, 1000);
 
     /*$scope.familyMembers = [
 		{
@@ -161,19 +179,6 @@ angular.module('app.controllers')
                 });
             };
         }, 1000);
-
-
-        var ledData = [];
-        Object.keys($scope.familyMembers).forEach(function (key) {
-
-            var userData = {
-                minutes: $scope.familyMembers[key].transit.length > 0 ? $scope.familyMembers[key].transit[0].minutesLeft : 60,
-                color: [Math.floor(Math.random() * 255), Math.floor(Math.random() * 255), Math.floor(Math.random() * 255)]
-            }
-
-            ledData.push(userData);
-        });
-        leds.displayTimeLeftGrowing(ledData);
     });
     $scope.$on("$ionicView.leave", function (event, data) {
 		$rootScope.handleClockwise = function(){};
