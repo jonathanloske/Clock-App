@@ -76,6 +76,10 @@ a.item {
 	box-shadow: inset 0px 0px 40vh grey;
 }
 
+.blurred-picture {
+	-webkit-filter: blur(3px);
+}
+
 .radial-progress .transportation i {
 	line-height: 25vh;
 	font-size: 20vh;
@@ -108,8 +112,8 @@ a.item {
 	left: 50vw;
 }
 
-.timeline-current-marker{
-	border-left: 4px solid rgba(255,0,0,0.6);
+.timeline-current-marker {
+	border-left: 4px solid rgba(255, 0, 0, 0.6);
 	height: 94vh;
 	z-index: 1;
 }
