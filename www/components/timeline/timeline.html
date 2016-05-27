@@ -38,7 +38,7 @@
 					'translate3d(' + timelineMarkerPosition + 'vw, -100vh, 1px)'}">
 			</div>
 			<div class="timelines">
-				<div class="row timeline timeline-marker" ng-repeat="calendar in calendars">
+				<div class="row timeline" ng-repeat="calendar in calendars">
 					<!-- Calculate the horizontal positioning of the elements.
 						This is divided into two parts:
 							'margin-left' is to care for the white space between the last calendar
@@ -103,7 +103,7 @@
 			</div>
 		</ion-scroll>
 		<div class="minimap">
-			<div ng-class="['row', 'timeline', 'timeline-marker', 'timelines' + calendars.length]" ng-repeat="calendar in calendars track by $index">
+			<div ng-class="['row', 'timeline', 'timelines' + calendars.length]" ng-repeat="calendar in calendars track by $index">
 				<div class="minimap-indicator" ng-if="$index === 0" ng-style="{'transform':
 						'translate3d(' + minimapScrollPosition + 'vw, 0, 0)'}"></div>
 				<div ng-class="['col', 'timeline-cell', 'filled']" ng-repeat="event in calendar.events track by $index" ng-style="{

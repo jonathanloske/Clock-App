@@ -492,11 +492,13 @@ a.item {
 
 .minimap {
 	position: fixed;
+	top: 100vh;
 	transform: translate3d(15vw, -6vh, 1px);
 	height: 6vh;
 	width: 85vw;
 	background-color: black;
 	overflow: hidden;
+	z-index: 1;
 }
 
 .minimap .timeline.timelines1 {
