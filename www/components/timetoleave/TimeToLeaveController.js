@@ -1,18 +1,7 @@
 angular.module('app.controllers')
 
 .controller('TimeToLeaveController', function ($rootScope, $scope, $state, $ionicViewSwitcher, $ionicNativeTransitions, $interval, $timeout, storage, leds) {
-	// get the users' calendars from the storage and listen to updates
-	$scope.calendars = storage.getCalendars();
-	$scope.carSimulatorData = storage.getCarSimulatorData();
-	retrieveLeaveData();
 	$scope.floor = Math.floor;
-
-	storage.subscribe($scope, function onStorageUpdated() {
-		$scope.calendars = storage.getCalendars();
-		$scope.carSimulatorData = storage.getCarSimulatorData();
-		retrieveLeaveData();
-		$scope.$apply();
-	});
 
 	$scope.weather = {
 		condition: 'partlysunny',
@@ -69,12 +58,20 @@ angular.module('app.controllers')
 			if (nextEvent.event != null) {
 				parent.nextEvent = nextEvent.event.title;
 				if (nextEvent.event.optimized_transit != undefined) {
-					var timeToLeaveBest = new Date(nextEvent.event.start.getTime() - nextEvent.event.optimized_transit.best.duration * 60000);
+					var timeToLeaveBest;
+					var transitOption;
+					if(nextEvent.event.userSelectedTransitOption === ""){
+						timeToLeaveBest = new Date(nextEvent.event.start.getTime() - nextEvent.event.optimized_transit.best.duration * 60000);
+					} else {
+						// Need to translate 'walk' to walking
+						transitOption = nextEvent.event.userSelectedTransitOption === 'walk'? 'walking' : nextEvent.event.userSelectedTransitOption;
+						timeToLeaveBest = new Date(nextEvent.event.start.getTime() - nextEvent.event.transit_options[transitOption].duration * 60000);
+					}
 
 					var timeToLeaveSecondBest = new Date(nextEvent.event.start.getTime() - nextEvent.event.optimized_transit.alternative.duration * 60000);
 					parent.transit = [
 						{
-							type: nextEvent.event.optimized_transit.best.name,
+							type: nextEvent.event.userSelectedTransitOption === ""?nextEvent.event.optimized_transit.best.name : transitOption,
 							hoursLeft: Math.floor(Math.round((timeToLeaveBest - now) / 1000 / 60 / 60)),
 							minutesLeft: Math.round((timeToLeaveBest - now) / 1000 / 60)
 					  },
@@ -93,10 +90,6 @@ angular.module('app.controllers')
 			$scope.familyMembers.push(parent);
 		};
 	};
-
-	$interval(function(){
-		retrieveLeaveData();
-	}, 300);
 
 	/*$scope.familyMembers = [
 		{
@@ -144,6 +137,20 @@ angular.module('app.controllers')
 	];
 
 	$scope.$on("$ionicView.enter", function (event, data) {
+		storage.subscribe($scope, function onStorageUpdated() {
+			$scope.calendars = storage.getCalendars();
+			$scope.carSimulatorData = storage.getCarSimulatorData();
+			retrieveLeaveData();
+			$scope.$apply();
+		});
+
+		$scope.calendars = storage.getCalendars();
+		$scope.carSimulatorData = storage.getCarSimulatorData();
+
+		$interval(function(){
+			retrieveLeaveData();
+		}, 300);
+
 		$timeout(function(){
 			$rootScope.handleCounterClockwise = function () {
 				// $state.go('carStatus');
