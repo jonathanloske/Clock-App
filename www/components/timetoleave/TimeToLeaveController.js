@@ -96,11 +96,17 @@ angular.module('app.controllers')
 
     function triggerLEDs() {
         var ledData = [];
-        Object.keys($scope.familyMembers).forEach(function (key) {
+        var colors = [
+            [176,105,131],
+            [115,181,66],
+            [52,150,133],
+            [248,100,81]
+        ]
+        Object.keys($scope.familyMembers).forEach(function (key, i) {
 
             var userData = {
                 minutes: $scope.familyMembers[key].transit.length > 0 ? $scope.familyMembers[key].transit[0].minutesLeft : 60,
-                color: [Math.floor(Math.random() * 255), Math.floor(Math.random() * 255), Math.floor(Math.random() * 255)]
+                color: colors[i];
             }
 
             ledData.push(userData);
