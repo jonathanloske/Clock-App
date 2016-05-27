@@ -280,10 +280,10 @@ a.item {
     top: -5px;
 }
 
-.timeline .timelines3 .transit-option-icon.ion-android-car {
+/*.timeline .timelines3 .transit-option-icon.ion-android-car {
     position: relative;
     top: -10px;
-}
+}*/
 
 .timeline .timelines3 .event-description {
     margin-top: -22vh;
