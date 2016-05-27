@@ -158,6 +158,7 @@ angular.module('app.controllers')
 				} else if ($scope.selectEventMode){
 					$scope.selectedTransitOptionIndex = 0;
 					$scope.editTransitOption = true;
+					$scope.scrollToTime($scope.calendars[$scope.selectedUserIndex].events[$scope.selectedCalendarIndex].start);
 				} else {
 					// Find all events that coincide with the selected time
 					var timelineMarkerDate = new Date();
@@ -175,7 +176,6 @@ angular.module('app.controllers')
 						$scope.selectedEvent = 0;
 						$scope.selectedUserIndex = $scope.selectableEvents[0][0];
 						$scope.selectedCalendarIndex = $scope.selectableEvents[0][1];
-						$scope.scrollToTime($scope.calendars[$scope.selectedUserIndex].events[$scope.selectedCalendarIndex].start);
 					}
 				}
 			};
@@ -188,7 +188,6 @@ angular.module('app.controllers')
 						$scope.selectedEvent++;
 						$scope.selectedUserIndex = $scope.selectableEvents[$scope.selectedEvent][0];
 						$scope.selectedCalendarIndex = $scope.selectableEvents[$scope.selectedEvent][1];
-						$scope.scrollToTime($scope.calendars[$scope.selectedUserIndex].events[$scope.selectedCalendarIndex].start);
 					}
 				} else {
 					$scope.scrubTimelineMarker = true;
@@ -209,7 +208,6 @@ angular.module('app.controllers')
 						$scope.selectedEvent--;
 						$scope.selectedUserIndex = $scope.selectableEvents[$scope.selectedEvent][0];
 						$scope.selectedCalendarIndex = $scope.selectableEvents[$scope.selectedEvent][1];
-						$scope.scrollToTime($scope.calendars[$scope.selectedUserIndex].events[$scope.selectedCalendarIndex].start);
 					}
 				} else {
 					if ($ionicScrollDelegate.getScrollPosition().left === 0) {
