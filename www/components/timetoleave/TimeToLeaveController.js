@@ -1,6 +1,6 @@
 angular.module('app.controllers')
 
-.controller('TimeToLeaveController', function ($rootScope, $scope, $state, $ionicViewSwitcher, $ionicNativeTransitions, $interval, storage, leds) {
+.controller('TimeToLeaveController', function ($rootScope, $scope, $state, $ionicViewSwitcher, $ionicNativeTransitions, $interval, $timeout, storage, leds) {
     // get the users' calendars from the storage and listen to updates
     $scope.calendars = storage.getCalendars();
     $scope.carSimulatorData = storage.getCarSimulatorData();
@@ -144,21 +144,23 @@ angular.module('app.controllers')
     ];
 
     $scope.$on("$ionicView.enter", function (event, data) {
-        $rootScope.handleCounterClockwise = function () {
-            // $state.go('carStatus');
-            $ionicNativeTransitions.stateGo('carStatus', {}, {
-                "type": "slide",
-                "direction": "right"
-            });
-        };
+        $timeout(function(){
+            $rootScope.handleCounterClockwise = function () {
+                // $state.go('carStatus');
+                $ionicNativeTransitions.stateGo('carStatus', {}, {
+                    "type": "slide",
+                    "direction": "right"
+                });
+            };
 
-        $rootScope.handleClockwise = function () {
-            // $state.go('timeline');
-            $ionicNativeTransitions.stateGo('timeline', {}, {
-                "type": "slide",
-                "direction": "left"
-            });
-        };
+            $rootScope.handleClockwise = function () {
+                // $state.go('timeline');
+                $ionicNativeTransitions.stateGo('timeline', {}, {
+                    "type": "slide",
+                    "direction": "left"
+                });
+            };
+        }, 1000);
 
 
         var ledData = [];
@@ -172,5 +174,10 @@ angular.module('app.controllers')
             ledData.push(userData);
         });
         leds.displayTimeLeftGrowing(ledData);
+    });
+    $scope.$on("$ionicView.leave", function (event, data) {
+		$rootScope.handleClockwise = function(){};
+		$rootScope.handleCounterClockwise = function(){};
+		$rootScope.toggleEditMode = function(){};
     });
 });

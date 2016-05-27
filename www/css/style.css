@@ -169,7 +169,7 @@ a.item {
 
 .timeline .filled {
 	color: white;
-	overflow: hidden;
+	/*overflow: hidden;*/
 	text-overflow: ellipsis;
 	font-size: 30px;
 	line-height: 28px;
@@ -216,7 +216,12 @@ a.item {
 }
 
 .timeline .timelines1 .event-category i.icon {
-	margin-top: 9%;
+	margin-top: 4.5%;
+}
+
+.timeline .timelines1 .transit-option {
+	height: 4vh;
+	margin-top: 1vh;
 }
 
 .timeline .timelines2 {
@@ -230,7 +235,12 @@ a.item {
 }
 
 .timeline .timelines2 .event-category i.icon {
-	margin-top: 16%;
+	margin-top: 8%;
+}
+
+.timeline .timelines2 .transit-option {
+	height: 4vh;
+	margin-top: 1vh;
 }
 
 .timeline .timelines3 {
@@ -244,7 +254,39 @@ a.item {
 }
 
 .timeline .timelines3 .event-category i.icon {
-	margin-top: 9%;
+	margin-top: 4.5%;
+}
+
+.timeline .timelines3 .transit-option {
+	height: 4.75vh;
+	margin-top: 1vh;
+	font-size: 36px;
+}
+
+.timeline .timelines3 .primary-transit-option.transit-option {
+	height: 22vh;
+	margin-top: 1vh;
+	margin-bottom: 1vh;
+	line-height: 20vh;
+	font-size: 100px;
+}
+
+.timeline .timelines3 .transit-option-icon {
+    position: relative;
+    top: -5px;
+}
+
+.timeline .timelines3 .transit-option-icon.ion-android-car {
+    position: relative;
+    top: -10px;
+}
+
+.timeline .timelines3 .event-description {
+    margin-top: -20vh;
+}
+
+.timeline .timelines3 .event-category {
+    margin-top: -18vh;
 }
 
 .timeline .timelines4 {
@@ -261,6 +303,12 @@ a.item {
 	margin-top: 9%;
 }
 
+.timeline .timelines4 .transit-option {
+	height: 3vh;
+	margin-top: 1vh;
+	line-height: 0;
+}
+
 .timeline .timelines5 {
 	height: calc(16vh - 17px);
 	margin-top: 1.5vh;
@@ -275,6 +323,11 @@ a.item {
 	margin-top: 9%;
 }
 
+.timeline .timelines5 .transit-option {
+	height: 2vh;
+	margin-top: 1vh;
+}
+
 .timeline {
 	margin-bottom: 10px;
 }
@@ -286,9 +339,21 @@ a.item {
 	width: 85vw;
 }
 
+.timeline-cell{
+	transition: height 1s;
+}
+
+.timeline .timeline-cell.transit-selection-focus {
+}
+
+.ng-hide.enter{
+	display: hidden;
+}
+
 .timeline-cell > .primary-transit-option,
+.timeline-cell > .transit-option,
 .timeline-cell > .transit-options {
-	position: absolute;
+	/*position: absolute;*/
 	/* Choose a value that just fits all of the transit options*/
 	width: 20%;
 	border-radius: 6px;
@@ -296,17 +361,16 @@ a.item {
 	word-wrap: break-word;
 }
 
-.primary-transit-option {
+.transit-option {
 	border: 2px solid #525252;
 	text-align: center;
-	height: inherit;
-	padding: 5% 0;
+	height: 8vh;
 	line-height: initial;
 	transform: translate3d(-100%, 0, 0);
 }
 
-.transit-option-icon {
-	font-size: 100px;
+.primary-transit-option {
+	height: inherit;
 }
 
 .transit-options {
@@ -314,11 +378,6 @@ a.item {
 	background-color: black;
 	z-index: 2;
 	transform: translate3d(-100%, 0, 0);
-}
-
-.transit-options .transit-option {
-	line-height: initial;
-	text-align: right;
 }
 
 .transit-options:not(.transit-option:last-of-type) {
@@ -329,7 +388,8 @@ a.item {
 	background: linear-gradient(135deg, #DAA28C 10%, #B06983 100%)
 }
 
-.timeline:nth-of-type(1) .filled > .primary-transit-option {
+.timeline:nth-of-type(1) .filled > .primary-transit-option,
+.timeline:nth-of-type(1) .filled > .transit-option {
 	background: repeating-linear-gradient(45deg, black, black 10px, #DAA28C 10px, #DAA28C 16px);
 }
 
@@ -337,7 +397,8 @@ a.item {
 	background: linear-gradient(135deg, #BCDE7E 10%, #73B542 100%);
 }
 
-.timeline:nth-of-type(2) .filled > .primary-transit-option {
+.timeline:nth-of-type(2) .filled > .primary-transit-option,
+.timeline:nth-of-type(2) .filled > .transit-option {
 	background: repeating-linear-gradient(45deg, black, black 10px, #BCDE7E 10px, #BCDE7E 16px);
 }
 
@@ -345,7 +406,8 @@ a.item {
 	background: linear-gradient(135deg, #81B8BC 10%, #349685 100%);
 }
 
-.timeline:nth-of-type(3) .filled > .primary-transit-option {
+.timeline:nth-of-type(3) .filled > .primary-transit-option,
+.timeline:nth-of-type(3) .filled > .transit-option {
 	background: repeating-linear-gradient(45deg, black, black 10px, #81B8BC 10px, #81B8BC 16px);
 }
 
@@ -353,7 +415,8 @@ a.item {
 	background: linear-gradient(135deg, #D19C7E 10%, #F86451 100%);
 }
 
-.timeline:nth-of-type(4) .filled > .primary-transit-option {
+.timeline:nth-of-type(4) .filled > .primary-transit-option,
+.timeline:nth-of-type(4) .filled > .transit-option {
 	background: repeating-linear-gradient(45deg, black, black 10px, #D19C7E 10px, #D19C7E 16px);
 }
 
@@ -361,7 +424,8 @@ a.item {
 	background: linear-gradient(135deg, #8A8BD1 10%, #9148F8 100%);
 }
 
-.timeline:nth-of-type(5) .filled > .primary-transit-option {
+.timeline:nth-of-type(5) .filled > .primary-transit-option,
+.timeline:nth-of-type(5) .filled > .transit-option {
 	background: repeating-linear-gradient(45deg, black, black 10px, #8A8BD1 10px, #8A8BD1 16px);
 }
 
@@ -442,7 +506,7 @@ a.item {
 }
 
 .minimap-indicator {
-	background-color: rgba(255, 255, 255, 1);
+	background-color: white;
 	height: 6vh;
 	width: 20vw;
 	position: absolute;

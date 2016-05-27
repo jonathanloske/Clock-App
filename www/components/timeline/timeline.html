@@ -50,34 +50,46 @@
 					<div ng-class="['col', 'timeline-cell', 'filled',
 							'timelines' + calendars.length,
 							selectEventMode && !editTransitOption && calendars[selectedUserIndex] === calendar && selectedCalendarIndex === $index?
-								'selected' : ''
+								'selected' : '',
+							editTransitOption && shouldTransitOptionDisplay(event, name, calendar.email)? 'transit-selection-focus' : ''
 						]" ng-repeat="event in calendar.events track by $index" ng-style="{
 							'margin-left': ((event.distanceToEventBeforeInMinutes / 60 * 25) + '%'),
 							'flex': '0 0 ' + (event.durationInMinutes / 60 * 25) + '%'
-						}">
-						<div ng-class="['primary-transit-option',
-								editCalendarMode && !editTransitOption && calendars[selectedUserIndex] === calendar && selectedCalendarIndex === $index?
-								'selected' : '']" ng-style="{
-								'width': ((event.userSelectedTransitOption? event.transit_options[event.userSelectedTransitOption].duration : event.optimized_transit.best.duration) / 60 * 25) + '%'
-							}" ng-if="!editTransitOption || !(calendars[selectedUserIndex] === calendar && selectedCalendarIndex === $index)">
-							<i ng-class="['transit-option-icon', 'icon', 'ion-android-' + (event.userSelectedTransitOption? transitOptions[transitTranslations.indexOf(event.userSelectedTransitOption)] : transitOptions[transitTranslations.indexOf(event.optimized_transit.best.name)])]" ng-style="{
-								'font-size' : ((event.userSelectedTransitOption? event.transit_options[event.userSelectedTransitOption].duration : event.optimized_transit.best.duration) / 60 * 25) < 8? (((event.userSelectedTransitOption? event.transit_options[event.userSelectedTransitOption].duration : event.optimized_transit.best.duration) / 60 * 25) < 4? '0px': '50px'):'',
-								'position': ((event.userSelectedTransitOption? event.transit_options[event.userSelectedTransitOption].duration : event.optimized_transit.best.duration) / 60 * 25) < 8? 'relative' : '',
-								'top': ((event.userSelectedTransitOption? event.transit_options[event.userSelectedTransitOption].duration : event.optimized_transit.best.duration) / 60 * 25) < 8? '30px' : '',
+						}"
+					>
+						<!-- || !(calendars[selectedUserIndex] === calendar && selectedCalendarIndex === $index)-->
+						<!--ng-show="(editTransitOption && shouldTransitOptionDisplay(event, name, calendar.email)) || !editTransitOption">-->
+						<div ng-class="['transit-option',
+								shouldTransitOptionDisplay(event, name, calendar.email) && selectedTransitOptionIndex === $index? 'selected' : '',
+								(isPrimaryTransitOption(event, name) && !shouldTransitOptionDisplay(event, name, calendar.email))? 'primary-transit-option' : '']"
+							 ng-style="{
+								'width': (transitOption.duration / 60 * 25) + '%'
+							 }"
+							 ng-if="isPrimaryTransitOption(event, name) || shouldTransitOptionDisplay(event, name, calendar.email)"
+							 ng-repeat="(name, transitOption) in event.transit_options track by $index">
+							<i ng-class="['transit-option-icon', 'icon', 'ion-android-' + transitOptions[transitTranslations.indexOf(name)]]" ng-style="{
+								'font-size' : (transitOption.duration / 60 * 25) < 14? ((transitOption.duration / 60 * 25) * 4 + 'px'): '',
 								'color' : (event.transit_options.car.distance * 0.000568182 > carSimulatorData.range && (event.userSelectedTransitOption == 'car' || (event.userSelectedTransitOption == '' && event.optimized_transit.best.name == 'car' ))) ? 'red' : ''
 								}"></i>
+								<!--
+								'position': ((transitOption.duration) / 60 * 25) < 8? 'relative' : '',
+								'top': ((transitOption.duration) / 60 * 25) < 8? '30px' : '',-->
 						</div>
-						<div class="transit-options" ng-if="editTransitOption && calendars[selectedUserIndex] === calendar && selectedCalendarIndex === $index">
-							<div ng-class="['transit-option', selectedTransitOptionIndex === $index? 'selected' : '' ]" ng-repeat="transitOption in transitOptions track by $index">
-								{{transitOption}}
+						<!--ng-if="editTransitOption && calendars[selectedUserIndex] === calendar && selectedCalendarIndex === $index"-->
+						<!--<div class="transit-options" >
+							<div
+								ng-class="['transit-option', selectedTransitOptionIndex === $index? 'selected' : '' ]"
+								ng-repeat="transitOption in event.transit_options track by $index"
+								ng-style="{'width': transitOption.duration + '%'}">
+								{{keys(event.transit_options)[$index]}}
 							</div>
-						</div>
+						</div>-->
 						<div class="event-category" ng-style="{
 							'margin-left' : 'calc(' + (event.durationInMinutes / 60 * 85 / 4) + 'vw - 95px)'
 						}">
 							<i class="icon ion-{{categoryTranslations[event.category]}}"></i>
 						</div>
-						<div>
+						<div class="event-description">
 							<p class="event-title">{{event.title}}</p>
 							<p class="event-location">{{event.location.split(',')[0]}}</p>
 						</div>
