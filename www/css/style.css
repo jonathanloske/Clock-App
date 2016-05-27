@@ -41,7 +41,7 @@ a.item {
 }
 
 .selected {
-	box-shadow: 0 0 20px 15px rgba(255,255,255,0.7) !important;
+	box-shadow: 0 0 20px 15px rgba(255, 255, 255, 0.7) !important;
 }
 
 .timeline-page,
@@ -132,7 +132,7 @@ a.item {
 	background-color: #525252;
 	padding-top: calc( 10px + 5vh);
 	text-align: center;
-	background: -webkit-linear-gradient(left, rgba(0, 0, 0, 1) 80%, rgba(70, 70, 70, 1) 98%, rgba(90, 90, 90, 1) 100%);
+	background: -webkit-linear-gradient(left, rgba(0, 0, 0, 1) 87%, rgba(60, 60, 60, 1) 91%, rgba(70, 70, 70, 1) 96%, rgba(90, 90, 90, 1) 100%);
 }
 
 .timeline-pictures img {
