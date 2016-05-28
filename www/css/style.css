@@ -538,12 +538,12 @@ a.item {
 }
 
 .minimap-indicator {
-	background-color: white;
+	background-color: rgba(255, 255, 255, 0.55);
 	height: 6vh;
 	width: 20vw;
 	position: absolute;
 	border-radius: 6px;
-	mix-blend-mode: difference;
+	/*mix-blend-mode: difference;*/
 }
 
 .car-info-card-box {
