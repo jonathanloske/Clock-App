@@ -194,7 +194,11 @@ angular.module('app.controllers')
 					$scope.scrubMarkerMinute += 30;
 					var date = new Date();
 					date.setMinutes(Number($scope.currentMinutes) + $scope.scrubMarkerMinute);
-					$scope.scrollToTime(date);
+					if(date.getHours() === 23 && date.getMinutes() > 30){
+						$scope.scrubMarkerMinute -= 30;
+					} else {
+						$scope.scrollToTime(date);
+					}
 				}
 			};
 
