@@ -1,13 +1,14 @@
 // Simple red/blue fade with Node and opc.js
 var LEDController = function(host, port)
 {
-    //time left growing parameters
-    this.maximumMinutes = 60;
-
     this.color = {r: 255, g: 0, b: 0};
     this.urgence = 6;
     this.stop = 0;
     this.leds = 152;
+
+    //time left growing parameters
+    this.maximumMinutes = 60;
+    this.shift = Math.floor(this.leds/2)*3;
 
     //animation parameters
     this.lastTime = 0;
@@ -88,7 +89,7 @@ LEDController.prototype._writePacket = function (packet) {
         console.log("[LEDController] The network is lagging, and we still haven't sent the previous frame.");
         return;
     }
-    console.log(packet.toString());
+    //console.log(packet.toString());
     this.socket.send(packet.buffer);
 }
 
@@ -147,7 +148,7 @@ LEDController.prototype.spark = function () {
 }
 
 LEDController.prototype.stopLEDs = function () {
-    console.log("[LEDController] stopping sparking");
+    //console.log("[LEDController] stopping sparking");
     this.stop = 1;
     this._allOff();
 }
@@ -174,8 +175,6 @@ LEDController.prototype.showTime = function(){
 }
 
 
-
-
 LEDController.prototype.displayTimeLeftGrowing = function (timeLeftInformation) {
     this._displayTimeLeft(timeLeftInformation, true);
 }
@@ -184,9 +183,9 @@ LEDController.prototype.displayTimeLeftShrinking = function (timeLeftInformation
     this._displayTimeLeft(timeLeftInformation, false);
 }
 
+
 LEDController.prototype._displayTimeLeft = function (timeLeftInformation, growing) {
-    //this.leds
-    var packet = new Uint8ClampedArray(4 + this.leds * 3);
+    var packet = new Uint8ClampedArray(this.leds * 3);
 
     if (timeLeftInformation.length < 1 || timeLeftInformation.length > 4) {
         console.log('[LEDController] unsupported amount of users for this glow type');
@@ -207,17 +206,67 @@ LEDController.prototype._displayTimeLeft = function (timeLeftInformation, growin
         var litLedEnd = Math.floor(litLedStart + numberOfActiveLeds);
 
         for (var i = litLedStart; i < litLedEnd; i++) {
-            packet[4 + i * 3    ] = timeLeftInformation[user].color[0];
-            packet[4 + i * 3 + 1] = timeLeftInformation[user].color[1];
-            packet[4 + i * 3 + 2] = timeLeftInformation[user].color[2];
+            packet[i * 3    ] = timeLeftInformation[user].color[0];
+            packet[i * 3 + 1] = timeLeftInformation[user].color[1];
+            packet[i * 3 + 2] = timeLeftInformation[user].color[2];
         }
 
-        console.log('[LEDController] s: ' + userLedAreaStart + ' e: ' + userLedAreaEnd + ' av: ' + availableLedsForUser + ' actLED: ' + numberOfActiveLeds + ' litS: ' + litLedStart + ' litE: ' + litLedEnd);
+        //console.log('[LEDController] s: ' + userLedAreaStart + ' e: ' + userLedAreaEnd + ' av: ' + availableLedsForUser + ' actLED: ' + numberOfActiveLeds + ' litS: ' + litLedStart + ' litE: ' + litLedEnd);
 
     }
-    this._writePacket(packet);
-    this._writePacket(packet);
-    this._writePacket(packet);
-    this._writePacket(packet);
-    this._writePacket(packet);
+    localShift = this.shift - Math.floor(this.leds / timeLeftInformation.length) * 3;
+    var packetWithHeader = new Uint8ClampedArray(4 + packet.length);
+    for (var i = 0; i < packet.length; i++) {
+        packetWithHeader[4 + i] = packet[(packet.length - localShift + i) % packet.length];
+    }
+    
+    this._writePacket(packetWithHeader);
+}
+
+LEDController.prototype.displayTimeLeftGrowingTogether = function (timeLeftInformation) {
+    var packet = new Uint8ClampedArray(this.leds * 3);
+
+    if (timeLeftInformation.length < 1 || timeLeftInformation.length > 4) {
+        console.log('[LEDController] unsupported amount of users for this glow type');
+        return;
+    }
+
+    for (var user = 0; user < timeLeftInformation.length; user++) {
+        var userLedAreaStart = Math.floor(this.leds / timeLeftInformation.length * (user));
+        var userLedAreaEnd = Math.floor(this.leds / timeLeftInformation.length * (user+1)) - 1;
+
+        var availableLedsForUser = userLedAreaEnd - userLedAreaStart;
+
+        var numberOfActiveLeds = Math.min(timeLeftInformation[user].minutes, this.maximumMinutes) / this.maximumMinutes * availableLedsForUser;
+
+        numberOfActiveLeds = availableLedsForUser - numberOfActiveLeds;
+
+        var litLedStartA = userLedAreaStart;
+        var litLedEndA = Math.floor(userLedAreaStart + (availableLedsForUser - numberOfActiveLeds)/2);
+
+        for (var i = litLedStartA; i < litLedEndA; i++) {
+            packet[i * 3    ] = timeLeftInformation[user].color[0];
+            packet[i * 3 + 1] = timeLeftInformation[user].color[1];
+            packet[i * 3 + 2] = timeLeftInformation[user].color[2];
+        }
+
+        var litLedStartB = Math.floor(litLedEndA + numberOfActiveLeds); // @todo
+        var litLedEndB = userLedAreaEnd;
+
+        for (var i = litLedStartB; i < litLedEndB; i++) {
+            packet[i * 3    ] = timeLeftInformation[user].color[0];
+            packet[i * 3 + 1] = timeLeftInformation[user].color[1];
+            packet[i * 3 + 2] = timeLeftInformation[user].color[2];
+        }
+
+        //console.log('[LEDController] s: ' + userLedAreaStart + ' e: ' + userLedAreaEnd + ' av: ' + availableLedsForUser + ' actLED: ' + numberOfActiveLeds + ' litAS: ' + litLedStartA + ' litAE: ' + litLedEndA + ' litBS: ' + litLedStartB + ' litBE: ' + litLedEndB);
+
+    }
+    localShift = this.shift - Math.floor(this.leds / timeLeftInformation.length) * 3;
+    var packetWithHeader = new Uint8ClampedArray(4 + packet.length);
+    for (var i = 0; i < packet.length; i++) {
+        packetWithHeader[4 + i] = packet[(packet.length - localShift + i) % packet.length];
+    }
+
+    this._writePacket(packetWithHeader);
 }

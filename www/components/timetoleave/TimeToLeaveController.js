@@ -1,12 +1,39 @@
 angular.module('app.controllers')
 
 .controller('TimeToLeaveController', function ($rootScope, $scope, $state, $ionicViewSwitcher, $ionicNativeTransitions, $interval, $timeout, storage, leds) {
+	// get the users' calendars from the storage and listen to updates
+	$scope.calendars = storage.getCalendars();
+	$scope.carSimulatorData = storage.getCarSimulatorData();
+	retrieveLeaveData();
 	$scope.floor = Math.floor;
 	$scope.viewIsVisible = true;
+
+	storage.subscribe($scope, function onStorageUpdated() {
+		$scope.calendars = storage.getCalendars();
+		$scope.carSimulatorData = storage.getCarSimulatorData();
+		retrieveLeaveData();
+		$scope.$apply();
+	});
 
 	$scope.weather = {
 		condition: 'partlysunny',
 		temperature: 71
+	}
+
+	var currentLedMode = leds.displayTimeLeftGrowingTogether;
+
+	var ledModes = [leds.displayTimeLeftGrowingTogether, leds.displayTimeLeftGrowing, leds.displayTimeLeftShrinking, leds.off];
+
+	$rootScope.toggleLedMode = function () {
+		if (currentLedMode == leds.displayTimeLeftGrowingTogether) {
+			currentLedMode = leds.displayTimeLeftGrowing;
+		} else if (currentLedMode == leds.displayTimeLeftGrowing) {
+			currentLedMode = leds.displayTimeLeftShrinking;
+		} else if (currentLedMode == leds.displayTimeLeftShrinking) {
+			currentLedMode = leds.off;
+		} else {
+			currentLedMode = leds.displayTimeLeftGrowingTogether;
+		}
 	}
 
 	$scope.goToIndex = function (index) {
@@ -65,14 +92,14 @@ angular.module('app.controllers')
 						timeToLeaveBest = new Date(nextEvent.event.start.getTime() - nextEvent.event.optimized_transit.best.duration * 60000);
 					} else {
 						// Need to translate 'walk' to walking
-						transitOption = nextEvent.event.userSelectedTransitOption === 'walk'? 'walking' : nextEvent.event.userSelectedTransitOption;
+						transitOption = nextEvent.event.userSelectedTransitOption === 'walk' ? 'walking' : nextEvent.event.userSelectedTransitOption;
 						timeToLeaveBest = new Date(nextEvent.event.start.getTime() - nextEvent.event.transit_options[transitOption].duration * 60000);
 					}
 
 					var timeToLeaveSecondBest = new Date(nextEvent.event.start.getTime() - nextEvent.event.optimized_transit.alternative.duration * 60000);
 					parent.transit = [
 						{
-							type: nextEvent.event.userSelectedTransitOption === ""?nextEvent.event.optimized_transit.best.name : transitOption,
+							type: nextEvent.event.userSelectedTransitOption === "" ? nextEvent.event.optimized_transit.best.name : transitOption,
 							hoursLeft: Math.floor(Math.round((timeToLeaveBest - now) / 1000 / 60 / 60)),
 							minutesLeft: Math.round((timeToLeaveBest - now) / 1000 / 60)
 					  },
@@ -94,50 +121,32 @@ angular.module('app.controllers')
 
 	};
 
-	/*$scope.familyMembers = [
-		{
-			transit: [
-				{
-					type: 'car',
-					minutesLeft: 30
-				},
-				{
-					type: 'walk',
-					minutesLeft: 10
-				}
-			],
-			picture: 'img/father.jpg'
-		},
-		{
-			transit: [
-				{
-					type: 'bus',
-					minutesLeft: 20
-				},
-				{
-					type: 'walk',
-					minutesLeft: 10
-				}
-			],
-			picture: 'img/mother.png'
-		}
-	];*/
-	$scope.children = [
-		{
-			transit: [
-				{
-					type: 'walk',
-					minutesLeft: 20
-				},
-				{
-					type: 'bicycle',
-					minutesLeft: 50
-				}
-			],
-			nextEvent: 'Template Event',
-			picture: 'img/child1.jpg'
-		}
-	];
+	function triggerLEDs() {
+		var ledData = [];
+		var colors = [
+			[176,105,131],
+			[115,181,66],
+			[52,150,133],
+			[248,100,81]
+		]
+		Object.keys($scope.familyMembers).forEach(function (key, i) {
+
+			var userData = {
+				minutes: $scope.familyMembers[key].transit.length > 0 ? $scope.familyMembers[key].transit[0].minutesLeft : 60,
+				color: colors[i]
+			}
+
+			ledData.push(userData);
+		});
+
+		currentLedMode(ledData);
+		//leds.displayTimeLeftGrowingTogether(ledData);
+	};
+
+	$interval(function(){
+		triggerLEDs();
+	}, 1000);
+
 	storage.subscribe($scope, function onStorageUpdated() {
 		$scope.calendars = storage.getCalendars();
 		$scope.carSimulatorData = storage.getCarSimulatorData();
@@ -152,27 +161,12 @@ angular.module('app.controllers')
 		$scope.carSimulatorData = storage.getCarSimulatorData();
 		retrieveLeaveData();
 		$scope.viewIsVisible = true;
-
-		var ledData = [];
-		Object.keys($scope.familyMembers).forEach(function (key) {
-
-			var userData = {
-				minutes: $scope.familyMembers[key].transit.length > 0 ? $scope.familyMembers[key].transit[0].minutesLeft : 60,
-				color: [Math.floor(Math.random() * 255), Math.floor(Math.random() * 255), Math.floor(Math.random() * 255)]
-			}
-
-			ledData.push(userData);
-		});
-		leds.displayTimeLeftGrowing(ledData);
-
 	});
-	
-	$scope.$on("$ionicView.enter", function (event, data) {
 
+	$scope.$on("$ionicView.enter", function (event, data) {
 		retrieveLeaveDataInterval = $interval(function(){
 			retrieveLeaveData();
 		}, 300);
-
 		$timeout(function(){
 			$rootScope.handleCounterClockwise = function () {
 				// $state.go('carStatus');
@@ -190,19 +184,6 @@ angular.module('app.controllers')
 				});
 			};
 		}, 1000);
-
-
-		var ledData = [];
-		Object.keys($scope.familyMembers).forEach(function (key) {
-
-			var userData = {
-				minutes: $scope.familyMembers[key].transit.length > 0 ? $scope.familyMembers[key].transit[0].minutesLeft : 60,
-				color: [Math.floor(Math.random() * 255), Math.floor(Math.random() * 255), Math.floor(Math.random() * 255)]
-			}
-
-			ledData.push(userData);
-		});
-		leds.displayTimeLeftGrowing(ledData);
 	});
 
 	$scope.$on("$ionicView.afterLeave", function (event, data) {
