@@ -156,13 +156,6 @@ angular.module('app.controllers')
 
 	var retrieveLeaveDataInterval;
 
-	$scope.$on("$ionicView.beforeEnter", function (event, data) {
-		$scope.calendars = storage.getCalendars();
-		$scope.carSimulatorData = storage.getCarSimulatorData();
-		retrieveLeaveData();
-		$scope.viewIsVisible = true;
-	});
-
 	$scope.$on("$ionicView.enter", function (event, data) {
 		retrieveLeaveDataInterval = $interval(function(){
 			retrieveLeaveData();
@@ -187,7 +180,6 @@ angular.module('app.controllers')
 	});
 
 	$scope.$on("$ionicView.afterLeave", function (event, data) {
-		$scope.viewIsVisible = false;
 		$interval.cancel(retrieveLeaveDataInterval);
 		$rootScope.handleClockwise = function(){};
 		$rootScope.handleCounterClockwise = function(){};

@@ -31,6 +31,7 @@ angular.module('starter', ['ionic', 'ionic-native-transitions', 'app.controllers
 	$ionicNativeTransitionsProvider.setDefaultOptions({
 		triggerTransitionEvent: '$ionicView.afterEnter',
 		slowdownfactor: 1,
+		androidDelayFactor: 0,
 		backInOppositeDirection: true,
 	});
 })
@@ -100,7 +101,7 @@ angular.module('starter', ['ionic', 'ionic-native-transitions', 'app.controllers
 })
 
 .factory('leds', function ($rootScope) {
-	var leds = new LEDController('192.168.1.150', 7890);
+	var leds = new LEDController('localhost', 7890);
 
 	var enabled = false;
 

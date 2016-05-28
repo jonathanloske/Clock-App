@@ -26,6 +26,14 @@ import java.util.TimerTask;
 
 public class NativePageTransitions extends CordovaPlugin {
 
+  private static final String ACTION_EXECUTE_PENDING_TRANSITION = "executePendingTransition";
+  private static final String ACTION_CANCEL_PENDING_TRANSITION = "cancelPendingTransition";
+
+  private static final String ACTION_SLIDE = "slide";
+  private static final String ACTION_FADE = "fade";
+  private static final String ACTION_FLIP = "flip";
+  private static final String ACTION_DRAWER = "drawer";
+
   private ImageView imageView;
   private ImageView imageView2;
   private ImageView fixedImageViewTop;
@@ -106,17 +114,33 @@ public class NativePageTransitions extends CordovaPlugin {
   public boolean execute(String action, JSONArray args, final CallbackContext callbackContext) throws JSONException {
     _callbackContext = callbackContext;
 
-    if ("executePendingTransition".equalsIgnoreCase(action)) {
+    if (ACTION_EXECUTE_PENDING_TRANSITION.equalsIgnoreCase(action)) {
       delay = 0;
-      if ("slide".equalsIgnoreCase(_action)) {
+      if (ACTION_SLIDE.equalsIgnoreCase(_action)) {
         doSlideTransition();
-      } else if ("fade".equalsIgnoreCase(_action)) {
+      } else if (ACTION_FADE.equalsIgnoreCase(_action)) {
         doFadeTransition();
-      } else if ("flip".equalsIgnoreCase(_action)) {
+      } else if (ACTION_FLIP.equalsIgnoreCase(_action)) {
         doFlipTransition();
-      } else if ("drawer".equalsIgnoreCase(_action)) {
+      } else if (ACTION_DRAWER.equalsIgnoreCase(_action)) {
         doDrawerTransition();
       }
+      return true;
+    } else if (ACTION_CANCEL_PENDING_TRANSITION.equalsIgnoreCase(action)) {
+      lastCallbackID = null;
+      cordova.getActivity().runOnUiThread(new Runnable() {
+        @Override
+        public void run() {
+          if (fixedImageViewTop != null) {
+            fixedImageViewTop.setImageBitmap(null);
+          }
+          if (fixedImageViewBottom != null) {
+            fixedImageViewBottom.setImageBitmap(null);
+          }
+          imageView.setImageBitmap(null);
+          _callbackContext.sendPluginResult(new PluginResult(PluginResult.Status.OK));
+        }
+      });
       return true;
     }
 
@@ -128,7 +152,7 @@ public class NativePageTransitions extends CordovaPlugin {
     calledFromJS = true;
 
     // TODO move effects to separate classes, and reuse lots of code
-    if ("slide".equalsIgnoreCase(action)) {
+    if (ACTION_SLIDE.equalsIgnoreCase(action)) {
       duration = json.getLong("duration");
       direction = json.getString("direction");
       delay = json.getLong("androiddelay");
@@ -144,29 +168,31 @@ public class NativePageTransitions extends CordovaPlugin {
           imageView.setImageBitmap(bitmap);
           bringToFront(imageView);
 
-          // crop the screenshot if fixed pixels have been passed when sliding left or right
-          if (fixedPixelsTop > 0) {
-            int cropHeight = (int)(fixedPixelsTop * retinaFactor);
-            fixedImageViewTop = new ImageView(cordova.getActivity().getBaseContext());
-            fixedImageViewTop.setImageBitmap(Bitmap.createBitmap(bitmap, 0, 0, bitmap.getWidth(), cropHeight));
-            final FrameLayout.LayoutParams lp = new FrameLayout.LayoutParams(FrameLayout.LayoutParams.WRAP_CONTENT, FrameLayout.LayoutParams.WRAP_CONTENT, Gravity.TOP);
-            layout.addView(fixedImageViewTop, lp);
-            if ("down".equals(direction)) {
-              // in case we slide down, strip off the fixedPixelsTop from the top of the screenshot
-              bitmap = Bitmap.createBitmap(bitmap, 0, cropHeight, bitmap.getWidth(), bitmap.getHeight()-cropHeight);
-              imageView.setScaleType(ImageView.ScaleType.FIT_END); // affects the entire plugin but is only relevant here
-              imageView.setImageBitmap(bitmap);
-            } else if ("up".equals(direction)) {
-              // TODO in case we slide up, strip off the fixedPixelsTop from the top of the webview
-              // TODO .. but this seems it a bit impossible.. (see my email of jan 24 2016)
+          if (bitmap != null) {
+            // crop the screenshot if fixed pixels have been passed when sliding left or right
+            if (fixedPixelsTop > 0) {
+              int cropHeight = (int)(fixedPixelsTop * retinaFactor);
+              fixedImageViewTop = new ImageView(cordova.getActivity().getBaseContext());
+              fixedImageViewTop.setImageBitmap(Bitmap.createBitmap(bitmap, 0, 0, bitmap.getWidth(), cropHeight));
+              final FrameLayout.LayoutParams lp = new FrameLayout.LayoutParams(FrameLayout.LayoutParams.WRAP_CONTENT, FrameLayout.LayoutParams.WRAP_CONTENT, Gravity.TOP);
+              layout.addView(fixedImageViewTop, lp);
+              if ("down".equals(direction)) {
+                // in case we slide down, strip off the fixedPixelsTop from the top of the screenshot
+                bitmap = Bitmap.createBitmap(bitmap, 0, cropHeight, bitmap.getWidth(), bitmap.getHeight()-cropHeight);
+                imageView.setScaleType(ImageView.ScaleType.FIT_END); // affects the entire plugin but is only relevant here
+                imageView.setImageBitmap(bitmap);
+              } else if ("up".equals(direction)) {
+                // TODO in case we slide up, strip off the fixedPixelsTop from the top of the webview
+                // TODO .. but this seems it a bit impossible.. (see my email of jan 24 2016)
+              }
             }
-          }
-          if (fixedPixelsBottom > 0) {
-            int cropHeight = (int)(fixedPixelsBottom * retinaFactor);
-            fixedImageViewBottom = new ImageView(cordova.getActivity().getBaseContext());
-            fixedImageViewBottom.setImageBitmap(Bitmap.createBitmap(bitmap, 0, bitmap.getHeight()-cropHeight, bitmap.getWidth(), cropHeight));
-            final FrameLayout.LayoutParams lp = new FrameLayout.LayoutParams(FrameLayout.LayoutParams.WRAP_CONTENT, FrameLayout.LayoutParams.WRAP_CONTENT, Gravity.BOTTOM);
-            layout.addView(fixedImageViewBottom, lp);
+            if (fixedPixelsBottom > 0) {
+              int cropHeight = (int)(fixedPixelsBottom * retinaFactor);
+              fixedImageViewBottom = new ImageView(cordova.getActivity().getBaseContext());
+              fixedImageViewBottom.setImageBitmap(Bitmap.createBitmap(bitmap, 0, bitmap.getHeight()-cropHeight, bitmap.getWidth(), cropHeight));
+              final FrameLayout.LayoutParams lp = new FrameLayout.LayoutParams(FrameLayout.LayoutParams.WRAP_CONTENT, FrameLayout.LayoutParams.WRAP_CONTENT, Gravity.BOTTOM);
+              layout.addView(fixedImageViewBottom, lp);
+            }
           }
 
           if (href != null && !"null".equals(href)) {
@@ -183,7 +209,7 @@ public class NativePageTransitions extends CordovaPlugin {
         }
       });
 
-    } else if ("drawer".equalsIgnoreCase(action)) {
+    } else if (ACTION_DRAWER.equalsIgnoreCase(action)) {
 
       if (drawerNonOverlappingSpace == 0) {
         drawerNonOverlappingSpace = getView().getWidth()/8;
@@ -239,7 +265,7 @@ public class NativePageTransitions extends CordovaPlugin {
         }
       });
 
-    } else if ("fade".equalsIgnoreCase(action)) {
+    } else if (ACTION_FADE.equalsIgnoreCase(action)) {
 
       duration = json.getLong("duration");
       delay = json.getLong("androiddelay");
@@ -264,7 +290,7 @@ public class NativePageTransitions extends CordovaPlugin {
         }
       });
 
-    } else if ("flip".equalsIgnoreCase(action)) {
+    } else if (ACTION_FLIP.equalsIgnoreCase(action)) {
 
       duration = json.getLong("duration");
       direction = json.getString("direction");
@@ -569,11 +595,18 @@ public class NativePageTransitions extends CordovaPlugin {
             if (slidePixels <=0 || !"down".equals(direction)) {
               getView().setAnimation(webViewAnimationSet);
             }
+
+            if (BEFORE_KITKAT) {
+              //fixes a problem where the animation didn't start unless the user touched the screen once
+              layout.invalidate();
+            }
+
             layout.startLayoutAnimation();
 
             if (BEFORE_KITKAT) {
               // This fixes an issue observed on a Samsung Galaxy S3 /w Android 4.3 where the img is shown,
               // but the transition doesn't kick in unless the screen is touched again.
+              // note that with 'layout.invalidate();' this may be obsolete but I can't reproduce the issue anyway
               imageView.requestFocusFromTouch();
               getView().requestFocus();
             }
