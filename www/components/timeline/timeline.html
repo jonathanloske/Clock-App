@@ -2,19 +2,13 @@
 
 	<ion-content class="timeline-page" scroll="false">
 		<div class="gradient-overlay gradient-overlay-right"></div>
-		<div ng-show="!editMode" class="timeline-time">
-			{{currentHour}}:{{currentMinutes}}
+		<div class="timeline-time">
+			{{currentHour + ':' + currentMinutes}}
 		</div>
-		<div ng-class="['cancel-button', 'filled', selectedUserIndex === -1? 'selected':'']" ng-show="editMode && !editCalendarMode">
-			Cancel
-		</div>
-		<div class="timeline-pictures" ng-click="goTo()">
+		<div class="timeline-pictures" ng-click="::goTo()">
 			<div class="row timeline" ng-repeat="calendar in calendars track by $index">
-				<div ng-class="['col', 'timelines' + calendars.length]">
-					<img ng-src="{{calendar.picture}}" ng-class="editMode && !editCalendarMode && selectedUserIndex === $index? 'selected' : ''" />
-					<div ng-class="['cancel-button', 'filled', selectedCalendarIndex === -1? 'selected':'']" ng-show="editCalendarMode && !editTransitOption && selectedUserIndex === $index">
-						Cancel
-					</div>
+				<div ng-class="::['col', 'timelines' + calendars.length]">
+					<img ng-src="{{::calendar.picture}}"/>
 				</div>
 			</div>
 		</div>
@@ -31,8 +25,8 @@
 			<div class="row timeline-hours">
 				<!-- Display the hour markers at the top of the screen.
 					One hour should take up 25% (horizontally) of the screen.-->
-				<div class="col hour-marker" ng-repeat="time in timerange track by $index">
-					{{time}}
+				<div class="col hour-marker" ng-repeat="time in ::timerange track by $index">
+					{{::time}}
 				</div>
 			</div>
 			<div class="timeline-current-marker" ng-style="{'transform':
@@ -67,24 +61,14 @@
 								shouldTransitOptionDisplay(event, name, calendar.email) && selectedTransitOptionIndex === $index? 'selected' : '',
 								(isPrimaryTransitOption(event, name) && !shouldTransitOptionDisplay(event, name, calendar.email))? 'primary-transit-option' : '']" ng-style="{
 								'width': (transitOption.duration / 60 * 25) + '%'
-							 }" ng-if="isPrimaryTransitOption(event, name) || shouldTransitOptionDisplay(event, name, calendar.email)" ng-repeat="(name, transitOption) in event.transit_options track by $index">
+							 }"
+							 ng-if="isPrimaryTransitOption(event, name) || shouldTransitOptionDisplay(event, name, calendar.email)"
+							 ng-repeat="(name, transitOption) in event.transit_options track by $index">
 							<i ng-class="['transit-option-icon', 'icon', 'ion-android-' + transitOptions[transitTranslations.indexOf(name)]]" ng-style="{
 								'font-size' : (isPrimaryTransitOption(event, name) && !shouldTransitOptionDisplay(event, name, calendar.email)) && (transitOption.duration / 60 * 25) < 14? ((transitOption.duration / 60 * 25) * 4 + 'px'): '',
 								'color' : (event.transit_options.car.distance * 0.000568182 > carSimulatorData.range && (event.userSelectedTransitOption == 'car' || (event.userSelectedTransitOption == '' && event.optimized_transit.best.name == 'car' ))) ? 'red' : ''
 								}"></i>
-							<!--
-								'position': ((transitOption.duration) / 60 * 25) < 8? 'relative' : '',
-								'top': ((transitOption.duration) / 60 * 25) < 8? '30px' : '',-->
 						</div>
-						<!--ng-if="editTransitOption && calendars[selectedUserIndex] === calendar && selectedCalendarIndex === $index"-->
-						<!--<div class="transit-options" >
-							<div
-								ng-class="['transit-option', selectedTransitOptionIndex === $index? 'selected' : '' ]"
-								ng-repeat="transitOption in event.transit_options track by $index"
-								ng-style="{'width': transitOption.duration + '%'}">
-								{{keys(event.transit_options)[$index]}}
-							</div>
-						</div>-->
 						<div class="event-category" ng-style="{
 							'margin-left' : 'calc(' + (event.durationInMinutes / 60 * 85 / 4) + 'vw - 95px)'
 						}">

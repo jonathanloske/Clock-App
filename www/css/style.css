@@ -143,28 +143,6 @@ a.item {
 	margin-top: 40px;
 }
 
-.cancel-button {
-	width: 12vw;
-	text-align: center;
-	color: black;
-	font-size: 36px;
-	padding-top: 6px;
-	padding-bottom: 6px;
-	border-radius: 6px;
-	position: absolute;
-	margin: 0 1.5vw;
-	z-index: 2;
-	top: 10px;
-	background-color: #f8f8f8;
-	box-shadow: 0 0 6px 2px black;
-}
-
-.timeline-pictures .col > .cancel-button {
-	position: relative;
-	top: -10px;
-	line-height: initial;
-}
-
 .timeline-hours {
 	color: white;
 	padding-top: 0px;

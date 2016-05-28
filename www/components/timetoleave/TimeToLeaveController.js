@@ -150,6 +150,7 @@ angular.module('app.controllers')
 		retrieveLeaveDataInterval = $interval(function(){
 			retrieveLeaveData();
 		}, 300);
+		
 		$timeout(function(){
 			$rootScope.handleCounterClockwise = function () {
 				// $state.go('carStatus');
@@ -167,6 +168,7 @@ angular.module('app.controllers')
 				});
 			};
 		}, 1000);
+
 		$rootScope.toggleLedMode = function () {
 			ledMode++;
 			if (ledMode > 4) ledMode = 0;
