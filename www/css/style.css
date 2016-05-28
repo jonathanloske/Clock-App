@@ -73,10 +73,6 @@ a.item {
 	color: white;
 }
 
-.transportation-with-shadow {
-	box-shadow: inset 0px 0px 40vh grey;
-}
-
 .blurred-picture {
 	-webkit-filter: blur(3px);
 }
