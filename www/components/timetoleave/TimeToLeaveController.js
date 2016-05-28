@@ -6,6 +6,7 @@ angular.module('app.controllers')
 	$scope.carSimulatorData = storage.getCarSimulatorData();
 	retrieveLeaveData();
 	$scope.floor = Math.floor;
+	$scope.viewIsVisible = true;
 
 	var ledMode = 0;
 
@@ -32,7 +33,7 @@ angular.module('app.controllers')
 	}
 
 	function retrieveLeaveData() {
-		$scope.familyMembers = [];
+		var familyMembers = [];
 
 		for (var i = 0; i < $scope.calendars.length; i++) {
 			var calendar = $scope.calendars[i];
@@ -100,8 +101,10 @@ angular.module('app.controllers')
 				parent.nextEvent = '- No more events today -';
 			}
 
-			$scope.familyMembers.push(parent);
+			familyMembers.push(parent);
 		};
+		$scope.familyMembers = familyMembers;
+
 	};
 
 	function updateLEDs() {
@@ -134,8 +137,26 @@ angular.module('app.controllers')
 		updateLEDs();
 	}, 1000);
 
+	storage.subscribe($scope, function onStorageUpdated() {
+		$scope.calendars = storage.getCalendars();
+		$scope.carSimulatorData = storage.getCarSimulatorData();
+		retrieveLeaveData();
+		$scope.$apply();
+	});
+
+	var retrieveLeaveDataInterval;
+
+	$scope.$on("$ionicView.beforeEnter", function (event, data) {
+		$scope.calendars = storage.getCalendars();
+		$scope.carSimulatorData = storage.getCarSimulatorData();
+		retrieveLeaveData();
+		$scope.viewIsVisible = true;
+	});
 
 	$scope.$on("$ionicView.enter", function (event, data) {
+		retrieveLeaveDataInterval = $interval(function(){
+			retrieveLeaveData();
+		}, 300);
 		$timeout(function(){
 			$rootScope.handleCounterClockwise = function () {
 				// $state.go('carStatus');
@@ -159,7 +180,10 @@ angular.module('app.controllers')
 			leds.setMode(ledMode);
 		}
 	});
-	$scope.$on("$ionicView.leave", function (event, data) {
+
+	$scope.$on("$ionicView.afterLeave", function (event, data) {
+		$scope.viewIsVisible = false;
+		$interval.cancel(retrieveLeaveDataInterval);
 		$rootScope.handleClockwise = function(){};
 		$rootScope.handleCounterClockwise = function(){};
 		$rootScope.toggleEditMode = function(){};

@@ -1,12 +1,12 @@
 <ion-view title="Time to Leave">
 	<ion-content class="timetoleave-page" scroll="false">
-		<div class="row family-member">
+		<div class="row family-member" ng-if="viewIsVisible">
 			<div class="col" ng-repeat="familyMember in familyMembers.slice(0,2) track by $index" ng-click="goToIndex($index)">
 				<leave-time-indicator transit="familyMember.transit[0]" picture="familyMember.picture"></leave-time-indicator>
 				<leave-time-indicator transit="familyMember.transit[1]" small="true"></leave-time-indicator>
 			</div>
 		</div>
-		<div class="row children">
+		<div class="row children" ng-if="viewIsVisible">
 			<div class="col" ng-repeat="familyMember in familyMembers.slice(2, familyMembers.length)">
 				<leave-time-indicator transit="familyMember.transit[0]" picture="familyMember.picture"></leave-time-indicator>
 				<leave-time-indicator transit="familyMember.transit[1]" small="true"></leave-time-indicator>
