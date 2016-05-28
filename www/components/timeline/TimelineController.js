@@ -44,7 +44,7 @@ angular.module('app.controllers')
 		// The empty part is 0.85 - 0.5 of the width.
 		// Divide that by the value of the whole timeline and multiply it again
 		// by the width of the visible timeline.
-		$scope.minimapScrollPosition = ($ionicScrollDelegate.getScrollPosition().left - $window.innerWidth * 0.34) / ($scope.pixelWidthOfOneHour * $scope.timerange.length - 1) * 85;
+		$scope.minimapScrollPosition = ($ionicScrollDelegate.getScrollPosition().left - $window.innerWidth * 0.34) / ($scope.pixelWidthOfOneHour * $scope.timerange.length - 1) * 93;
 		$scope.$apply();
 	};
 
@@ -70,7 +70,7 @@ angular.module('app.controllers')
 
 	// Continually update the time so we can display it
 	var updateTime = $interval(function () {
-		if($scope.carSimulatorData && $scope.carSimulatorData['time']){
+		if ($scope.carSimulatorData && $scope.carSimulatorData['time']) {
 			$scope.currentHour = Math.floor($scope.carSimulatorData['time'] / 3600);
 			$scope.currentMinutes = Math.floor($scope.carSimulatorData['time'] / 60 % 60);
 		} else {
@@ -80,35 +80,35 @@ angular.module('app.controllers')
 		if ($scope.currentMinutes < 10) {
 			$scope.currentMinutes = '0' + $scope.currentMinutes;
 		}
-		if(!$scope.scrubTimelineMarker){
+		if (!$scope.scrubTimelineMarker) {
 			$scope.scrubMarkerMinute = 0;
 			var date = new Date();
 			date.setHours($scope.currentHour);
 			date.setMinutes($scope.currentMinutes);
 			$scope.scrollToTime(date);
 		}
-		$scope.timelineMarkerPosition = (($scope.currentHour - 7) + Number($scope.currentMinutes) / 60 ) * 85 / 4;
+		$scope.timelineMarkerPosition = (($scope.currentHour - 7) + Number($scope.currentMinutes) / 60) * 85 / 4;
 	}, 300);
 
-	$scope.shouldTransitOptionDisplay = function(event, transitName, calendarEmail){
-		if(!$scope.editTransitOption){
+	$scope.shouldTransitOptionDisplay = function (event, transitName, calendarEmail) {
+		if (!$scope.editTransitOption) {
 			return false;
 		}
-		if($scope.calendars[$scope.selectedUserIndex].email !== calendarEmail){
+		if ($scope.calendars[$scope.selectedUserIndex].email !== calendarEmail) {
 			return false;
 		}
-		if($scope.calendars[$scope.selectedUserIndex].events[$scope.selectedCalendarIndex].id !== event.id){
+		if ($scope.calendars[$scope.selectedUserIndex].events[$scope.selectedCalendarIndex].id !== event.id) {
 			return false;
 		}
 		return true;
 	};
 
-	$scope.isPrimaryTransitOption = function(event, transitName){
+	$scope.isPrimaryTransitOption = function (event, transitName) {
 		// if($scope.editTransitOption){
 		// 	return false;
 		// }
 
-		if(event.userSelectedTransitOption){
+		if (event.userSelectedTransitOption) {
 			return $scope.transitTranslations[$scope.transitOptions.indexOf(event.userSelectedTransitOption)] === transitName;
 		}
 		return event.optimized_transit.best.name === transitName;
@@ -126,15 +126,14 @@ angular.module('app.controllers')
 		$scope.selectedTransitOptionIndex = 0;
 		$scope.selectedEvent = 0;
 
-		$timeout(function(){
+		$timeout(function () {
 			$rootScope.toggleEditMode = function () {
 				if ($scope.editTransitOption) {
 					if ($scope.selectedTransitOptionIndex !== $scope.transitOptions.length - 1) {
 						$scope.calendars[$scope.selectedUserIndex].events[$scope.selectedCalendarIndex].userSelectedTransitOption = $scope.transitOptions[
-								$scope.transitTranslations.indexOf(
-									Object.keys(
-										$scope.calendars[$scope.selectedUserIndex].events[$scope.selectedCalendarIndex].transit_options)
-								[$scope.selectedTransitOptionIndex])
+							$scope.transitTranslations.indexOf(
+								Object.keys(
+									$scope.calendars[$scope.selectedUserIndex].events[$scope.selectedCalendarIndex].transit_options)[$scope.selectedTransitOptionIndex])
 							];
 						storage.setCalendars($scope.calendars);
 
@@ -155,7 +154,7 @@ angular.module('app.controllers')
 					var timelineMarkerDate = new Date();
 					timelineMarkerDate.setMinutes(Number($scope.currentMinutes) + $scope.scrubMarkerMinute);
 					$scope.scrollToTime(timelineMarkerDate);
-				} else if ($scope.selectEventMode){
+				} else if ($scope.selectEventMode) {
 					$scope.selectedTransitOptionIndex = 0;
 					$scope.editTransitOption = true;
 					$scope.scrollToTime($scope.calendars[$scope.selectedUserIndex].events[$scope.selectedCalendarIndex].start);
@@ -164,14 +163,14 @@ angular.module('app.controllers')
 					var timelineMarkerDate = new Date();
 					timelineMarkerDate.setMinutes(Number($scope.currentMinutes) + $scope.scrubMarkerMinute);
 					$scope.selectableEvents = [];
-					for(var i = 0; i < $scope.calendars.length; i++){
-						for(var j = 0; j < $scope.calendars[i].events.length; j++){
-							if(timelineMarkerDate.getTime() >  $scope.calendars[i].events[j].start && timelineMarkerDate.getTime() < $scope.calendars[i].events[j].end){
+					for (var i = 0; i < $scope.calendars.length; i++) {
+						for (var j = 0; j < $scope.calendars[i].events.length; j++) {
+							if (timelineMarkerDate.getTime() > $scope.calendars[i].events[j].start && timelineMarkerDate.getTime() < $scope.calendars[i].events[j].end) {
 								$scope.selectableEvents.push([i, j]);
 							}
 						}
 					}
-					if($scope.selectableEvents.length > 0){
+					if ($scope.selectableEvents.length > 0) {
 						$scope.selectEventMode = true;
 						$scope.selectedEvent = 0;
 						$scope.selectedUserIndex = $scope.selectableEvents[0][0];
@@ -183,8 +182,8 @@ angular.module('app.controllers')
 			$rootScope.handleClockwise = function () {
 				if ($scope.editTransitOption) {
 					$scope.selectedTransitOptionIndex = $scope.selectedTransitOptionIndex < $scope.transitOptions.length - 1 ? $scope.selectedTransitOptionIndex + 1 : $scope.selectedTransitOptionIndex;
-				} else if ($scope.selectEventMode){
-					if($scope.selectedEvent < $scope.selectableEvents.length - 1){
+				} else if ($scope.selectEventMode) {
+					if ($scope.selectedEvent < $scope.selectableEvents.length - 1) {
 						$scope.selectedEvent++;
 						$scope.selectedUserIndex = $scope.selectableEvents[$scope.selectedEvent][0];
 						$scope.selectedCalendarIndex = $scope.selectableEvents[$scope.selectedEvent][1];
@@ -203,8 +202,8 @@ angular.module('app.controllers')
 					if ($scope.selectedTransitOptionIndex > 0) {
 						$scope.selectedTransitOptionIndex--;
 					}
-				} else if ($scope.selectEventMode){
-					if($scope.selectedEvent > 0){
+				} else if ($scope.selectEventMode) {
+					if ($scope.selectedEvent > 0) {
 						$scope.selectedEvent--;
 						$scope.selectedUserIndex = $scope.selectableEvents[$scope.selectedEvent][0];
 						$scope.selectedCalendarIndex = $scope.selectableEvents[$scope.selectedEvent][1];
@@ -228,9 +227,9 @@ angular.module('app.controllers')
 	});
 	$scope.$on("$ionicView.leave", function (event, data) {
 		$interval.cancel(updateTime);
-		$rootScope.handleClockwise = function(){};
-		$rootScope.handleCounterClockwise = function(){};
-		$rootScope.toggleEditMode = function(){};
+		$rootScope.handleClockwise = function () {};
+		$rootScope.handleCounterClockwise = function () {};
+		$rootScope.toggleEditMode = function () {};
 	});
 
 	$scope.calendars = [
