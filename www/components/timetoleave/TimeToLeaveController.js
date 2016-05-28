@@ -2,6 +2,7 @@ angular.module('app.controllers')
 
 .controller('TimeToLeaveController', function ($rootScope, $scope, $state, $ionicViewSwitcher, $ionicNativeTransitions, $interval, $timeout, storage, leds) {
 	$scope.floor = Math.floor;
+	$scope.viewIsVisible = true;
 
 	$scope.weather = {
 		condition: 'partlysunny',
@@ -19,7 +20,7 @@ angular.module('app.controllers')
 	}
 
 	function retrieveLeaveData() {
-		$scope.familyMembers = [];
+		var familyMembers = [];
 
 		for (var i = 0; i < $scope.calendars.length; i++) {
 			var calendar = $scope.calendars[i];
@@ -87,8 +88,10 @@ angular.module('app.controllers')
 				parent.nextEvent = '- No more events today -';
 			}
 
-			$scope.familyMembers.push(parent);
+			familyMembers.push(parent);
 		};
+		$scope.familyMembers = familyMembers;
+
 	};
 
 	/*$scope.familyMembers = [
@@ -135,19 +138,38 @@ angular.module('app.controllers')
 			picture: 'img/child1.jpg'
 		}
 	];
-
-	$scope.$on("$ionicView.enter", function (event, data) {
-		storage.subscribe($scope, function onStorageUpdated() {
-			$scope.calendars = storage.getCalendars();
-			$scope.carSimulatorData = storage.getCarSimulatorData();
-			retrieveLeaveData();
-			$scope.$apply();
-		});
-
+	storage.subscribe($scope, function onStorageUpdated() {
 		$scope.calendars = storage.getCalendars();
 		$scope.carSimulatorData = storage.getCarSimulatorData();
+		retrieveLeaveData();
+		$scope.$apply();
+	});
 
-		$interval(function(){
+	var retrieveLeaveDataInterval;
+
+	$scope.$on("$ionicView.beforeEnter", function (event, data) {
+		$scope.calendars = storage.getCalendars();
+		$scope.carSimulatorData = storage.getCarSimulatorData();
+		retrieveLeaveData();
+		$scope.viewIsVisible = true;
+
+		var ledData = [];
+		Object.keys($scope.familyMembers).forEach(function (key) {
+
+			var userData = {
+				minutes: $scope.familyMembers[key].transit.length > 0 ? $scope.familyMembers[key].transit[0].minutesLeft : 60,
+				color: [Math.floor(Math.random() * 255), Math.floor(Math.random() * 255), Math.floor(Math.random() * 255)]
+			}
+
+			ledData.push(userData);
+		});
+		leds.displayTimeLeftGrowing(ledData);
+
+	});
+	
+	$scope.$on("$ionicView.enter", function (event, data) {
+
+		retrieveLeaveDataInterval = $interval(function(){
 			retrieveLeaveData();
 		}, 300);
 
@@ -182,7 +204,10 @@ angular.module('app.controllers')
 		});
 		leds.displayTimeLeftGrowing(ledData);
 	});
-	$scope.$on("$ionicView.leave", function (event, data) {
+
+	$scope.$on("$ionicView.afterLeave", function (event, data) {
+		$scope.viewIsVisible = false;
+		$interval.cancel(retrieveLeaveDataInterval);
 		$rootScope.handleClockwise = function(){};
 		$rootScope.handleCounterClockwise = function(){};
 		$rootScope.toggleEditMode = function(){};
