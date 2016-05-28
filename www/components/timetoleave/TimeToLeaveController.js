@@ -7,6 +7,8 @@ angular.module('app.controllers')
 	retrieveLeaveData();
 	$scope.floor = Math.floor;
 
+	var ledMode = 0;
+
 	storage.subscribe($scope, function onStorageUpdated() {
 		$scope.calendars = storage.getCalendars();
 		$scope.carSimulatorData = storage.getCarSimulatorData();
@@ -17,22 +19,6 @@ angular.module('app.controllers')
 	$scope.weather = {
 		condition: 'partlysunny',
 		temperature: 71
-	}
-
-	var currentLedMode = leds.displayTimeLeftGrowingTogether;
-
-	var ledModes = [leds.displayTimeLeftGrowingTogether, leds.displayTimeLeftGrowing, leds.displayTimeLeftShrinking, leds.off];
-
-	$rootScope.toggleLedMode = function () {
-		if (currentLedMode == leds.displayTimeLeftGrowingTogether) {
-			currentLedMode = leds.displayTimeLeftGrowing;
-		} else if (currentLedMode == leds.displayTimeLeftGrowing) {
-			currentLedMode = leds.displayTimeLeftShrinking;
-		} else if (currentLedMode == leds.displayTimeLeftShrinking) {
-			currentLedMode = leds.off;
-		} else {
-			currentLedMode = leds.displayTimeLeftGrowingTogether;
-		}
 	}
 
 	$scope.goToIndex = function (index) {
@@ -118,7 +104,7 @@ angular.module('app.controllers')
 		};
 	};
 
-	function triggerLEDs() {
+	function updateLEDs() {
 		var ledData = [];
 		var colors = [
 			[176,105,131],
@@ -136,8 +122,8 @@ angular.module('app.controllers')
 			ledData.push(userData);
 		});
 
-		currentLedMode(ledData);
-		//leds.displayTimeLeftGrowingTogether(ledData);
+		//currentLedMode(ledData);
+		leds.updateTimeLeftInformation(ledData);
 	};
 
 	$interval(function(){
@@ -145,7 +131,7 @@ angular.module('app.controllers')
 	}, 300);
 
 	$interval(function(){
-		triggerLEDs();
+		updateLEDs();
 	}, 1000);
 
 
@@ -167,10 +153,16 @@ angular.module('app.controllers')
 				});
 			};
 		}, 1000);
+		$rootScope.toggleLedMode = function () {
+			ledMode++;
+			if (ledMode > 4) ledMode = 0;
+			leds.setMode(ledMode);
+		}
 	});
 	$scope.$on("$ionicView.leave", function (event, data) {
 		$rootScope.handleClockwise = function(){};
 		$rootScope.handleCounterClockwise = function(){};
 		$rootScope.toggleEditMode = function(){};
+		$rootScope.toggleLedMode = function(){};
 	});
 });

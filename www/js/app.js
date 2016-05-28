@@ -143,11 +143,17 @@ angular.module('starter', ['ionic', 'ionic-native-transitions', 'app.controllers
 		},
 		off: function() {
 			leds.stopLEDs();
+		},
+		updateTimeLeftInformation: function(timeLeftInformation) {
+			leds.updateTimeLeftInformation(timeLeftInformation);
+		},
+		setMode: function(mode) {
+			leds.setMode(mode);
 		}
 	}
 })
 
-.factory('socket', function ($rootScope, storage) {
+.factory('socket', function ($rootScope, storage, leds) {
 
 	var socket = io.connect("http://mtin.de:8080", {
 		query: 'id=clock'
@@ -168,7 +174,16 @@ angular.module('starter', ['ionic', 'ionic-native-transitions', 'app.controllers
 	});
 
 	socket.on('[Car Simulator Data] -  Update', function (data) {
+		if (data['key'] == 'LED_Mode_Update') {
+			leds.setMode(data['payload']);
+			return;
+		}
+
 		storage.updateCarSimulatorData(data['key'], data['payLoad']);
+	});
+
+	socket.on('car simulator - set led mode', function (mode) {
+		leds.setMode(mode);
 	});
 
 	return {
