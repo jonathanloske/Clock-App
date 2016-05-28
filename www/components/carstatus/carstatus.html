@@ -34,7 +34,7 @@
                         <div class="col">
                             <div class="car-info-headline">PARKING</div>
                             <div class="car-info-subject car-info-subject-map">{{ carSimulatorData['location'] }}</div>
-                            <div class="car-info-detail">Facebook HQ, Menlo Park</div>
+                            <div class="car-info-detail">{{ getAddress(); }}</div>
                         </div>
                         <div class="col">
                             <div class="{{ getMap(); }}"></div>

@@ -85,12 +85,20 @@ angular.module('app.controllers')
 			if (nextEvent.event != null) {
 				parent.nextEvent = nextEvent.event.title;
 				if (nextEvent.event.optimized_transit != undefined) {
-					var timeToLeaveBest = new Date(nextEvent.event.start.getTime() - nextEvent.event.optimized_transit.best.duration * 60000);
+					var timeToLeaveBest;
+					var transitOption;
+					if(nextEvent.event.userSelectedTransitOption === ""){
+						timeToLeaveBest = new Date(nextEvent.event.start.getTime() - nextEvent.event.optimized_transit.best.duration * 60000);
+					} else {
+						// Need to translate 'walk' to walking
+						transitOption = nextEvent.event.userSelectedTransitOption === 'walk' ? 'walking' : nextEvent.event.userSelectedTransitOption;
+						timeToLeaveBest = new Date(nextEvent.event.start.getTime() - nextEvent.event.transit_options[transitOption].duration * 60000);
+					}
 
 					var timeToLeaveSecondBest = new Date(nextEvent.event.start.getTime() - nextEvent.event.optimized_transit.alternative.duration * 60000);
 					parent.transit = [
 						{
-							type: nextEvent.event.optimized_transit.best.name,
+							type: nextEvent.event.userSelectedTransitOption === "" ? nextEvent.event.optimized_transit.best.name : transitOption,
 							hoursLeft: Math.floor(Math.round((timeToLeaveBest - now) / 1000 / 60 / 60)),
 							minutesLeft: Math.round((timeToLeaveBest - now) / 1000 / 60)
 					  },
@@ -140,50 +148,6 @@ angular.module('app.controllers')
 		triggerLEDs();
 	}, 1000);
 
-	/*$scope.familyMembers = [
-		{
-			transit: [
-				{
-					type: 'car',
-					minutesLeft: 30
-				},
-				{
-					type: 'walk',
-					minutesLeft: 10
-				}
-			],
-			picture: 'img/father.jpg'
-		},
-		{
-			transit: [
-				{
-					type: 'bus',
-					minutesLeft: 20
-				},
-				{
-					type: 'walk',
-					minutesLeft: 10
-				}
-			],
-			picture: 'img/mother.png'
-		}
-	];*/
-	$scope.children = [
-		{
-			transit: [
-				{
-					type: 'walk',
-					minutesLeft: 20
-				},
-				{
-					type: 'bicycle',
-					minutesLeft: 50
-				}
-			],
-			nextEvent: 'Template Event',
-			picture: 'img/child1.jpg'
-		}
-	];
 
 	$scope.$on("$ionicView.enter", function (event, data) {
 		$timeout(function(){

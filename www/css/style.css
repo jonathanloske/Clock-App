@@ -8,6 +8,7 @@
 	width: 100%;
 	height: 100%;
 	z-index: 10;
+	pointer-events: none;
 }
 
 .gradient-overlay-right {
@@ -41,7 +42,7 @@ a.item {
 }
 
 .selected {
-	box-shadow: 0 0 20px 15px rgba(255,255,255,0.7) !important;
+	box-shadow: 0 0 20px 15px rgba(255, 255, 255, 0.7) !important;
 }
 
 .timeline-page,
@@ -76,6 +77,10 @@ a.item {
 	box-shadow: inset 0px 0px 40vh grey;
 }
 
+.blurred-picture {
+	-webkit-filter: blur(3px);
+}
+
 .radial-progress .transportation i {
 	line-height: 25vh;
 	font-size: 20vh;
@@ -100,12 +105,18 @@ a.item {
 	font-size: 4vh;
 }
 
-.timeline-current-marker {
+.timeline-marker {
 	position: fixed;
 	height: 94vh;
 	border-left: 4px solid red;
 	z-index: 1;
 	left: 50vw;
+}
+
+.timeline-current-marker {
+	border-left: 4px solid rgba(255, 0, 0, 0.6);
+	height: 94vh;
+	z-index: 1;
 }
 
 .timeline-pictures {
@@ -126,7 +137,7 @@ a.item {
 	background-color: #525252;
 	padding-top: calc( 10px + 5vh);
 	text-align: center;
-	background: -webkit-linear-gradient(left, rgba(0, 0, 0, 1) 80%, rgba(70, 70, 70, 1) 98%, rgba(90, 90, 90, 1) 100%);
+	background: -webkit-linear-gradient(left, rgba(0, 0, 0, 1) 87%, rgba(60, 60, 60, 1) 91%, rgba(70, 70, 70, 1) 96%, rgba(90, 90, 90, 1) 100%);
 }
 
 .timeline-pictures img {
@@ -365,8 +376,6 @@ a.item {
 	transition: height 1s;
 }
 
-.timeline .timeline-cell.transit-selection-focus {}
-
 .ng-hide.enter {
 	display: hidden;
 }
@@ -489,11 +498,13 @@ a.item {
 
 .minimap {
 	position: fixed;
+	top: 100vh;
 	transform: translate3d(15vw, -6vh, 1px);
 	height: 6vh;
 	width: 85vw;
 	background-color: black;
 	overflow: hidden;
+	z-index: 1;
 }
 
 .minimap .timeline.timelines1 {
@@ -527,12 +538,12 @@ a.item {
 }
 
 .minimap-indicator {
-	background-color: white;
+	background-color: rgba(255, 255, 255, 0.55);
 	height: 6vh;
 	width: 20vw;
 	position: absolute;
 	border-radius: 6px;
-	mix-blend-mode: difference;
+	/*mix-blend-mode: difference;*/
 }
 
 .car-info-card-box {
