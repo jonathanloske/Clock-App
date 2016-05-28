@@ -1,6 +1,6 @@
 angular.module('app.controllers')
 
-    .controller('CarStatusController', function ($scope, $state, $rootScope, $ionicViewSwitcher, $ionicNativeTransitions, storage, leds) {
+    .controller('CarStatusController', function ($scope, $state, $timeout, $rootScope, $ionicViewSwitcher, $ionicNativeTransitions, storage, leds) {
         // get the users' carSimulatorData from the storage and listen to updates
         $scope.carSimulatorData = storage.getCarSimulatorData();
 
@@ -18,16 +18,24 @@ angular.module('app.controllers')
 
         $scope.$on("$ionicView.enter", function(event, data){
             //leds.toggleFlash();
-            $rootScope.handleCounterClockwise = function(){
-            };
+            $timeout(function(){
+                $rootScope.handleCounterClockwise = function(){
+                };
 
-            $rootScope.handleClockwise = function(){
-                // $state.go('timeToLeaveOverview');
-                $ionicNativeTransitions.stateGo('timeToLeaveOverview', {}, {
-                    "type": "slide",
-                    "direction": "left"
-                });
-            }
+                $rootScope.handleClockwise = function(){
+                    // $state.go('timeToLeaveOverview');
+                    $ionicNativeTransitions.stateGo('timeToLeaveOverview', {}, {
+                        "type": "slide",
+                        "direction": "left"
+                    });
+                }
+            }, 1000);
+        });
+
+        $scope.$on("$ionicView.leave", function (event, data) {
+            $rootScope.handleClockwise = function(){};
+            $rootScope.handleCounterClockwise = function(){};
+            $rootScope.toggleEditMode = function(){};
         });
 
         $scope.getMap = function () {

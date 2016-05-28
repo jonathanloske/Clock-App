@@ -7,7 +7,7 @@ var LEDController = function(host, port)
     this.color = {r: 255, g: 0, b: 0};
     this.urgence = 6;
     this.stop = 0;
-    this.leds = 144;
+    this.leds = 152;
 
     //animation parameters
     this.lastTime = 0;
@@ -19,18 +19,18 @@ var LEDController = function(host, port)
     this.sparkSide = [this.sparkRGB[0]/2, this.sparkRGB[1]/2, this.sparkRGB[2]/2];
 
     this.Frame = {
-        r: Array.apply(null, Array(this.leds)).map(Number.prototype.valueOf,0),
-        g: Array.apply(null, Array(this.leds)).map(Number.prototype.valueOf,0),
-        b: Array.apply(null, Array(this.leds)).map(Number.prototype.valueOf,0),
+        r: new Array(this.leds).fill(0),
+        g: new Array(this.leds).fill(0),
+        b: new Array(this.leds).fill(0),
         writeOne: function(i, red, green, blue){
             this.r[i] = red;
             this.g[i] = green;
             this.b[i] = blue;
         },
         clean: function(){
-            this.r = Array.apply(null, Array(this.leds)).map(Number.prototype.valueOf,0);
-            this.g = Array.apply(null, Array(this.leds)).map(Number.prototype.valueOf,0);
-            this.b = Array.apply(null, Array(this.leds)).map(Number.prototype.valueOf,0);
+            this.r.fill(0);
+            this.g.fill(0);
+            this.b.fill(0);
         },
         addOne: function(i, red, green, blue){
             this.r[i] = Math.min(255, this.r[i] + red);
@@ -141,7 +141,7 @@ LEDController.prototype._spark = function () {
 
 LEDController.prototype.spark = function () {
     this.sparkRGB = [250, 0, 0];
-    this.sparkSide = [this.sparkRGB[0]/2, this.sparkRGB[1]/2, this.sparkRGB[2]/2];
+    this.sparkSide = [this.sparkRGB[0]/4, this.sparkRGB[1]/4, this.sparkRGB[2]/4];
     this.startTime = new Date().getTime();
     this._spark();
 }
@@ -215,5 +215,9 @@ LEDController.prototype._displayTimeLeft = function (timeLeftInformation, growin
         console.log('[LEDController] s: ' + userLedAreaStart + ' e: ' + userLedAreaEnd + ' av: ' + availableLedsForUser + ' actLED: ' + numberOfActiveLeds + ' litS: ' + litLedStart + ' litE: ' + litLedEnd);
 
     }
+    this._writePacket(packet);
+    this._writePacket(packet);
+    this._writePacket(packet);
+    this._writePacket(packet);
     this._writePacket(packet);
 }

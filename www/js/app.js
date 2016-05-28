@@ -35,11 +35,8 @@ angular.module('starter', ['ionic', 'ionic-native-transitions', 'app.controllers
 		}
 	};
 
-	var yesterday = new Date();
-	yesterday.setDate(yesterday.getDate() - 1);
-	console.log(yesterday);
 	socket.emit('clock - request all calendars', {
-		day: yesterday
+		day: moment().format()
 	});
 })
 
@@ -70,6 +67,7 @@ angular.module('starter', ['ionic', 'ionic-native-transitions', 'app.controllers
 		updateCalendar: function (calendar) {
 			// find the calendar to replace (matching is done by user's name)
 			var calendarExists = false;
+			console.log(calendar);
 			calendars.forEach(function (currentCal, index) {
 				if (currentCal.name == calendar.name) {
 					calendarExists = true;
@@ -94,7 +92,7 @@ angular.module('starter', ['ionic', 'ionic-native-transitions', 'app.controllers
 			carSimulatorData[key] = data;
 
 			console.log(carSimulatorData);
-			
+
 			carSimulatorData['range'] = carSimulatorData['battery'] * 3;
 
 			// notify controllers using this factory, that the storage has been updated
@@ -115,7 +113,7 @@ angular.module('starter', ['ionic', 'ionic-native-transitions', 'app.controllers
 })
 
 .factory('leds', function ($rootScope) {
-	var leds = new LEDController('172.21.227.2', 7890);
+	var leds = new LEDController('192.168.1.150', 7890);
 
 	var enabled = false;
 
@@ -132,7 +130,7 @@ angular.module('starter', ['ionic', 'ionic-native-transitions', 'app.controllers
 			}
 		},
 		/* usage: displayTimeLeftGrowing( [ { color: [r,g,b], minutes: x } , ... ] ) */
-		displayTimeLeftGrowing: function(timeLeftInformation) {
+		displayTimeLeftGrowing: function (timeLeftInformation) {
 			leds.displayTimeLeftGrowing(timeLeftInformation);
 		}
 	}

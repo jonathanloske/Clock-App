@@ -9,6 +9,7 @@ angular.module('app.routes', [])
   $stateProvider
 
   .state('timeToLeaveOverview', {
+    cache: false,
     url: '/timetoleave',
     templateUrl: 'components/timetoleave/timetoleave.html',
     controller: 'TimeToLeaveController'
