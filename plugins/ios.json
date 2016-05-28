@@ -76,9 +76,6 @@
         },
         "com.telerik.plugins.nativepagetransitions": {
             "PACKAGE_NAME": "com.ionicframework.clock799969"
-        },
-        "cordova-plugin-crosswalk-webview": {
-            "PACKAGE_NAME": "com.ionicframework.clock799969"
         }
     },
     "dependent_plugins": {}
