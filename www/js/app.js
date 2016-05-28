@@ -32,6 +32,8 @@ angular.module('starter', ['ionic', 'ionic-native-transitions', 'app.controllers
 			// If user presses 'k' or presses the knob
 		} else if (event.keyCode === 75) {
 			$rootScope.toggleEditMode();
+		} else if (event.keyCode === 76) {
+			$rootScope.toggleLedMode();
 		}
 	};
 
@@ -132,6 +134,15 @@ angular.module('starter', ['ionic', 'ionic-native-transitions', 'app.controllers
 		/* usage: displayTimeLeftGrowing( [ { color: [r,g,b], minutes: x } , ... ] ) */
 		displayTimeLeftGrowing: function (timeLeftInformation) {
 			leds.displayTimeLeftGrowing(timeLeftInformation);
+		},
+		displayTimeLeftGrowingTogether: function (timeLeftInformation) {
+			leds.displayTimeLeftGrowingTogether(timeLeftInformation);
+		},
+		displayTimeLeftShrinking: function (timeLeftInformation) {
+			leds.displayTimeLeftShrinking(timeLeftInformation);
+		},
+		off: function() {
+			leds.stopLEDs();
 		}
 	}
 })

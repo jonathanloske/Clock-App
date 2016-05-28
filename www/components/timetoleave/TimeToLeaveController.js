@@ -19,6 +19,22 @@ angular.module('app.controllers')
         temperature: 71
     }
 
+    var currentLedMode = leds.displayTimeLeftGrowingTogether;
+
+    var ledModes = [leds.displayTimeLeftGrowingTogether, leds.displayTimeLeftGrowing, leds.displayTimeLeftShrinking, leds.off];
+
+    $rootScope.toggleLedMode = function () {
+        if (currentLedMode == leds.displayTimeLeftGrowingTogether) {
+            currentLedMode = leds.displayTimeLeftGrowing;
+        } else if (currentLedMode == leds.displayTimeLeftGrowing) {
+            currentLedMode = leds.displayTimeLeftShrinking;
+        } else if (currentLedMode == leds.displayTimeLeftShrinking) {
+            currentLedMode = leds.off;
+        } else {
+            currentLedMode = leds.displayTimeLeftGrowingTogether;
+        }
+    }
+
     $scope.goToIndex = function (index) {
         if (index === 0) {
             $ionicViewSwitcher.nextDirection('back');
@@ -106,12 +122,14 @@ angular.module('app.controllers')
 
             var userData = {
                 minutes: $scope.familyMembers[key].transit.length > 0 ? $scope.familyMembers[key].transit[0].minutesLeft : 60,
-                color: colors[i];
+                color: colors[i]
             }
 
             ledData.push(userData);
         });
-        leds.displayTimeLeftGrowing(ledData);
+
+        currentLedMode(ledData);
+        //leds.displayTimeLeftGrowingTogether(ledData);
     };
 
     $interval(function(){
