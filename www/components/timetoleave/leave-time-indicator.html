@@ -11,7 +11,7 @@
 	<div class="transportation inset blurred-picture" ng-style="::{'background-image': 'url({{::picture}})'}"></div>
 	<div class="transportation inset">
 		<div ng-class="::[small? 'secondary-transportation' : 'primary-transportation']">
-			<i ng-class="['icon', 'ion-android-' + '{{transit.type === 'walking'? 'walk' : transit.type}}']"></i>
+			<i class="icon ion-android-{{transit.type === 'walking'? 'walk' : transit.type}}"></i>
 			<p>{{transit.minutesLeft > 60 ? floor(transit.minutesLeft / 60) + ':' + (transit.minutesLeft % 60
 				< 10 ? '0' : '') + transit.minutesLeft % 60 + ' hours' : transit.minutesLeft + ' mins'}}</p>
 		</div>
