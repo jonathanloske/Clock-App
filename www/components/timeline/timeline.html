@@ -51,22 +51,25 @@
 							selectEventMode && !editTransitOption && calendars[selectedUserIndex] === calendar && selectedCalendarIndex === $index?
 								'selected' : '',
 							editTransitOption && shouldTransitOptionDisplay(event, name, calendar.email)? 'transit-selection-focus' : ''
-						]" ng-repeat="event in calendar.events track by $index" ng-style="{
+						]"
+						 ng-repeat="event in calendar.events track by $index"
+						 ng-style="{
 							'margin-left': ((event.distanceToEventBeforeInMinutes / 60 * 25) + '%'),
 							'flex': '0 0 ' + (event.durationInMinutes / 60 * 25) + '%'
-						}">
-						<!-- || !(calendars[selectedUserIndex] === calendar && selectedCalendarIndex === $index)-->
-						<!--ng-show="(editTransitOption && shouldTransitOptionDisplay(event, name, calendar.email)) || !editTransitOption">-->
+					}">
 						<div ng-class="['transit-option',
 								shouldTransitOptionDisplay(event, name, calendar.email) && selectedTransitOptionIndex === $index? 'selected' : '',
-								(isPrimaryTransitOption(event, name) && !shouldTransitOptionDisplay(event, name, calendar.email))? 'primary-transit-option' : '']" ng-style="{
+								(isPrimaryTransitOption(event, name) && !shouldTransitOptionDisplay(event, name, calendar.email))? 'primary-transit-option' : '']"
+							 ng-style="{
 								'width': (transitOption.duration / 60 * 25) + '%'
 							 }"
 							 ng-if="isPrimaryTransitOption(event, name) || shouldTransitOptionDisplay(event, name, calendar.email)"
 							 ng-repeat="(name, transitOption) in event.transit_options track by $index">
-							<i ng-class="['transit-option-icon', 'icon', 'ion-android-' + transitOptions[transitTranslations.indexOf(name)]]" ng-style="{
-								'font-size' : (isPrimaryTransitOption(event, name) && !shouldTransitOptionDisplay(event, name, calendar.email)) && (transitOption.duration / 60 * 25) < 14? ((transitOption.duration / 60 * 25) * 4 + 'px'): '',
-								'color' : (event.transit_options.car.distance * 0.000568182 > carSimulatorData.range && (event.userSelectedTransitOption == 'car' || (event.userSelectedTransitOption == '' && event.optimized_transit.best.name == 'car' ))) ? 'red' : ''
+							<i ng-class="['transit-option-icon', 'icon', 'ion-android-' + transitOptions[transitTranslations.indexOf(name)]]"
+							   ng-style="{
+								'left' : (isPrimaryTransitOption(event, name) && !shouldTransitOptionDisplay(event, name, calendar.email)) && (transitOption.duration / 60 * 25) < 14? '-6vw': ((shouldTransitOptionDisplay(event, name, calendar.email) && transitOption.duration < 25 )? '-3vw': ''),
+								'color' : (event.transit_options.car.distance * 0.000568182 > carSimulatorData.range && (event.userSelectedTransitOption == 'car' || (event.userSelectedTransitOption == '' && event.optimized_transit.best.name == 'car' ))) ? 'red' : '',
+								'display': (transitOption.duration < 0.5 ? 'none' : '') + ''
 								}"></i>
 						</div>
 						<div class="event-category" ng-style="{

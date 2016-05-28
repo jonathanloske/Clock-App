@@ -55,7 +55,6 @@ angular.module('starter', ['ionic', 'ionic-native-transitions', 'app.controllers
 		updateCalendar: function (calendar) {
 			// find the calendar to replace (matching is done by user's name)
 			var calendarExists = false;
-			console.log(calendar);
 			calendars.forEach(function (currentCal, index) {
 				if (currentCal.name == calendar.name) {
 					calendarExists = true;
