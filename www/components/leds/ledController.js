@@ -6,6 +6,8 @@ var LEDController = function(host, port)
     this.stop = 0;
     this.leds = 152;
 
+    this.ledMode = 0;
+
     //time left growing parameters
     this.maximumMinutes = 60;
     this.shift = Math.floor(this.leds/2)*3;
@@ -239,7 +241,7 @@ LEDController.prototype.displayTimeLeftGrowingTogether = function (timeLeftInfor
 
         var numberOfActiveLeds = Math.min(timeLeftInformation[user].minutes, this.maximumMinutes) / this.maximumMinutes * availableLedsForUser;
 
-        numberOfActiveLeds = availableLedsForUser - numberOfActiveLeds;
+        //numberOfActiveLeds = availableLedsForUser - numberOfActiveLeds;
 
         var litLedStartA = userLedAreaStart;
         var litLedEndA = Math.floor(userLedAreaStart + (availableLedsForUser - numberOfActiveLeds)/2);
@@ -269,4 +271,28 @@ LEDController.prototype.displayTimeLeftGrowingTogether = function (timeLeftInfor
     }
 
     this._writePacket(packetWithHeader);
+}
+
+LEDController.prototype.updateTimeLeftInformation = function (timeLeftInformation) {
+    var ledModes = [this.stopLEDs, this.displayTimeLeftGrowingTogether, this.displayTimeLeftGrowing, this.displayTimeLeftShrinking, this.spark];
+
+    if (this.ledMode == 1) {
+        this.displayTimeLeftGrowingTogether(timeLeftInformation);
+    } else if (this.ledMode == 2) {
+        this.displayTimeLeftGrowing(timeLeftInformation);
+    } else if (this.ledMode == 3) {
+        this.displayTimeLeftShrinking(timeLeftInformation);
+    }
+
+    if (this.ledMode > ledModes.length || this.ledMode < 0) {
+        this.stopLEDs();
+        return;
+    }
+}
+
+LEDController.prototype.setMode = function (mode) {
+    this.ledMode = mode;
+    if (mode == 0) this.stopLEDs();
+    if (mode == 4) this.spark();
+    console.log('[LEDController] mode switched to: ' + mode);
 }
