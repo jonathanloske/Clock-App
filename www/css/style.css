@@ -652,3 +652,39 @@ span.assertive {
 .car-info-map-school {
 	background-image: url('../img/map_school.png');
 }
+
+.usage-hint{
+	position: fixed;
+	border-radius: 20px;
+	width: 200px;
+	text-align: center;
+    bottom: 0;
+	color: white;
+}
+
+.usage-hint.right{
+    right: 0;
+}
+
+.usage-hint.left{
+    left: 0;
+}
+
+.usage-hint.on-timeline{
+    top: 50vh;
+    margin-top: -170px;
+    left: -30vw;
+}
+
+.usage-hint p{
+	position: relative;
+	top: 100px;
+}
+
+.usage-hint img{
+	width: inherit;
+}
+
+.usage-hint i{
+	font-size: 80px;
+}
