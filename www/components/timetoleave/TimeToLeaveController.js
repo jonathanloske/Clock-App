@@ -134,19 +134,8 @@ angular.module('app.controllers')
 	};
 
 	$interval(function(){
-		retrieveLeaveData();
-	}, 300);
-
-	$interval(function(){
 		updateLEDs();
 	}, 1000);
-
-	storage.subscribe($scope, function onStorageUpdated() {
-		$scope.calendars = storage.getCalendars();
-		$scope.carSimulatorData = storage.getCarSimulatorData();
-		retrieveLeaveData();
-		$scope.$apply();
-	});
 
 	var retrieveLeaveDataInterval;
 
@@ -154,7 +143,7 @@ angular.module('app.controllers')
 		retrieveLeaveDataInterval = $interval(function(){
 			retrieveLeaveData();
 		}, 300);
-		
+
 		$timeout(function(){
 			$rootScope.handleCounterClockwise = function () {
 				// $state.go('carStatus');
