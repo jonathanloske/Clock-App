@@ -126,14 +126,14 @@ a.item {
        four edges but we only want it on the right edge so we make the container
        a lot higher and move the upper and lower edge out of view (the left edge
        is never visible since we already made the container really wide) */
-	box-shadow: 0 0 20px 4px black;
+	/*box-shadow: 0 0 20px 4px black;*/
 	padding-left: 100%;
 	width: calc( 100% + 15vw);
 	height: 110vh;
 	background-color: #525252;
 	padding-top: calc( 10px + 5vh);
 	text-align: center;
-	background: -webkit-linear-gradient(left, rgba(0, 0, 0, 1) 87%, rgba(60, 60, 60, 1) 91%, rgba(70, 70, 70, 1) 96%, rgba(90, 90, 90, 1) 100%);
+	/*background: -webkit-linear-gradient(left, rgba(0, 0, 0, 1) 87%, rgba(60, 60, 60, 1) 91%, rgba(70, 70, 70, 1) 96%, rgba(90, 90, 90, 1) 100%);*/
 }
 
 .timeline-pictures img {

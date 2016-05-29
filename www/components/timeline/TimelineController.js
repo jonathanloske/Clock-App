@@ -123,6 +123,8 @@ angular.module('app.controllers')
 		prepareCalendarForTimeline();
 	});
 
+	var canGoBackToTimeToLeave = false;
+
 	storage.subscribe($scope, prepareCalendarForTimeline);
 
 	$scope.$on("$ionicView.enter", function (event, data) {
@@ -195,6 +197,7 @@ angular.module('app.controllers')
 						$scope.selectedCalendarIndex = $scope.selectableEvents[$scope.selectedEvent][1];
 					}
 				} else {
+					canGoBackToTimeToLeave = false;
 					$scope.scrubTimelineMarker = true;
 					$scope.scrubMarkerMinute += 30;
 					var date = new Date();
@@ -219,16 +222,22 @@ angular.module('app.controllers')
 						$scope.selectedCalendarIndex = $scope.selectableEvents[$scope.selectedEvent][1];
 					}
 				} else {
-					if ($ionicScrollDelegate.getScrollPosition().left === 0) {
-						$ionicNativeTransitions.stateGo('timeToLeaveOverview', {}, {
-							"type": "slide",
-							"direction": "right"
-						});
+					if ($ionicScrollDelegate.getScrollPosit
+							$ionicNativeTransitions.stateGo('timeToLeaveOverview', {}, {
+								"type": "slide",
+								"direction": "right"
+							});
+						}
 					} else {
 						$scope.scrubTimelineMarker = true;
 						$scope.scrubMarkerMinute -= 30;
 						var date = new Date();
 						date.setMinutes(Number($scope.currentMinutes) + $scope.scrubMarkerMinute);
+						if(date.getHours() < 7 && !canGoBackToTimeToLeave){
+							$timeout(function(){
+								canGoBackToTimeToLeave = true;
+							}, 1000);
+						}
 						$scope.scrollToTime(date);
 					}
 				}
