@@ -5,7 +5,7 @@
 // the 2nd parameter is an array of 'requires'
 angular.module('starter', ['ionic', 'ionic-native-transitions', 'app.controllers', 'app.routes'])
 
-.run(function ($ionicPlatform, $rootScope, $state, $ionicScrollDelegate, socket) {
+.run(function ($ionicPlatform, $rootScope, $state, $ionicScrollDelegate, $ionicHistory, socket) {
 
 	$rootScope.keyPress = function (event) {
 		// If user presses 'a' or turns the knob counterclockwise
@@ -19,6 +19,8 @@ angular.module('starter', ['ionic', 'ionic-native-transitions', 'app.controllers
 			$rootScope.toggleEditMode();
 		} else if (event.keyCode === 76) {
 			$rootScope.toggleLedMode();
+		} else if (event.keyCode === 8) {
+			document.location.href = 'index.html';
 		}
 	};
 
@@ -126,13 +128,13 @@ angular.module('starter', ['ionic', 'ionic-native-transitions', 'app.controllers
 		displayTimeLeftShrinking: function (timeLeftInformation) {
 			leds.displayTimeLeftShrinking(timeLeftInformation);
 		},
-		off: function() {
+		off: function () {
 			leds.stopLEDs();
 		},
-		updateTimeLeftInformation: function(timeLeftInformation) {
+		updateTimeLeftInformation: function (timeLeftInformation) {
 			leds.updateTimeLeftInformation(timeLeftInformation);
 		},
-		setMode: function(mode) {
+		setMode: function (mode) {
 			leds.setMode(mode);
 		}
 	}
