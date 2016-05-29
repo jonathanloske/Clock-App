@@ -222,12 +222,11 @@ angular.module('app.controllers')
 						$scope.selectedCalendarIndex = $scope.selectableEvents[$scope.selectedEvent][1];
 					}
 				} else {
-					if ($ionicScrollDelegate.getScrollPosit
-							$ionicNativeTransitions.stateGo('timeToLeaveOverview', {}, {
-								"type": "slide",
-								"direction": "right"
-							});
-						}
+					if ($ionicScrollDelegate.getScrollPosition().left === 0) {
+						$ionicNativeTransitions.stateGo('timeToLeaveOverview', {}, {
+							"type": "slide",
+							"direction": "right"
+						});
 					} else {
 						$scope.scrubTimelineMarker = true;
 						$scope.scrubMarkerMinute -= 30;
