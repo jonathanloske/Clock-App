@@ -72,6 +72,9 @@
 								'display': (transitOption.duration < 0.5 ? 'none' : '') + ''
 								}"></i>
 						</div>
+						<div ng-class="['transit-cancel-button', 'filled', selectedTransitOptionIndex === 4? 'selected' : '']" ng-show="editTransitOption && calendars[selectedUserIndex] === calendar && selectedCalendarIndex === $index">
+							Cancel
+						</div>
 						<div class="event-category" ng-style="{
 							'margin-left' : 'calc(' + (event.durationInMinutes / 60 * 85 / 4) + 'vw - 95px)'
 						}">

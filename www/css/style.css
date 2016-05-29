@@ -187,6 +187,14 @@ a.item {
 	font-size: 55px;
 }
 
+.transit-cancel-button{
+	margin-top: 2px;
+    position: absolute;
+    text-align: center;
+    padding: 10px;
+    margin-left: -125px;
+}
+
 @font-face {
 	font-family: 'Avenir';
 	src: url("http://www.myfontfree.com/data/556/a/avenir/Avenir Roman.otf");
@@ -215,10 +223,6 @@ a.item {
 	height: calc(94vh - 50px);
 }
 
-.timeline .timelines1 > .cancel-button {
-	margin-top: -100vh;
-}
-
 .timeline .timelines1 .event-category i.icon {
 	margin-top: 4.5%;
 }
@@ -234,10 +238,6 @@ a.item {
 	margin-bottom: 5vh;
 }
 
-.timeline .timelines2 > .cancel-button {
-	margin-top: -55vh;
-}
-
 .timeline .timelines2 .event-category i.icon {
 	margin-top: 8%;
 }
@@ -251,10 +251,6 @@ a.item {
 	height: calc(26.3vh - 20px);
 	margin-top: 2.5vh;
 	margin-bottom: 2.5vh;
-}
-
-.timeline .timelines3 > .cancel-button {
-	margin-top: -40vh;
 }
 
 .timeline .timelines3 .event-category i.icon {
@@ -302,10 +298,6 @@ a.item {
 	margin-bottom: 2vh;
 }
 
-.timeline .timelines4 > .cancel-button {
-	margin-top: -31vh;
-}
-
 .timeline .timelines4 .event-category i.icon {
 	margin-top: 9%;
 }
@@ -320,10 +312,6 @@ a.item {
 	height: calc(16vh - 17px);
 	margin-top: 1.5vh;
 	margin-bottom: 1.vh;
-}
-
-.timeline .timelines5 > .cancel-button {
-	margin-top: -26vh;
 }
 
 .timeline .timelines5 .event-category i.icon {
