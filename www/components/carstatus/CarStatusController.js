@@ -11,8 +11,10 @@ angular.module('app.controllers')
         });
 
         $scope.goTo = function(){
-            $ionicViewSwitcher.nextDirection('forward');
-            $state.go('timeToLeaveOverview');
+            $ionicNativeTransitions.stateGo('timeToLeaveOverview', {}, {
+                "type": "slide",
+                "direction": "left"
+            });
         }
 
 

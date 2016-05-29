@@ -24,11 +24,15 @@ angular.module('app.controllers')
 
 	$scope.goToIndex = function (index) {
 		if (index === 0) {
-			$ionicViewSwitcher.nextDirection('back');
-			$state.go('carStatus');
+			$ionicNativeTransitions.stateGo('carStatus', {}, {
+				"type": "slide",
+				"direction": "right"
+			});
 		} else {
-			$ionicViewSwitcher.nextDirection('forward');
-			$state.go('timeline');
+			$ionicNativeTransitions.stateGo('timeline', {}, {
+				"type": "slide",
+				"direction": "left"
+			});
 		}
 	}
 

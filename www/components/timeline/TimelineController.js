@@ -3,8 +3,10 @@ angular.module('app.controllers')
 .controller('TimelineController', function ($scope, storage, socket, $interval, $timeout, $document, $rootScope, $ionicScrollDelegate, $ionicViewSwitcher, $ionicNativeTransitions, $state, $window) {
 
 	$scope.goTo = function () {
-		$ionicViewSwitcher.nextDirection('back');
-		$state.go('timeToLeaveOverview');
+		$ionicNativeTransitions.stateGo('timeToLeaveOverview', {}, {
+			"type": "slide",
+			"direction": "right"
+		});
 	};
 
 	$scope.floor = Math.floor;
