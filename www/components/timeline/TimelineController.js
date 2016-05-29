@@ -222,7 +222,7 @@ angular.module('app.controllers')
 						$scope.selectedCalendarIndex = $scope.selectableEvents[$scope.selectedEvent][1];
 					}
 				} else {
-					if ($ionicScrollDelegate.getScrollPosition().left === 0) {
+					if ($ionicScrollDelegate.getScrollPosition().left === 0 && canGoBackToTimeToLeave) {
 						$ionicNativeTransitions.stateGo('timeToLeaveOverview', {}, {
 							"type": "slide",
 							"direction": "right"
