@@ -39,12 +39,15 @@ angular.module('app.controllers')
 	$scope.pixelWidthOfTimeline = $window.innerWidth * .85;
 	$scope.minimapScrollPosition = 0;
 
+	var widthOfLeftHalfOfTimeline = $window.innerWidth * 0.34;
+	var widthOfMinimap = $scope.pixelWidthOfOneHour * $scope.timerange.length - 1;
+
 	$scope.adjustMinimap = function () {
 		// Subtract the 'empty' part of the timeline so the alignment works
 		// The empty part is 0.85 - 0.5 of the width.
 		// Divide that by the value of the whole timeline and multiply it again
 		// by the width of the visible timeline.
-		$scope.minimapScrollPosition = ($ionicScrollDelegate.getScrollPosition().left - $window.innerWidth * 0.34) / ($scope.pixelWidthOfOneHour * $scope.timerange.length - 1) * 93;
+		$scope.minimapScrollPosition = ($ionicScrollDelegate.getScrollPosition().left - widthOfLeftHalfOfTimeline) / (widthOfMinimap) * 93;
 		$scope.$apply();
 	};
 
