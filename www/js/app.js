@@ -102,10 +102,8 @@ angular.module('starter', ['ionic', 'ionic-native-transitions', 'app.controllers
 .factory('leds', function ($rootScope) {
 	var leds = new LEDController('192.168.1.150', 7890);
 
-	var enabled = false;
-
 	return {
-		toggleFlash: function () {
+		/*toggleFlash: function () {
 			if (enabled) {
 				//leds.displayTimeLeftGrowing([{color: [255,255,255], minutes: 0}, {color: [111,111,111], minutes: 10}]);
 				leds.stopLEDs();
@@ -116,7 +114,6 @@ angular.module('starter', ['ionic', 'ionic-native-transitions', 'app.controllers
 				enabled = true;
 			}
 		},
-		/* usage: displayTimeLeftGrowing( [ { color: [r,g,b], minutes: x } , ... ] ) */
 		displayTimeLeftGrowing: function (timeLeftInformation) {
 			leds.displayTimeLeftGrowing(timeLeftInformation);
 		},
@@ -128,7 +125,7 @@ angular.module('starter', ['ionic', 'ionic-native-transitions', 'app.controllers
 		},
 		off: function() {
 			leds.stopLEDs();
-		},
+		},*/
 		updateTimeLeftInformation: function(timeLeftInformation) {
 			leds.updateTimeLeftInformation(timeLeftInformation);
 		},
@@ -160,7 +157,7 @@ angular.module('starter', ['ionic', 'ionic-native-transitions', 'app.controllers
 
 	socket.on('[Car Simulator Data] -  Update', function (data) {
 		if (data['key'] == 'LED_Mode_Update') {
-			leds.setMode(data['payload']);
+			leds.setMode(data['payLoad']);
 			return;
 		}
 
