@@ -73,10 +73,6 @@ a.item {
 	color: white;
 }
 
-.transportation-with-shadow {
-	box-shadow: inset 0px 0px 40vh grey;
-}
-
 .blurred-picture {
 	-webkit-filter: blur(3px);
 }
@@ -130,14 +126,14 @@ a.item {
        four edges but we only want it on the right edge so we make the container
        a lot higher and move the upper and lower edge out of view (the left edge
        is never visible since we already made the container really wide) */
-	box-shadow: 0 0 20px 4px black;
+	/*box-shadow: 0 0 20px 4px black;*/
 	padding-left: 100%;
 	width: calc( 100% + 15vw);
 	height: 110vh;
 	background-color: #525252;
 	padding-top: calc( 10px + 5vh);
 	text-align: center;
-	background: -webkit-linear-gradient(left, rgba(0, 0, 0, 1) 87%, rgba(60, 60, 60, 1) 91%, rgba(70, 70, 70, 1) 96%, rgba(90, 90, 90, 1) 100%);
+	/*background: -webkit-linear-gradient(left, rgba(0, 0, 0, 1) 87%, rgba(60, 60, 60, 1) 91%, rgba(70, 70, 70, 1) 96%, rgba(90, 90, 90, 1) 100%);*/
 }
 
 .timeline-pictures img {
@@ -145,28 +141,6 @@ a.item {
 	border-radius: 6px;
 	box-shadow: 0 0 6px 0px black;
 	margin-top: 40px;
-}
-
-.cancel-button {
-	width: 12vw;
-	text-align: center;
-	color: black;
-	font-size: 36px;
-	padding-top: 6px;
-	padding-bottom: 6px;
-	border-radius: 6px;
-	position: absolute;
-	margin: 0 1.5vw;
-	z-index: 2;
-	top: 10px;
-	background-color: #f8f8f8;
-	box-shadow: 0 0 6px 2px black;
-}
-
-.timeline-pictures .col > .cancel-button {
-	position: relative;
-	top: -10px;
-	line-height: initial;
 }
 
 .timeline-hours {
@@ -213,6 +187,14 @@ a.item {
 	font-size: 55px;
 }
 
+.transit-cancel-button{
+	margin-top: 2px;
+    position: absolute;
+    text-align: center;
+    padding: 10px;
+    margin-left: -115px;
+}
+
 @font-face {
 	font-family: 'Avenir';
 	src: url("http://www.myfontfree.com/data/556/a/avenir/Avenir Roman.otf");
@@ -241,10 +223,6 @@ a.item {
 	height: calc(94vh - 50px);
 }
 
-.timeline .timelines1 > .cancel-button {
-	margin-top: -100vh;
-}
-
 .timeline .timelines1 .event-category i.icon {
 	margin-top: 4.5%;
 }
@@ -260,10 +238,6 @@ a.item {
 	margin-bottom: 5vh;
 }
 
-.timeline .timelines2 > .cancel-button {
-	margin-top: -55vh;
-}
-
 .timeline .timelines2 .event-category i.icon {
 	margin-top: 8%;
 }
@@ -277,10 +251,6 @@ a.item {
 	height: calc(26.3vh - 20px);
 	margin-top: 2.5vh;
 	margin-bottom: 2.5vh;
-}
-
-.timeline .timelines3 > .cancel-button {
-	margin-top: -40vh;
 }
 
 .timeline .timelines3 .event-category i.icon {
@@ -328,10 +298,6 @@ a.item {
 	margin-bottom: 2vh;
 }
 
-.timeline .timelines4 > .cancel-button {
-	margin-top: -31vh;
-}
-
 .timeline .timelines4 .event-category i.icon {
 	margin-top: 9%;
 }
@@ -346,10 +312,6 @@ a.item {
 	height: calc(16vh - 17px);
 	margin-top: 1.5vh;
 	margin-bottom: 1.vh;
-}
-
-.timeline .timelines5 > .cancel-button {
-	margin-top: -26vh;
 }
 
 .timeline .timelines5 .event-category i.icon {
@@ -689,4 +651,40 @@ span.assertive {
 
 .car-info-map-school {
 	background-image: url('../img/map_school.png');
+}
+
+.usage-hint{
+	position: fixed;
+	border-radius: 20px;
+	width: 200px;
+	text-align: center;
+    bottom: 0;
+	color: white;
+}
+
+.usage-hint.right{
+    right: 0;
+}
+
+.usage-hint.left{
+    left: 0;
+}
+
+.usage-hint.on-timeline{
+    top: 50vh;
+    margin-top: -170px;
+    left: -30vw;
+}
+
+.usage-hint p{
+	position: relative;
+	top: 100px;
+}
+
+.usage-hint img{
+	width: inherit;
+}
+
+.usage-hint i{
+	font-size: 80px;
 }

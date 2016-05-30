@@ -10,7 +10,7 @@
     CGRect screenBound = [[UIScreen mainScreen] bounds];
 
     // Set our transitioning view (see #114)
-    self.transitionView = self.webView;
+  self.transitionView = self.webView;
 
     // Look to see if a WKWebView exists
     Class wkWebViewClass = NSClassFromString(@"WKWebView");
@@ -51,6 +51,25 @@
   }
 }
 
+- (void) cancelPendingTransition:(CDVInvokedUrlCommand*)command {
+  _slideOptions = nil;
+  _flipOptions = nil;
+  _drawerOptions = nil;
+  _fadeOptions = nil;
+  _curlOptions = nil;
+
+  // hide the screenshot like you mean it
+  [_screenShotImageView removeFromSuperview];
+  if (_originalColor != nil) {
+    self.viewController.view.backgroundColor = _originalColor;
+  }
+  // doesn't matter if these weren't added, but if they were we need to remove them
+  [_screenShotImageViewTop removeFromSuperview];
+  [_screenShotImageViewBottom removeFromSuperview];
+
+  CDVPluginResult* pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK];
+  [self.commandDelegate sendPluginResult:pluginResult callbackId:command.callbackId];
+}
 
 - (void) slide:(CDVInvokedUrlCommand*)command {
   // make sure incorrect usage doesn't leave artifacts (call setup, then slide with delay >= 0)
@@ -254,7 +273,7 @@
         }
         int corr = 0;
         if ([direction isEqualToString:@"left"] || [direction isEqualToString:@"right"]) {
-            corr = fixedPixelsTop;
+      //corr = fixedPixelsTop;
         }
         if (slidePixels > 0) {
             [self.transitionView setAlpha:0];
@@ -266,16 +285,12 @@
                             delay:delay
                           options:UIViewAnimationOptionCurveEaseInOut
                        animations:^{
-                             [self.transitionView setFrame:CGRectMake(0, webviewToY+fixedPixelsTop, width, height-_nonWebViewHeight)];
+                       [self.transitionView setFrame:CGRectMake(0, webviewToY, width, height-_nonWebViewHeight)];
                              if (slidePixels > 0) {
                                  [self.transitionView setAlpha:1.0f];
                          }
                          }
                          completion:^(BOOL finished) {
-                             if (fixedPixelsTop > 0) {
-                               [self.transitionView setFrame:CGRectMake(0, webviewToY, width, height-_nonWebViewHeight)];
-                               [self.transitionView setBounds:CGRectMake(0, 0, width, height-_nonWebViewHeight)];
-                             }
                        }];
     }
 

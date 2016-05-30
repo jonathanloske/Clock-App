@@ -3,8 +3,10 @@ angular.module('app.controllers')
 .controller('TimelineController', function ($scope, storage, socket, $interval, $timeout, $document, $rootScope, $ionicScrollDelegate, $ionicViewSwitcher, $ionicNativeTransitions, $state, $window) {
 
 	$scope.goTo = function () {
-		$ionicViewSwitcher.nextDirection('back');
-		$state.go('timeToLeaveOverview');
+		$ionicNativeTransitions.stateGo('timeToLeaveOverview', {}, {
+			"type": "slide",
+			"direction": "right"
+		});
 	};
 
 	$scope.floor = Math.floor;
@@ -39,12 +41,15 @@ angular.module('app.controllers')
 	$scope.pixelWidthOfTimeline = $window.innerWidth * .85;
 	$scope.minimapScrollPosition = 0;
 
+	var widthOfLeftHalfOfTimeline = $window.innerWidth * 0.34;
+	var widthOfMinimap = $scope.pixelWidthOfOneHour * $scope.timerange.length - 1;
+
 	$scope.adjustMinimap = function () {
 		// Subtract the 'empty' part of the timeline so the alignment works
 		// The empty part is 0.85 - 0.5 of the width.
 		// Divide that by the value of the whole timeline and multiply it again
 		// by the width of the visible timeline.
-		$scope.minimapScrollPosition = ($ionicScrollDelegate.getScrollPosition().left - $window.innerWidth * 0.34) / ($scope.pixelWidthOfOneHour * $scope.timerange.length - 1) * 93;
+		$scope.minimapScrollPosition = ($ionicScrollDelegate.getScrollPosition().left - widthOfLeftHalfOfTimeline) / (widthOfMinimap) * 93;
 		$scope.$apply();
 	};
 
@@ -118,8 +123,11 @@ angular.module('app.controllers')
 		prepareCalendarForTimeline();
 	});
 
+	var canGoBackToTimeToLeave = false;
+
+	storage.subscribe($scope, prepareCalendarForTimeline);
+
 	$scope.$on("$ionicView.enter", function (event, data) {
-		storage.subscribe($scope, prepareCalendarForTimeline);
 		$scope.scrollToTime(new Date());
 		$scope.scrubTimelineMarker = false;
 		$scope.scrubMarkerMinute = 0;
@@ -189,11 +197,16 @@ angular.module('app.controllers')
 						$scope.selectedCalendarIndex = $scope.selectableEvents[$scope.selectedEvent][1];
 					}
 				} else {
+					canGoBackToTimeToLeave = false;
 					$scope.scrubTimelineMarker = true;
 					$scope.scrubMarkerMinute += 30;
 					var date = new Date();
 					date.setMinutes(Number($scope.currentMinutes) + $scope.scrubMarkerMinute);
-					$scope.scrollToTime(date);
+					if(date.getHours() === 23 && date.getMinutes() > 30){
+						$scope.scrubMarkerMinute -= 30;
+					} else {
+						$scope.scrollToTime(date);
+					}
 				}
 			};
 
@@ -219,101 +232,24 @@ angular.module('app.controllers')
 						$scope.scrubMarkerMinute -= 30;
 						var date = new Date();
 						date.setMinutes(Number($scope.currentMinutes) + $scope.scrubMarkerMinute);
+						if(date.getHours() < 7 && !canGoBackToTimeToLeave){
+							$timeout(function(){
+								canGoBackToTimeToLeave = true;
+							}, 1000);
+						}
 						$scope.scrollToTime(date);
 					}
 				}
 			};
 		}, 1000);
 	});
+
 	$scope.$on("$ionicView.leave", function (event, data) {
 		$interval.cancel(updateTime);
 		$rootScope.handleClockwise = function () {};
 		$rootScope.handleCounterClockwise = function () {};
 		$rootScope.toggleEditMode = function () {};
 	});
-
-	$scope.calendars = [
-		{
-			picture: 'img/father.jpg',
-			events: [
-				{
-					start: new Date(2016, 05, 01, 07, 10),
-					end: new Date(2016, 05, 01, 07, 45),
-					title: 'Breakfast (alone)'
-			},
-				{
-					start: new Date(2016, 05, 01, 09),
-					end: new Date(2016, 05, 01, 12),
-					title: 'Work'
-			},
-				{
-					start: new Date(2016, 05, 01, 12),
-					end: new Date(2016, 05, 01, 13),
-					title: 'Business lunch'
-			},
-				{
-					start: new Date(2016, 05, 01, 13),
-					end: new Date(2016, 05, 01, 17),
-					title: 'Slacking off'
-			},
-				{
-					start: new Date(2016, 05, 01, 18),
-					end: new Date(2016, 05, 01, 19),
-					title: 'Gym'
-			}
-		]
-		},
-		{
-			picture: 'img/mother.png',
-			events: [
-				{
-					start: new Date(2016, 05, 01, 08, 0),
-					end: new Date(2016, 05, 01, 08, 30),
-					title: 'Breakfast'
-			},
-				{
-					start: new Date(2016, 05, 01, 09),
-					end: new Date(2016, 05, 01, 12),
-					title: 'Work'
-			},
-				{
-					start: new Date(2016, 05, 01, 12),
-					end: new Date(2016, 05, 01, 13),
-					title: 'Business lunch'
-			},
-				{
-					start: new Date(2016, 05, 01, 13),
-					end: new Date(2016, 05, 01, 17),
-					title: 'Slacking off'
-			},
-				{
-					start: new Date(2016, 05, 01, 18),
-					end: new Date(2016, 05, 01, 19),
-					title: 'Gym'
-			}
-		]
-		},
-		{
-			picture: 'img/child1.jpg',
-			events: [
-				{
-					start: new Date(2016, 05, 01, 08, 0),
-					end: new Date(2016, 05, 01, 08, 30),
-					title: 'Breakfast'
-			},
-				{
-					start: new Date(2016, 05, 01, 09),
-					end: new Date(2016, 05, 01, 15),
-					title: 'School'
-			},
-				{
-					start: new Date(2016, 05, 01, 15, 30),
-					end: new Date(2016, 05, 01, 17),
-					title: 'Choir'
-			}
-		]
-		}
-	];
 
 	var addDurationAndDistanceToEvents = function () {
 		for (var i = 0; i < $scope.calendars.length; i++) {
@@ -333,6 +269,4 @@ angular.module('app.controllers')
 			}
 		}
 	};
-
-	addDurationAndDistanceToEvents();
 });

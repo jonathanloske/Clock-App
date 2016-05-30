@@ -1,20 +1,13 @@
 <ion-view title="Timeline">
 
 	<ion-content class="timeline-page" scroll="false">
-		<div class="gradient-overlay gradient-overlay-right"></div>
-		<div ng-show="!editMode" class="timeline-time">
-			{{currentHour}}:{{currentMinutes}}
+		<div class="timeline-time">
+			{{currentHour + ':' + currentMinutes}}
 		</div>
-		<div ng-class="['cancel-button', 'filled', selectedUserIndex === -1? 'selected':'']" ng-show="editMode && !editCalendarMode">
-			Cancel
-		</div>
-		<div class="timeline-pictures" ng-click="goTo()">
+		<div class="timeline-pictures" ng-click="::goTo()">
 			<div class="row timeline" ng-repeat="calendar in calendars track by $index">
-				<div ng-class="['col', 'timelines' + calendars.length]">
-					<img ng-src="{{calendar.picture}}" ng-class="editMode && !editCalendarMode && selectedUserIndex === $index? 'selected' : ''" />
-					<div ng-class="['cancel-button', 'filled', selectedCalendarIndex === -1? 'selected':'']" ng-show="editCalendarMode && !editTransitOption && selectedUserIndex === $index">
-						Cancel
-					</div>
+				<div ng-class="::['col', 'timelines' + calendars.length]">
+					<img ng-src="{{::calendar.picture}}"/>
 				</div>
 			</div>
 		</div>
@@ -31,13 +24,19 @@
 			<div class="row timeline-hours">
 				<!-- Display the hour markers at the top of the screen.
 					One hour should take up 25% (horizontally) of the screen.-->
-				<div class="col hour-marker" ng-repeat="time in timerange track by $index">
-					{{time}}
+				<div class="col hour-marker" ng-repeat="time in ::timerange track by $index">
+					{{::time}}
 				</div>
 			</div>
 			<div class="timeline-current-marker" ng-style="{'transform':
 					'translate3d(' + timelineMarkerPosition + 'vw, -100vh, 1px)'}">
 			</div>
+
+			<div class="usage-hint on-timeline">
+				<p><i class="icon ion-reply"></i></p>
+				<img src="img/TimeToLeave_small.png">
+			</div>
+
 			<div class="timelines">
 				<div class="row timeline" ng-repeat="calendar in calendars">
 					<!-- Calculate the horizontal positioning of the elements.
@@ -57,34 +56,30 @@
 							selectEventMode && !editTransitOption && calendars[selectedUserIndex] === calendar && selectedCalendarIndex === $index?
 								'selected' : '',
 							editTransitOption && shouldTransitOptionDisplay(event, name, calendar.email)? 'transit-selection-focus' : ''
-						]" ng-repeat="event in calendar.events track by $index" ng-style="{
+						]"
+						 ng-repeat="event in calendar.events track by $index"
+						 ng-style="{
 							'margin-left': ((event.distanceToEventBeforeInMinutes / 60 * 25) + '%'),
 							'flex': '0 0 ' + (event.durationInMinutes / 60 * 25) + '%'
-						}">
-						<!-- || !(calendars[selectedUserIndex] === calendar && selectedCalendarIndex === $index)-->
-						<!--ng-show="(editTransitOption && shouldTransitOptionDisplay(event, name, calendar.email)) || !editTransitOption">-->
+					}">
 						<div ng-class="['transit-option',
 								shouldTransitOptionDisplay(event, name, calendar.email) && selectedTransitOptionIndex === $index? 'selected' : '',
-								(isPrimaryTransitOption(event, name) && !shouldTransitOptionDisplay(event, name, calendar.email))? 'primary-transit-option' : '']" ng-style="{
+								(isPrimaryTransitOption(event, name) && !shouldTransitOptionDisplay(event, name, calendar.email))? 'primary-transit-option' : '']"
+							 ng-style="{
 								'width': (transitOption.duration / 60 * 25) + '%'
-							 }" ng-if="isPrimaryTransitOption(event, name) || shouldTransitOptionDisplay(event, name, calendar.email)" ng-repeat="(name, transitOption) in event.transit_options track by $index">
-							<i ng-class="['transit-option-icon', 'icon', 'ion-android-' + transitOptions[transitTranslations.indexOf(name)]]" ng-style="{
-								'font-size' : (isPrimaryTransitOption(event, name) && !shouldTransitOptionDisplay(event, name, calendar.email)) && (transitOption.duration / 60 * 25) < 14? ((transitOption.duration / 60 * 25) * 4 + 'px'): '',
-								'color' : (event.transit_options.car.distance * 0.000568182 > carSimulatorData.range && (event.userSelectedTransitOption == 'car' || (event.userSelectedTransitOption == '' && event.optimized_transit.best.name == 'car' ))) ? 'red' : ''
+							 }"
+							 ng-if="isPrimaryTransitOption(event, name) || shouldTransitOptionDisplay(event, name, calendar.email)"
+							 ng-repeat="(name, transitOption) in event.transit_options track by $index">
+							<i ng-class="['transit-option-icon', 'icon', 'ion-android-' + transitOptions[transitTranslations.indexOf(name)]]"
+							   ng-style="{
+								'left' : (isPrimaryTransitOption(event, name) && !shouldTransitOptionDisplay(event, name, calendar.email)) && (transitOption.duration / 60 * 25) < 14? '-6vw': ((shouldTransitOptionDisplay(event, name, calendar.email) && transitOption.duration < 25 )? '-3vw': ''),
+								'color' : (event.transit_options.car.distance * 0.000568182 > carSimulatorData.range && (event.userSelectedTransitOption == 'car' || (event.userSelectedTransitOption == '' && event.optimized_transit.best.name == 'car' ))) ? 'red' : '',
+								'display': (transitOption.duration < 0.5 ? 'none' : '') + ''
 								}"></i>
-							<!--
-								'position': ((transitOption.duration) / 60 * 25) < 8? 'relative' : '',
-								'top': ((transitOption.duration) / 60 * 25) < 8? '30px' : '',-->
 						</div>
-						<!--ng-if="editTransitOption && calendars[selectedUserIndex] === calendar && selectedCalendarIndex === $index"-->
-						<!--<div class="transit-options" >
-							<div
-								ng-class="['transit-option', selectedTransitOptionIndex === $index? 'selected' : '' ]"
-								ng-repeat="transitOption in event.transit_options track by $index"
-								ng-style="{'width': transitOption.duration + '%'}">
-								{{keys(event.transit_options)[$index]}}
-							</div>
-						</div>-->
+						<div ng-class="['transit-cancel-button', 'filled', selectedTransitOptionIndex === 4? 'selected' : '']" ng-show="editTransitOption && calendars[selectedUserIndex] === calendar && selectedCalendarIndex === $index">
+							Cancel
+						</div>
 						<div class="event-category" ng-style="{
 							'margin-left' : 'calc(' + (event.durationInMinutes / 60 * 85 / 4) + 'vw - 95px)'
 						}">

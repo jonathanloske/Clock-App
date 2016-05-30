@@ -5,7 +5,7 @@
 // the 2nd parameter is an array of 'requires'
 angular.module('starter', ['ionic', 'ionic-native-transitions', 'app.controllers', 'app.routes'])
 
-.run(function ($ionicPlatform, $rootScope, $state, $ionicScrollDelegate, socket) {
+.run(function ($ionicPlatform, $rootScope, $state, $ionicScrollDelegate, $ionicHistory, socket) {
 
 	$rootScope.keyPress = function (event) {
 		// If user presses 'a' or turns the knob counterclockwise
@@ -19,6 +19,8 @@ angular.module('starter', ['ionic', 'ionic-native-transitions', 'app.controllers
 			$rootScope.toggleEditMode();
 		} else if (event.keyCode === 76) {
 			$rootScope.toggleLedMode();
+		} else if (event.keyCode === 8) {
+			document.location.href = 'index.html';
 		}
 	};
 
@@ -31,6 +33,7 @@ angular.module('starter', ['ionic', 'ionic-native-transitions', 'app.controllers
 	$ionicNativeTransitionsProvider.setDefaultOptions({
 		triggerTransitionEvent: '$ionicView.afterEnter',
 		slowdownfactor: 1,
+		androidDelayFactor: 0,
 		backInOppositeDirection: true,
 	});
 })
@@ -54,7 +57,6 @@ angular.module('starter', ['ionic', 'ionic-native-transitions', 'app.controllers
 		updateCalendar: function (calendar) {
 			// find the calendar to replace (matching is done by user's name)
 			var calendarExists = false;
-			console.log(calendar);
 			calendars.forEach(function (currentCal, index) {
 				if (currentCal.name == calendar.name) {
 					calendarExists = true;
@@ -123,13 +125,13 @@ angular.module('starter', ['ionic', 'ionic-native-transitions', 'app.controllers
 		displayTimeLeftShrinking: function (timeLeftInformation) {
 			leds.displayTimeLeftShrinking(timeLeftInformation);
 		},
-		off: function() {
+		off: function () {
 			leds.stopLEDs();
 		},*/
-		updateTimeLeftInformation: function(timeLeftInformation) {
+		updateTimeLeftInformation: function (timeLeftInformation) {
 			leds.updateTimeLeftInformation(timeLeftInformation);
 		},
-		setMode: function(mode) {
+		setMode: function (mode) {
 			leds.setMode(mode);
 		}
 	}

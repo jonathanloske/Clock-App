@@ -24,11 +24,15 @@ angular.module('app.controllers')
 
 	$scope.goToIndex = function (index) {
 		if (index === 0) {
-			$ionicViewSwitcher.nextDirection('back');
-			$state.go('carStatus');
+			$ionicNativeTransitions.stateGo('carStatus', {}, {
+				"type": "slide",
+				"direction": "right"
+			});
 		} else {
-			$ionicViewSwitcher.nextDirection('forward');
-			$state.go('timeline');
+			$ionicNativeTransitions.stateGo('timeline', {}, {
+				"type": "slide",
+				"direction": "left"
+			});
 		}
 	}
 
@@ -130,33 +134,16 @@ angular.module('app.controllers')
 	};
 
 	$interval(function(){
-		retrieveLeaveData();
-	}, 300);
-
-	$interval(function(){
 		updateLEDs();
 	}, 1000);
 
-	storage.subscribe($scope, function onStorageUpdated() {
-		$scope.calendars = storage.getCalendars();
-		$scope.carSimulatorData = storage.getCarSimulatorData();
-		retrieveLeaveData();
-		$scope.$apply();
-	});
-
 	var retrieveLeaveDataInterval;
-
-	$scope.$on("$ionicView.beforeEnter", function (event, data) {
-		$scope.calendars = storage.getCalendars();
-		$scope.carSimulatorData = storage.getCarSimulatorData();
-		retrieveLeaveData();
-		$scope.viewIsVisible = true;
-	});
 
 	$scope.$on("$ionicView.enter", function (event, data) {
 		retrieveLeaveDataInterval = $interval(function(){
 			retrieveLeaveData();
 		}, 300);
+
 		$timeout(function(){
 			$rootScope.handleCounterClockwise = function () {
 				// $state.go('carStatus');
@@ -174,6 +161,7 @@ angular.module('app.controllers')
 				});
 			};
 		}, 1000);
+
 		$rootScope.toggleLedMode = function () {
 			ledMode++;
 			if (ledMode > 4) ledMode = 0;
@@ -182,7 +170,6 @@ angular.module('app.controllers')
 	});
 
 	$scope.$on("$ionicView.afterLeave", function (event, data) {
-		$scope.viewIsVisible = false;
 		$interval.cancel(retrieveLeaveDataInterval);
 		$rootScope.handleClockwise = function(){};
 		$rootScope.handleCounterClockwise = function(){};
