@@ -9,7 +9,7 @@
 		</div>
 	</div>
 	<div class="transportation inset" ng-style="::{'background-image': 'url({{::picture}})'}"></div>
-	<div class="transportation inset">
+	<div class="transportation inset" ng-class="[small? '' : 'transparent-grey']">
 		<div ng-class="::[small? 'secondary-transportation' : 'primary-transportation']">
 			<i class="icon ion-android-{{transit.type === 'walking'? 'walk' : transit.type}}"></i>
 			<p>{{transit.minutesLeft > 60 ? floor(transit.minutesLeft / 60) + ':' + (transit.minutesLeft % 60

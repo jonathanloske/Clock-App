@@ -35,8 +35,11 @@
 	position: absolute;
 	margin-left: 2vh;
 	margin-top: 2vh;
-	/*background-color: white;*/
 	border-radius: 50%;
+}
+
+.transparent-grey {
+	background-color: rgba(89, 89, 89, 0.73);
 }
 
 .radial-progress[data-progress="0"] .circle .mask.full,
