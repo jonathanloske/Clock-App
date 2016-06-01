@@ -113,10 +113,10 @@ angular.module('app.controllers')
 		// 	return false;
 		// }
 
-		if (event.userSelectedTransitOption) {
+		if (event.userSelectedTransitOption && event.userSelectedTransitOption.length > 0) {
 			return $scope.transitTranslations[$scope.transitOptions.indexOf(event.userSelectedTransitOption)] === transitName;
 		}
-		return event.optimized_transit.best.name === transitName;
+		return $scope.transitTranslations[$scope.transitOptions.indexOf(event.optimized_transit.best.name)] === transitName;
 	}
 
 	$scope.$on("$ionicView.beforeEnter", function (event, data) {
