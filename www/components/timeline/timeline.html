@@ -72,7 +72,7 @@
 							 ng-repeat="(name, transitOption) in event.transit_options track by $index">
 							<i ng-class="['transit-option-icon', 'icon', 'ion-android-' + transitOptions[transitTranslations.indexOf(name)]]"
 							   ng-style="{
-								'left' : (isPrimaryTransitOption(event, name) && !shouldTransitOptionDisplay(event, name, calendar.email)) && (transitOption.duration / 60 * 25) < 14? '-6vw': ((shouldTransitOptionDisplay(event, name, calendar.email) && transitOption.duration < 25 )? '-3vw': ''),
+								'left' : (isPrimaryTransitOption(event, name) && !shouldTransitOptionDisplay(event, name, calendar.email)) && transitOption.duration < 18? '-6vw': ((shouldTransitOptionDisplay(event, name, calendar.email) && transitOption.duration < 25 )? '-3vw': ''),
 								'color' : (event.transit_options.car.distance * 0.000568182 > carSimulatorData.range && (event.userSelectedTransitOption == 'car' || (event.userSelectedTransitOption == '' && event.optimized_transit.best.name == 'car' ))) ? 'red' : '',
 								'display': (transitOption.duration < 0.5 ? 'none' : '') + ''
 								}"></i>
