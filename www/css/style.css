@@ -658,7 +658,7 @@ span.assertive {
 .usage-hint {
 	position: fixed;
 	border-radius: 20px;
-	width: 200px;
+	width: 100px;
 	text-align: center;
 	bottom: 0;
 	color: white;

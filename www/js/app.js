@@ -5,7 +5,7 @@
 // the 2nd parameter is an array of 'requires'
 angular.module('starter', ['ionic', 'ionic-native-transitions', 'app.controllers', 'app.routes'])
 
-.run(function ($ionicPlatform, $rootScope, $state, $ionicScrollDelegate, $ionicHistory, socket) {
+.run(function ($ionicPlatform, $rootScope, $state, $ionicScrollDelegate, $ionicHistory, socket, leds) {
 
 	$rootScope.keyPress = function (event) {
 		// If user presses 'a' or turns the knob counterclockwise
@@ -21,6 +21,7 @@ angular.module('starter', ['ionic', 'ionic-native-transitions', 'app.controllers
 			$rootScope.toggleLedMode();
 		} else if (event.keyCode === 8) {
 			document.location.href = 'index.html';
+			leds.reconnect();
 		}
 	};
 
@@ -102,37 +103,22 @@ angular.module('starter', ['ionic', 'ionic-native-transitions', 'app.controllers
 })
 
 .factory('leds', function ($rootScope) {
-	var leds = new LEDController('192.168.1.150', 7890);
+
+	function connectLEDs() {
+		return new LEDController('192.168.1.150', 7890);
+	}
+
+	var leds = connectLEDs();
 
 	return {
-		/*toggleFlash: function () {
-			if (enabled) {
-				//leds.displayTimeLeftGrowing([{color: [255,255,255], minutes: 0}, {color: [111,111,111], minutes: 10}]);
-				leds.stopLEDs();
-				enabled = false;
-			} else {
-				//leds.displayTimeLeftGrowing([{color: [255,255,255], minutes: 120}, {color: [111,111,111], minutes: 10}, {color: [3,3,3], minutes: 1}]);
-				leds.spark();
-				enabled = true;
-			}
-		},
-		displayTimeLeftGrowing: function (timeLeftInformation) {
-			leds.displayTimeLeftGrowing(timeLeftInformation);
-		},
-		displayTimeLeftGrowingTogether: function (timeLeftInformation) {
-			leds.displayTimeLeftGrowingTogether(timeLeftInformation);
-		},
-		displayTimeLeftShrinking: function (timeLeftInformation) {
-			leds.displayTimeLeftShrinking(timeLeftInformation);
-		},
-		off: function () {
-			leds.stopLEDs();
-		},*/
 		updateTimeLeftInformation: function (timeLeftInformation) {
 			leds.updateTimeLeftInformation(timeLeftInformation);
 		},
 		setMode: function (mode) {
 			leds.setMode(mode);
+		},
+		reconnect: function () {
+			leds = connectLEDs();
 		}
 	}
 })
