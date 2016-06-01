@@ -339,7 +339,7 @@ a.item {
 }
 
 .ng-hide.enter {
-	display: hidden;
+	display: none;
 }
 
 .timeline-cell > .primary-transit-option,
