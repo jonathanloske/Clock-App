@@ -66,7 +66,7 @@
 								shouldTransitOptionDisplay(event, name, calendar.email) && selectedTransitOptionIndex === $index? 'selected' : '',
 								(isPrimaryTransitOption(event, name) && !shouldTransitOptionDisplay(event, name, calendar.email))? 'primary-transit-option' : '']"
 							 ng-style="{
-								'width': (transitOption.duration / 60 * 25) + '%'
+								'width': (transitOption.duration / 60 / 4.7058823529 * 100) + 'vw'
 							 }"
 							 ng-if="isPrimaryTransitOption(event, name) || shouldTransitOptionDisplay(event, name, calendar.email)"
 							 ng-repeat="(name, transitOption) in event.transit_options track by $index">
