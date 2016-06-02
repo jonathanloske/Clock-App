@@ -52,7 +52,10 @@ angular.module('app.controllers')
 				msecsUntilStart: -1,
 				event: null
 			};
-			var now = (!$scope.carSimulatorData['time']) ? new Date() : new Date(new Date().getTime() - (new Date().getTime() % 86400000) + 25200000 + $scope.carSimulatorData['time'] * 1000);
+			var todayMidnight = new Date();
+			todayMidnight.setHours(0, 0, 0, 0);
+			var now = (!$scope.carSimulatorData['time']) ? new Date() : new Date(todayMidnight.getTime() + ($scope.carSimulatorData['time'] * 1000));
+			//new Date(today.getTime() - (today.getTime() % 86400000) + 25200000 + $scope.carSimulatorData['time'] * 1000);
 			calendar.events.forEach(function (event) {
 				var msecsUntilEvent = (event.start - now);
 				// we dont want events that are already over or ones that the user is
@@ -60,8 +63,8 @@ angular.module('app.controllers')
 				// event as being too late)
 				if (msecsUntilEvent < 0 ||
 					(event.optimized_transit && event.start.getTime() -
-					 event.optimized_transit.best.duration * 60000 - now.getTime() < -1000 * 60 * 2 &&
-					 event.start.getTime() - event.optimized_transit.alternative.duration * 60000 - now.getTime() < -1000 * 60 * 2)){
+						event.optimized_transit.best.duration * 60000 - now.getTime() < -1000 * 60 * 2 &&
+						event.start.getTime() - event.optimized_transit.alternative.duration * 60000 - now.getTime() < -1000 * 60 * 2)) {
 					return;
 				}
 				if (nextEvent.msecsUntilStart === -1 || nextEvent.msecsUntilStart > msecsUntilEvent) {
@@ -76,7 +79,7 @@ angular.module('app.controllers')
 				if (nextEvent.event.optimized_transit != undefined) {
 					var timeToLeaveBest;
 					var transitOption;
-					if(nextEvent.event.userSelectedTransitOption === ""){
+					if (nextEvent.event.userSelectedTransitOption === "") {
 						timeToLeaveBest = new Date(nextEvent.event.start.getTime() - nextEvent.event.optimized_transit.best.duration * 60000);
 					} else {
 						// Need to translate 'walk' to walking
@@ -112,10 +115,10 @@ angular.module('app.controllers')
 	function updateLEDs() {
 		var ledData = [];
 		var colors = [
-			[176,105,131],
-			[115,181,66],
-			[52,150,133],
-			[248,100,81]
+			[176, 105, 131],
+			[115, 181, 66],
+			[52, 150, 133],
+			[248, 100, 81]
 		]
 		Object.keys($scope.familyMembers).forEach(function (key, i) {
 
@@ -130,18 +133,18 @@ angular.module('app.controllers')
 		leds.updateTimeLeftInformation(ledData);
 	};
 
-	$interval(function(){
+	$interval(function () {
 		updateLEDs();
 	}, 1000);
 
 	var retrieveLeaveDataInterval;
 
 	$scope.$on("$ionicView.enter", function (event, data) {
-		retrieveLeaveDataInterval = $interval(function(){
+		retrieveLeaveDataInterval = $interval(function () {
 			retrieveLeaveData();
 		}, 300);
 
-		$timeout(function(){
+		$timeout(function () {
 			$rootScope.handleCounterClockwise = function () {
 				// $state.go('carStatus');
 				$ionicNativeTransitions.stateGo('carStatus', {}, {
@@ -163,8 +166,8 @@ angular.module('app.controllers')
 
 	$scope.$on("$ionicView.afterLeave", function (event, data) {
 		$interval.cancel(retrieveLeaveDataInterval);
-		$rootScope.handleClockwise = function(){};
-		$rootScope.handleCounterClockwise = function(){};
-		$rootScope.toggleEditMode = function(){};
+		$rootScope.handleClockwise = function () {};
+		$rootScope.handleCounterClockwise = function () {};
+		$rootScope.toggleEditMode = function () {};
 	});
 });
