@@ -297,6 +297,7 @@ LEDController.prototype.getMode = function () {
 };
 
 LEDController.prototype.setMode = function (mode) {
+    this.stopLEDs();
     this.ledMode = mode;
     if (mode == 0) this.stopLEDs();
     if (mode == 4) this.spark();
