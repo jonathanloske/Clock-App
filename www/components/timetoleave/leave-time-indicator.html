@@ -13,7 +13,7 @@
 		<div ng-class="::[small? 'secondary-transportation' : 'primary-transportation']">
 			<i class="icon ion-android-{{transit.type === 'walking'? 'walk' : transit.type}}"></i>
 			<p>{{transit.minutesLeft > 60 ? floor(transit.minutesLeft / 60) + ':' + (transit.minutesLeft % 60
-				< 10 ? '0' : '') + transit.minutesLeft % 60 + ' hours' : transit.minutesLeft + ' mins'}}</p>
+				< 10 ? '0' : '') + transit.minutesLeft % 60 + ' hours' : transit.minutesLeft + (transit.minutesLeft > 0 ? ' mins' : '')}}</p>
 		</div>
 	</div>
 
