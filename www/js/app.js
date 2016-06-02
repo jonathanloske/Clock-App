@@ -188,6 +188,7 @@ angular.module('starter', ['ionic', 'ionic-native-transitions', 'app.controllers
 	return {
 		scope: {
 			transit: '=',
+			otherTransit: '=',
 			picture: '=',
 			small: '='
 		},
