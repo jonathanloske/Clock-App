@@ -6,7 +6,7 @@ var LEDController = function(host, port)
     this.stop = 0;
     this.leds = 152;
 
-    this.ledMode = 0;
+    this.ledMode = 2;
 
     //time left growing parameters
     this.maximumMinutes = 60;
@@ -42,6 +42,7 @@ var LEDController = function(host, port)
         }
     };
 
+
     this.socket = new WebSocket('ws://' + host + ':' + port);
     this.socket.onclose = function(event) {
         console.log("[LEDController] disconnected from fadecandy");
@@ -49,9 +50,10 @@ var LEDController = function(host, port)
     };
     this.socket.onopen = function(event) {
         console.log("[LEDController] connected to fadecandy at " + host + ":" + port);
-    };
-}
+        this.setMode(this.ledMode);
+    }.bind(this);
 
+}
 LEDController.prototype._writeFrame = function (red, green, blue) {
     var packet = new Uint8ClampedArray(4 + this.leds * 3);
     // Dest position in our packet. Start right after the header.
@@ -64,7 +66,7 @@ LEDController.prototype._writeFrame = function (red, green, blue) {
         packet[dest++] = blue;
     }
     this._writePacket(packet);
-}
+};
 
 // extended from writeFrame, can write a certain light pattern rather than single color
 LEDController.prototype._advancedFrame = function (Fra) {
@@ -79,7 +81,7 @@ LEDController.prototype._advancedFrame = function (Fra) {
     }
 
     this._writePacket(packet);
-}
+};
 
 LEDController.prototype._writePacket = function (packet) {
     if (this.socket.readyState != 1 /* OPEN */) {
@@ -93,11 +95,11 @@ LEDController.prototype._writePacket = function (packet) {
     }
     //console.log(packet.toString());
     this.socket.send(packet.buffer);
-}
+};
 
 LEDController.prototype._allOff = function () {
     this._writeFrame(0, 0, 0);
-}
+};
 
 
 // Make sure the light index is legal
@@ -110,7 +112,7 @@ LEDController.prototype._tailor = function (ind){
         newI = ind;
     }
     return newI;
-}
+};
 
 // Random sparkling light
 LEDController.prototype._spark = function () {
@@ -140,20 +142,20 @@ LEDController.prototype._spark = function () {
     this._advancedFrame(this.Frame);
     //console.log("[LEDController] setting timeout to: " + dT);
     setTimeout(this._spark.bind(this), dT);
-}
+};
 
 LEDController.prototype.spark = function () {
     this.sparkRGB = [250, 0, 0];
     this.sparkSide = [this.sparkRGB[0]/4, this.sparkRGB[1]/4, this.sparkRGB[2]/4];
     this.startTime = new Date().getTime();
     this._spark();
-}
+};
 
 LEDController.prototype.stopLEDs = function () {
     //console.log("[LEDController] stopping sparking");
     this.stop = 1;
     this._allOff();
-}
+};
 
 LEDController.prototype.showTime = function(){
     // TODO get time (e.g. hour=5 minutes=45)
@@ -179,11 +181,11 @@ LEDController.prototype.showTime = function(){
 
 LEDController.prototype.displayTimeLeftGrowing = function (timeLeftInformation) {
     this._displayTimeLeft(timeLeftInformation, true);
-}
+};
 
 LEDController.prototype.displayTimeLeftShrinking = function (timeLeftInformation) {
     this._displayTimeLeft(timeLeftInformation, false);
-}
+};
 
 
 LEDController.prototype._displayTimeLeft = function (timeLeftInformation, growing) {
@@ -223,7 +225,7 @@ LEDController.prototype._displayTimeLeft = function (timeLeftInformation, growin
     }
     
     this._writePacket(packetWithHeader);
-}
+};
 
 LEDController.prototype.displayTimeLeftGrowingTogether = function (timeLeftInformation) {
     var packet = new Uint8ClampedArray(this.leds * 3);
@@ -271,7 +273,7 @@ LEDController.prototype.displayTimeLeftGrowingTogether = function (timeLeftInfor
     }
 
     this._writePacket(packetWithHeader);
-}
+};
 
 LEDController.prototype.updateTimeLeftInformation = function (timeLeftInformation) {
     var ledModes = [this.stopLEDs, this.displayTimeLeftGrowingTogether, this.displayTimeLeftGrowing, this.displayTimeLeftShrinking, this.spark];
@@ -288,11 +290,17 @@ LEDController.prototype.updateTimeLeftInformation = function (timeLeftInformatio
         this.stopLEDs();
         return;
     }
-}
+};
+
+LEDController.prototype.getMode = function () {
+    return this.ledMode;
+};
 
 LEDController.prototype.setMode = function (mode) {
     this.ledMode = mode;
     if (mode == 0) this.stopLEDs();
     if (mode == 4) this.spark();
     console.log('[LEDController] mode switched to: ' + mode);
-}
+};
+
+

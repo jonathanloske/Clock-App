@@ -7,6 +7,8 @@ angular.module('starter', ['ionic', 'ionic-native-transitions', 'app.controllers
 
 .run(function ($ionicPlatform, $rootScope, $state, $ionicScrollDelegate, $ionicHistory, socket, leds) {
 
+	var ledMode = 2;
+
 	$rootScope.keyPress = function (event) {
 		// If user presses 'a' or turns the knob counterclockwise
 		if (event.keyCode === 65) {
@@ -18,10 +20,11 @@ angular.module('starter', ['ionic', 'ionic-native-transitions', 'app.controllers
 		} else if (event.keyCode === 75) {
 			$rootScope.toggleEditMode();
 		} else if (event.keyCode === 76) {
-			$rootScope.toggleLedMode();
-		} else if (event.keyCode === 8) {
+			ledMode++;
+			if (ledMode > 4) ledMode = 0;
+			leds.setMode(ledMode);
+		} else if (event.keyCode === 82) {
 			document.location.href = 'index.html';
-			leds.reconnect();
 		}
 	};
 
@@ -119,6 +122,9 @@ angular.module('starter', ['ionic', 'ionic-native-transitions', 'app.controllers
 		},
 		reconnect: function () {
 			leds = connectLEDs();
+		},
+		getMode: function () {
+			return leds.getMode();
 		}
 	}
 })

@@ -8,8 +8,6 @@ angular.module('app.controllers')
 	$scope.floor = Math.floor;
 	$scope.viewIsVisible = true;
 
-	var ledMode = 0;
-
 	storage.subscribe($scope, function onStorageUpdated() {
 		$scope.calendars = storage.getCalendars();
 		$scope.carSimulatorData = storage.getCarSimulatorData();
@@ -19,7 +17,7 @@ angular.module('app.controllers')
 
 	$scope.weather = {
 		condition: 'partlysunny',
-		temperature: 71
+		temperature: 84
 	}
 
 	$scope.goToIndex = function (index) {
@@ -129,7 +127,6 @@ angular.module('app.controllers')
 			ledData.push(userData);
 		});
 
-		//currentLedMode(ledData);
 		leds.updateTimeLeftInformation(ledData);
 	};
 
@@ -162,11 +159,6 @@ angular.module('app.controllers')
 			};
 		}, 1000);
 
-		$rootScope.toggleLedMode = function () {
-			ledMode++;
-			if (ledMode > 4) ledMode = 0;
-			leds.setMode(ledMode);
-		}
 	});
 
 	$scope.$on("$ionicView.afterLeave", function (event, data) {
@@ -174,6 +166,5 @@ angular.module('app.controllers')
 		$rootScope.handleClockwise = function(){};
 		$rootScope.handleCounterClockwise = function(){};
 		$rootScope.toggleEditMode = function(){};
-		$rootScope.toggleLedMode = function(){};
 	});
 });
